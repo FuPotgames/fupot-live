@@ -1,14 +1,11 @@
 #!/bin/bash
 
+MY_VAR=$(grep Mode .env | xargs)
+mode=${MY_VAR#*=}
+echo $mode
+
 # Start server
 echo "Starting server"
-
-while getopts m: flag
-do
-    case "${flag}" in
-        m) mode=${OPTARG};;
-    esac
-done
 
 if [[ $mode == "prod" ]]
 then
