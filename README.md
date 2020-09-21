@@ -67,7 +67,7 @@ Download Nodejs
 ----------------------
 [Download NodeJs](https://nodejs.org/en/)
 
-**Install These Packages** 
+**Install These Packages** \
 `npm install -g npm@latest`\
 `sudo npm i -g @angular/cli@latest`\
 `sudo npm i -g typescript@latest`\
