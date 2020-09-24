@@ -13,8 +13,7 @@ urlpatterns = [
     path('api/fupot/',include('fupot.api.urls','winners_view_api')),
     path('api/fupot/',include('fupot.api.urls','user_sub_api')),
     path('api/fupot/',include('fupot.api.urls','user_post_questions_api')),
-    path('api/account/',include('account.api.urls','account_api')),
-    path('api/account/',include('account.api.web','account_api')),
+    path('api/account/',include('account.api.urls','account_api'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
