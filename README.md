@@ -67,7 +67,8 @@ Download Nodejs
 ----------------------
 [Download NodeJs](https://nodejs.org/en/)
 
-**Install These Packages** \
+**Install These Packages**
+
 `npm install -g npm@latest`\
 `sudo npm i -g @angular/cli@latest`\
 `sudo npm i -g typescript@latest`\
@@ -75,6 +76,11 @@ Download Nodejs
 `sudo npm install -g capacitor@latest`\
 `npm install --save-dev @angular-devkit/build-angular`\
 `npm install --save-dev @angular-devkit/core`
+
+**Update All Packages inside frontend**
+
+`sudo npm run update:packages`
+
 
 FuPotLive Launch Script
 -------------------
