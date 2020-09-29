@@ -1,0 +1,58 @@
+// Setting up background image for the signin page
+ion-content{
+    --background: url('../../assets/test.jpg') no-repeat center/cover fixed;
+}
+// Making our layout transparent with out background image
+ion-grid{
+    --ion-item-background: transparent;
+}
+// Adjusted the row to be centered in the middle
+ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --ion-item-background: transparent;
+}
+// Added margin around our middle section of the userinputs
+ion-col{
+    margin: 2%;
+}
+// Customize our signin button
+ion-button{
+    --background:rgb(240, 0, 160);
+    --box-shadow: none;
+    --border-radius: 50px;
+    margin-top: 5%;
+    text-transform: none;
+    
+}
+// Added margin around our middle section of the userinputs
+.middle_section{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+// Making our bottom terms and sign in text to be in one line each
+.label_style{
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: center;
+    display:flex;
+    margin-top: 2%;
+    font-size: small;
+}
+// Set a custom border for the middle section
+.custom_border{
+    border-bottom: 1px solid #F1F1F1;
+}
+// Padded middle section vertically
+.padding_middle_section{
+    padding-bottom: 3%;
+}
+//Padded between icons
+.padding_between_icons{
+    padding-right: 2%;
+}
+// Added white color for the border
+ion-item {
+    --border-color: white;
+  }
