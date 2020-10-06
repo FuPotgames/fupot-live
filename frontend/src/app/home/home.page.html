@@ -1,20 +1,57 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      FuPotLive
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>HELLO WORLD!!</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <form  #form="ngForm" >
+    <ion-grid>
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <img src="../../assets/Main logo.png" width="75%" height="20%" style="padding-bottom: 5%;padding-top: 8%;">
+            </div >
+            <div class="middle_section">
+              <ion-row class="padding_middle_section">
+               Home 
+              </ion-row>
+              My Groups
+              <ion-row  class="padding_middle_section">
+                <ion-icon name = "md-pin" class="padding_between_icons"></ion-icon>
+     <!-- List of user groups, using as placeholder need to find something more dynamic -->         
+                <ion-list>
+                    <ion-item>
+                      <ion-label>Buffulo Wild Wings</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Target</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Chile's</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Best Buy</ion-label>
+                    </ion-item>
+                  </ion-list>
+              </ion-row>
+            </div>
+          <div style="margin-top: 10%;">
+            <ion-button  type="submit" [disabled]="form.invalid" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;">Find Locations</ion-button>
+            <div>
+            </div>
+             <img src="../../assets/Dinning Icon.png" width="30%" height="20%" style="padding-bottom: 5%;padding-top: 8%;">
+          </div>
+        </ion-col>
+        <ion-tabs>
+  <!-- Bottom menu bar -->
+              <ion-tab-bar slot="bottom">
+                <ion-tab-button tab="home">
+                  <img src="../../assets/Home Icon.png" width="20%" height="50%">
+                </ion-tab-button>
+                <ion-tab-button tab="search">
+                  <img src="../../assets/Serach Icon.png" width="20%" height="50%">
+                </ion-tab-button>
+                <ion-tab-button tab="profile">
+                  <img src="../../assets/Profile Icon.png" width="20%" height="50%">
+                </ion-tab-button>
+              </ion-tab-bar>
+            </ion-tabs>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
