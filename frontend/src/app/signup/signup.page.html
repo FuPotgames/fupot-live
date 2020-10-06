@@ -26,8 +26,11 @@
           </div>
           <div style="margin-top: 20%;">
             <ion-button  type="submit" [disabled]="form.invalid" expand="block" style="margin-left: 20%;margin-right: 20%;">Create Account</ion-button>
-            <ion-label class="label_style">By creating an account, you agree to our Terms</ion-label>
-            <div class="label_style">Already have an account,&nbsp; <a routerLink='/signin'>Signin</a></div>
+              <ion-label class="label_style">By creating an account, you agree to our Terms</ion-label>
+              <ion-row class="label_style">
+                <div >Already have an account,&nbsp; </div>
+                <ion-label><a [routerLink]="['/signin']" routerLinkActive="router-link-active" >Signin</a></ion-label>
+              </ion-row>
           </div>
         </ion-col>
       </ion-row>

@@ -77,9 +77,9 @@ Download Nodejs
 `npm install --save-dev @angular-devkit/build-angular`\
 `npm install --save-dev @angular-devkit/core`
 
-**Update All Packages inside frontend**
+**Get packages frontend**
 
-`sudo npm run update:packages`
+`npm i`
 
 
 FuPotLive Launch Script

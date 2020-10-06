@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "frontend",
+  "appName": "MyApp",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
@@ -9,5 +9,21 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false",
+      "android-minSdkVersion": "19",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreenDuration": "300",
+      "SplashShowOnlyFirstTime": "false",
+      "SplashScreen": "none",
+      "SplashScreenDelay": "10000",
+      "AutoHideSplashScreen": "true",
+      "ShowSplashScreen": "true",
+      "LottieAnimationLocation": "www/assets/loading.json",
+      "LottieFullScreen": "true",
+      "LottieLoopAnimation": "true"
+    }
+  }
 }
