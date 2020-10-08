@@ -1,12 +1,16 @@
 <ion-content>
-  
+  <!-- Using web animation lib to animate our logo section --> 
+  <script src="web-animations.min.js"></script>
+  <!-- Using forms for collecting user information and parseing it later on --> 
   <form  #form="ngForm" >
     <ion-grid>
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
+          <!-- Fupot Logo Section --> 
+          <div id="signin_logo_animation" class="ion-text-center">
             <img src="../../assets/load_screen_logo.png" width="75%" height="20%" style="padding-bottom: 20%;padding-top: 20%;">
             </div>
+            <!-- Middle user inputs section for signin--> 
             <div class="middle_section">
               <ion-row class="padding_middle_section">
                 <ion-icon name="person-outline" class="padding_between_icons"></ion-icon>
@@ -17,11 +21,12 @@
                 <ion-input  name="password" type="password" placeholder="Password" ngModel required class="custom_border"></ion-input>
               </ion-row>
             </div>
+            <!-- Button Section with texts --> 
           <div style="margin-top: 10%;">
             <ion-button  type="submit" [disabled]="form.invalid" expand="block" style="margin-left: 20%;margin-right: 20%;">Submit</ion-button>
             <ion-row class="label_style">
               <div >Don't have an account, please&nbsp; </div>
-              <ion-label><a [routerLink]="['/signup']" >Signup</a></ion-label>
+              <ion-label><a [routerLink]="['/signup']" routerLinkActive="router-link-active" >Signup</a></ion-label>
             </ion-row>
           </div>
         </ion-col>

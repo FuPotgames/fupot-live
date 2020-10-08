@@ -38,6 +38,7 @@
     "native-run": "^1.2.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
+    "web-animations-js": "^2.3.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

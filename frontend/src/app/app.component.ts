@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
@@ -16,22 +16,16 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private lottieSplashScreen: LottieSplashScreen
-  ) {
-    
+    private lottieSplashScreen: LottieSplashScreen) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      setTimeout(() => {
-        this.lottieSplashScreen.hide()
-      }, 4000);
-    
-
-      
-      // this.splashScreen.hide();  // WE DONE NEED THIS 
+      setTimeout(()=>{
+        this.lottieSplashScreen.hide();
+      },1500);
     });
   }
 }

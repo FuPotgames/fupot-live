@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

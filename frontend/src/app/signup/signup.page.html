@@ -1,11 +1,16 @@
 <ion-content>
-  <form  #form="ngForm" >
+  <!-- Using web animation lib to animate our logo section --> 
+  <script src="web-animations.min.js"></script>
+  <!-- Using forms for collecting user information and parseing it later on --> 
+  <form  #form="ngForm">
     <ion-grid>
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
+          <!-- Fupot Logo Section --> 
+          <div id="signup_logo_animation" class="ion-text-center">
             <img src="../../assets/load_screen_logo.png" width="75%" height="20%" style="padding-bottom: 20%;">
             </div>
+          <!-- Middle user inputs section for signup-->
           <div class="middle_section">
             <ion-row class="padding_middle_section">
               <ion-icon name="person-outline" class="padding_between_icons"></ion-icon>
@@ -24,6 +29,7 @@
               <ion-input  name="password" type="password" placeholder="Password" ngModel required class="custom_border"></ion-input>
             </ion-row>
           </div>
+          <!-- Button Section with texts -->
           <div style="margin-top: 20%;">
             <ion-button  type="submit" [disabled]="form.invalid" expand="block" style="margin-left: 20%;margin-right: 20%;">Create Account</ion-button>
               <ion-label class="label_style">By creating an account, you agree to our Terms</ion-label>
