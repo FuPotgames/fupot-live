@@ -18,14 +18,20 @@ ion-col{
     margin: 2%;
 }
 // Customize our signin button
-ion-button{
+#customized_submit_button{
     --background:rgb(240, 0, 160);
-    --box-shadow: none;
-    --border-radius: 50px;
-    margin-top: 5%;
+    --box-shadow: white;
+    --border-radius: 200px;
+    --border-color:white;
     text-transform: none;
+    margin: auto;
+    font-size:150%;
+    font-weight: bolder;
+    height: 1.8em;
+    color: white;
     
 }
+
 // Added margin around our middle section of the userinputs
 .middle_section{
     margin-left: 5%;
@@ -56,3 +62,12 @@ ion-button{
 ion-item {
     --border-color: white;
   }
+// Customized the middle section inputs
+#middle_inputs_style{
+    color: white;
+    font-weight: bold;
+}
+// Customized the bottom section texts
+#bottom_text_style{
+    color: white;
+}

@@ -8,25 +8,27 @@
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
           <!-- Fupot Logo Section --> 
           <div id="signin_logo_animation" class="ion-text-center">
-            <img src="../../assets/load_screen_logo.png" width="75%" height="20%" style="padding-bottom: 20%;padding-top: 20%;">
+            <img src="../../assets/load_screen_logo.png" width="75%" height="20%" style="padding-bottom: 5%;padding-top: 5%;">
             </div>
             <!-- Middle user inputs section for signin--> 
             <div class="middle_section">
               <ion-row class="padding_middle_section">
-                <ion-icon name="person-outline" class="padding_between_icons"></ion-icon>
-                <ion-input  name="name" type="text" placeholder="Username" ngModel required class="custom_border"></ion-input>
+                <ion-icon src="../../assets/input_icons/username.svg" class="padding_between_icons"></ion-icon>
+                <ion-input id="middle_inputs_style" name="name" type="text" placeholder="Username" ngModel required class="custom_border"></ion-input>
               </ion-row>
               <ion-row class="padding_middle_section">
-                <ion-icon name="key-outline" class="padding_between_icons"></ion-icon>
-                <ion-input  name="password" type="password" placeholder="Password" ngModel required class="custom_border"></ion-input>
+                <ion-icon src="../../assets/input_icons/key.svg" class="padding_between_icons"></ion-icon>
+                <ion-input id="middle_inputs_style" name="password" type="password" placeholder="Password" ngModel required class="custom_border"></ion-input>
               </ion-row>
             </div>
             <!-- Button Section with texts --> 
-          <div style="margin-top: 10%;">
-            <ion-button  type="submit" [disabled]="form.invalid" expand="block" style="margin-left: 20%;margin-right: 20%;">Submit</ion-button>
+          <div style="margin-top: 20%;">
+            <div class="ion-text-center">
+              <ion-button fill="outline" size= large id="customized_submit_button" type="submit">&nbsp;&nbsp;Submit&nbsp;&nbsp;</ion-button>
+            </div>
             <ion-row class="label_style">
-              <div >Don't have an account, please&nbsp; </div>
-              <ion-label><a [routerLink]="['/signup']" routerLinkActive="router-link-active" >Signup</a></ion-label>
+              <div id="bottom_text_style">Don't have an account, please&nbsp; </div>
+              <ion-label><a id="bottom_text_style" [routerLink]="['/signup']" routerLinkActive="router-link-active" >Signup</a></ion-label>
             </ion-row>
           </div>
         </ion-col>

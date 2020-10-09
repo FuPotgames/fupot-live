@@ -19,11 +19,17 @@ ion-row{
     margin-right: 5%;
 }
 // Customize our signup button
-ion-button{
+#customized_create_account_button{
     --background:rgb(240, 0, 160);
     --box-shadow: none;
-    --border-radius: 50px;
+    --border-radius: 25px;
     text-transform: none;
+    margin: auto;
+    font-size:150%;
+    font-weight: bolder;
+    height: 2em;
+    color: white;
+    --border-color:white ;
     
 }
 
@@ -53,3 +59,12 @@ ion-item {
     --border-color: white;
     margin-bottom: 2%;
   }
+// Customized the middle section inputs
+#middle_inputs_style{
+    color: white;
+    font-weight: bold;
+}
+// Customized the bottom section texts
+#bottom_text_style{
+    color: white;
+}
