@@ -67,17 +67,7 @@ Download Nodejs
 ----------------------
 [Download NodeJs](https://nodejs.org/en/)
 
-**Install These Packages**
-
-`npm install -g npm@latest`\
-`sudo npm i -g @angular/cli@latest`\
-`sudo npm i -g typescript@latest`\
-`sudo npm install -g @ionic/cli@latest`\
-`sudo npm install -g capacitor@latest`\
-`npm install --save-dev @angular-devkit/build-angular`\
-`npm install --save-dev @angular-devkit/core`
-
-**Get packages frontend**
+**Install These Packages (inside frontend folder after git pull or clone)**
 
 `npm i`
 
