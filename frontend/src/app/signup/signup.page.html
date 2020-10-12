@@ -15,26 +15,27 @@
           <div class="middle_section" >
             <ion-row class="padding_middle_section">
               <ion-icon src="../../assets/input_icons/username.svg" class="padding_between_icons"></ion-icon>
-              <ion-input id="middle_inputs_style" name="name" type="text" placeholder="Username" ngModel required class="custom_border"></ion-input>
+              <ion-input [(ngModel)]="registerValues.username" id="middle_inputs_style" name="name" type="text" placeholder="Username" ngModel required class="custom_border"></ion-input>
             </ion-row>
             <ion-row class="padding_middle_section">
               <ion-icon src="../../assets/input_icons/email.svg" class="padding_between_icons"></ion-icon>
-              <ion-input id="middle_inputs_style" name="email" type="email" placeholder="Email" ngModel required class="custom_border"></ion-input>
+              
+              <ion-input [(ngModel)]="registerValues.email" id="middle_inputs_style" name="email" type="email" placeholder="Email" ngModel required class="custom_border" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
             </ion-row>
             <ion-row class="padding_middle_section">
               <ion-icon src="../../assets/input_icons/phone.svg" class="padding_between_icons"></ion-icon>
-              <ion-input id="middle_inputs_style" name="phone" type="number" placeholder="Phone" ngModel required class="custom_border"></ion-input>
+              <ion-input [(ngModel)]="registerValues.phone_number" id="middle_inputs_style" name="phone" type="number" placeholder="Phone" ngModel required class="custom_border"></ion-input>
             </ion-row>
             <ion-row class="padding_middle_section">
               <ion-icon src="../../assets/input_icons/key.svg" class="padding_between_icons"></ion-icon>
-              <ion-input id="middle_inputs_style" name="password" type="password" placeholder="Password" ngModel required class="custom_border"></ion-input>
+              <ion-input [(ngModel)]="registerValues.password" [(ngModel)]="registerValues.password2" id="middle_inputs_style" name="password" type="password" placeholder="Password" ngModel required class="custom_border"></ion-input>
             </ion-row>
           </div>
           </div>
           <!-- Button Section with texts -->
           <div style="margin-top: 10%;">
             <div class="ion-text-center">
-              <ion-button fill="outline" id="customized_create_account_button" type="submit">Create Account</ion-button>
+              <ion-button (click)="registerNewUser()" [disabled]="form.invalid" fill="outline" id="customized_create_account_button" type="submit">Create Account</ion-button>
             </div>
               <ion-label id="bottom_text_style" class="label_style">By creating an account, you agree to our Terms</ion-label>
               <ion-row class="label_style">

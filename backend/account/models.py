@@ -6,6 +6,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+from django.core.validators import RegexValidator
+
 class MyAccountManager(BaseUserManager):
 	def create_user(self, email, username, password=None):
 		if not email:
@@ -17,7 +19,6 @@ class MyAccountManager(BaseUserManager):
 			email=self.normalize_email(email),
 			username=username,
 		)
-
 		user.set_password(password)
 		user.save(using=self._db)
 		return user
@@ -38,7 +39,9 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
     username 				= models.CharField(max_length=30, unique=True)
-    date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    phone_regex         = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_number        = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
+    date_joined			= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin				= models.BooleanField(default=False)
     is_active				= models.BooleanField(default=True)
