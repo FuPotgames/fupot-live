@@ -13,9 +13,17 @@ from fupot.models import Question, Submission, Win,Group
 from fupot.api.serializers import UserQuestionSerializer, SubmissionSerializer, WinSerializer,CreateQuestionSerializer,\
     GroupSerializer
 
-class GroupView(generics.ListCreateAPIView):
+class CreateGetGroupView(generics.ListCreateAPIView):
     """
     Responsible for creating and showing groups in JSON Response
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+class UpdateDeleteGroupView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Responsible for updating and deleting specific group by id
     """
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Group.objects.all()

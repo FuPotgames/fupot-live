@@ -1,7 +1,7 @@
 from django.urls import path
 
 from fupot.api.views import SubmissionView, WinnersView, CreateUserViewSubmission, \
-     UserCreateQuestionView, UserEditQuestionView, QuestionView, GroupView
+     UserCreateQuestionView, UserEditQuestionView, QuestionView, CreateGetGroupView, UpdateDeleteGroupView
 app_name = 'fupot'
 
 """ REST-FRAMEWORK MAIN URLS """
@@ -9,7 +9,12 @@ app_name = 'fupot'
 urlpatterns = [
     path('questions', QuestionView.as_view(), name="questions"),
     path('submissions', SubmissionView.as_view(), name="submissions"),
-    path('groups', GroupView.as_view(), name="groups"),
+
+    
+    path('update_delete_groups/<int:pk>', UpdateDeleteGroupView.as_view(), name="update_groups"),
+    path('create_retrieve_groups', CreateGetGroupView.as_view(), name="create_groups"),
+
+
     path('winners', WinnersView.as_view(), name="winners"),
     path('create_user_submission', CreateUserViewSubmission.as_view(), name="user_sub_view"),
     path('user_edit_questions/<int:pk>', UserEditQuestionView.as_view(), name="user_edit_questions"),

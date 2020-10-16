@@ -46,7 +46,7 @@ class Question(models.Model):
                                help_text="Enter the answer text that \
                                             you want displayed",)
 
-    group = models.ForeignKey(Group, on_delete=models.SET_NULL, blank=True, null=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     
     def __str__(self):
       return self.prompt
