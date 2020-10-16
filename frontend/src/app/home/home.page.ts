@@ -15,6 +15,7 @@ export class HomePage implements OnInit{
   ngOnInit() {
   }
   signout(){
+    this.storage.clear()
     this.storage.set('token','');
     this.navController.navigateRoot('/signup');
   }

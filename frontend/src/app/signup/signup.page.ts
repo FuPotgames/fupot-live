@@ -31,7 +31,8 @@ export class SignupPage implements OnInit {
   // if they are redirect them to our home page
   isLoggedIn(){
     this.storage.get('token').then((token)=>{
-      if(token !== ''){
+      if(token !== null){
+        console.log(token);
         this.navController.navigateRoot('/home');
       }
     });
