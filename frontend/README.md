@@ -1,6 +1,17 @@
-<img src="https://i.imgur.com/PAPZbof.gif"/>
+FuPotLive - Frontend Instructions:
+==============================================================
 
-Full Tutorial on medium https://medium.com/@prashantg9912/how-to-add-beautiful-lottie-splashsceen-to-ionic-app-7fdbc00f6cea
+Build Web
+------------
+- `ionic build` - builds www directory for preparing other app 
+- `ionic serve` - starts our app from the (http://localhost:8100) 
 
-## Run
-ionic cordova run android
+Build Android
+------------
+- `ionic build` - builds www directory for preparing other app 
+- `ionic capacitor build android` - builds android folder and will open it on android studio 
+
+Build IOS
+------------
+- `ionic build` - builds www directory for preparing other app 
+- `ionic capacitor build ios` - builds ios folder and will open it on xcode 
