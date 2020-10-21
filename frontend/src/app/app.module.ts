@@ -10,8 +10,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
-
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -24,7 +22,7 @@ import { IonicStorageModule } from '@ionic/storage';
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,FormsModule,IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
-    SplashScreen,LottieSplashScreen,
+    SplashScreen,
     UserAuthService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

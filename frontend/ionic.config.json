@@ -1,7 +1,8 @@
 {
   "name": "Lottie-Ionic",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

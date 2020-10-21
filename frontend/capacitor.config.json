@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "MyApp",
+  "appName": "Lottie-Ionic",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
@@ -20,10 +20,7 @@
       "SplashScreen": "none",
       "SplashScreenDelay": "10000",
       "AutoHideSplashScreen": "true",
-      "ShowSplashScreen": "true",
-      "LottieAnimationLocation": "www/assets/loading.json",
-      "LottieFullScreen": "true",
-      "LottieLoopAnimation": "true"
+      "ShowSplashScreen": "true"
     }
   }
 }
