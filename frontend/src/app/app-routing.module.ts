@@ -8,6 +8,9 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
+  { path: 'owner-home', loadChildren: './owner-home/owner-home.module#OwnerHomePageModule' },
+  { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
+  { path: 'games', loadChildren: './games/games.module#GamesPageModule' },
 ];
 
 @NgModule({

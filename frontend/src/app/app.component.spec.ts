@@ -7,6 +7,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 
+import { addIcons } from "ionicons";
+import { construct, home, … } from "ionicons/icons";
+
+addIcons({
+  "ios-construct": construct.ios,
+  "md-construct": construct.md,
+  "ios-home": home.ios,
+  "md-home": home.md,
+  …
+});
+
 describe('AppComponent', () => {
 
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;

@@ -1,28 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Owner Home
+      </div>
+<!-- SLIDE OUT MENU -->
+<ion-buttons slot="start">
+  <ion-menu-button menu="main-menu">
+    <ion-icon src="../../assets/menu.svg" color="dark"></ion-icon>
+  </ion-menu-button>    
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
 <ion-content>
   <form  #form="ngForm" >
     <ion-grid>
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <ion-item>
-              <ion-button (click)="signout()" >Signout</ion-button>
-            </ion-item>
-            
-            <img src="../../assets/main_logo.png" width="75%" height="20%" style="padding-bottom: 1%;padding-top: 8%;">
-            </div >
-            <div style="text-align: center; font-size: 15pt;">
-              Home
-            </div>
-            
+        
+
 <!-- List of user groups -->   
           <div>    
             <ion-card>
-              <ion-card-header>
+              <ion-card-header color="medium">
               <ion-card-subtitle class ="ion-text-center" style="font-size: 12pt;">My Groups</ion-card-subtitle>
             </ion-card-header>
             
             <ion-item >
-              <ion-avatar ></ion-avatar>
+              <ion-avatar></ion-avatar>
               <ion-label>Buffalo Wild Wings</ion-label>
             </ion-item>
 
@@ -63,26 +70,46 @@
             </div>
         </ion-col>
         
-
-<!-- Bottom menu bar -->
+        <ion-tabs>
+          <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="home" style="background-color: #303030">
+              <img src="../../assets/home_rollover_icon.png" width="20%" height="50%">
+              Home
+            </ion-tab-button >
+            <ion-tab-button tab="search" style="background-color: #303030">
+              <img src="../../assets/search_icon.png" width="20%" height="50%">
+              Search
+            </ion-tab-button >
+            <ion-tab-button tab="profile" style="background-color: #303030">
+              <img src="../../assets/profile_icon.png" width="20%" height="50%">
+              Profile
+            </ion-tab-button  >
+          </ion-tab-bar>
+        </ion-tabs>
+<!-- Bottom menu bar
            <ion-tabs>
-              <ion-tab-bar slot="bottom">
+              <ion-tab-bar slot="bottom" > 
                 <ion-tab-button tab="home" style="background-color: #303030">
-                  <img src="../../assets/home_rollover_icon.png" width="20%" height="50%">
-                  Home
-                </ion-tab-button >
+                  <ion-icon color ="light" name="home"></ion-icon>Home</ion-tab-button>
+
                 <ion-tab-button tab="search" style="background-color: #303030">
-                  <img src="../../assets/search_icon.png" width="20%" height="50%">
-                  Search
-                </ion-tab-button >
+                  <ion-icon src="../../assets/search-sharp.svg"></ion-icon>Search</ion-tab-button >
+                
+                <ion-tab-button tab="notifications" style="background-color: #303030">
+                  <ion-icon src="../../assets/notifications" color="dark"></ion-icon>Notifications</ion-tab-button >
+                
                 <ion-tab-button tab="profile" style="background-color: #303030">
-                  <img src="../../assets/profile_icon.png" width="20%" height="50%">
-                  Profile
-                </ion-tab-button  >
+                  <img src="../../assets/person.svg">Profile</ion-tab-button>
+
               </ion-tab-bar>
-            </ion-tabs>
+            </ion-tabs> 
+
+          -->
+      
+
       </ion-row>
     </ion-grid>
   </form>
 </ion-content>
+
 
