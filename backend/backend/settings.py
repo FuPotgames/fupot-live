@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
+    'fcm_django'
 ]
 
 MIDDLEWARE = [
@@ -44,6 +45,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+FCM_DJANGO_SETTINGS = {
+        'FCM_SERVER_KEY': 'AAAAeUUqvH0:APA91bFC-_bFBsdRwZwpaAojvAbr_vAbLuQMzCer1nrjAPrdiUFMxwoRVWTKKES3aAGU3toXXHTI3r8gD8DLqutyKQMTkRPfwRCh1W5RCDecklcgEfJDmK2B19j_xwFe_gfYZC0-Bl5U'
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
