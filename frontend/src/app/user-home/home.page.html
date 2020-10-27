@@ -4,12 +4,12 @@
       <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
       </div >
       <div style="text-align: center; font-size: 12pt;">
-        Owner Home
+        Home
       </div>
 <!-- SLIDE OUT MENU -->
 <ion-buttons slot="start">
   <ion-menu-button menu="main-menu">
-    <ion-icon src="../../assets/menu.svg" color="dark"></ion-icon>
+    <ion-icon src="../../assets/menu.svg" color="fupot_grey"></ion-icon>
   </ion-menu-button>    
 </ion-buttons>
 </ion-toolbar>
@@ -24,27 +24,27 @@
 <!-- List of user groups -->   
           <div>    
             <ion-card>
-              <ion-card-header color="medium">
-              <ion-card-subtitle class ="ion-text-center" style="font-size: 12pt;">My Groups</ion-card-subtitle>
+              <ion-card-header color="fupot_grey">
+              <ion-card-subtitle class ="ion-text-center" style="font-size: 13pt;">My Groups</ion-card-subtitle>
             </ion-card-header>
             
             <ion-item >
-              <ion-avatar></ion-avatar>
+              <ion-icon src="../../assets/person-circle-outline.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
               <ion-label>Buffalo Wild Wings</ion-label>
             </ion-item>
 
             <ion-item >
-              <ion-avatar ></ion-avatar>
-              <ion-label>Target</ion-label>
+              <ion-icon src="../../assets/person-circle-outline.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>             
+               <ion-label>Target</ion-label>
             </ion-item>
 
             <ion-item >
-              <ion-avatar ></ion-avatar>
+              <ion-icon src="../../assets/person-circle-outline.svg" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
               <ion-label>Chile's</ion-label>
             </ion-item>
 
             <ion-item>
-              <ion-avatar ></ion-avatar>
+              <ion-icon src="../../assets/person-circle-outline.svg" color="fupot_purple" style="padding-right: 5%;"></ion-icon>              
               <ion-label>Best Buy</ion-label>
             </ion-item>
           </ion-card>
@@ -54,13 +54,13 @@
 
 <!-- Find locations button -->          
           <div style="margin-top: 10%;">
-            <ion-button  type="submit" [disabled]="form.invalid" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;">Find Locations</ion-button>
+            <ion-button  type="submit" [disabled]="form.invalid" expand="block" color="fupot_blue" shape="round" style="margin-left: 10%;margin-right: 10%;"><ion-label color="light" >Find Locations</ion-label></ion-button>
           </div>
 
 <!-- Location categories-->           
 
             <div class ="ion-text-center">
-              <img src="../../assets/dining_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 6%; padding-right: 2%">
+              <img src="../../assets/dining_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 10%; padding-right: 2%">
               <img src="../../assets/shopping_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 4%; padding-left: 2%">
             </div>
 
@@ -73,15 +73,17 @@
         <ion-tabs>
           <ion-tab-bar slot="bottom">
             <ion-tab-button tab="home" style="background-color: #303030">
-              <img src="../../assets/home_rollover_icon.png" width="20%" height="50%">
-              Home
-            </ion-tab-button >
+            <ion-icon src="../../assets/home.svg" color="fupot_purple"></ion-icon>Home</ion-tab-button>
+
             <ion-tab-button tab="search" style="background-color: #303030">
-              <img src="../../assets/search_icon.png" width="20%" height="50%">
-              Search
-            </ion-tab-button >
-            <ion-tab-button tab="profile" style="background-color: #303030">
-              <img src="../../assets/profile_icon.png" width="20%" height="50%">
+              <ion-icon src="../../assets/search-sharp.svg" color="light"></ion-icon>Search</ion-tab-button >
+
+              <ion-tab-button tab="search" style="background-color: #303030">
+              <ion-icon src="../../assets/notifications-sharp.svg" color="light"></ion-icon>Notifications</ion-tab-button >
+  
+
+              <ion-tab-button tab="profile" style="background-color: #303030">
+              <ion-icon src="../../assets/person.svg" color="light"></ion-icon>
               Profile
             </ion-tab-button  >
           </ion-tab-bar>

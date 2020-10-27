@@ -10,6 +10,7 @@ import { OwnerHomePage } from './owner-home.page';
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 
+
 const routes: Routes = [
   {
     path: '',
