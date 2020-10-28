@@ -2,22 +2,21 @@ import { UserAuthService } from './../services/user-auth.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Component, OnInit } from '@angular/core';
+
 import {
   Plugins,
   PushNotification,
   PushNotificationToken,
   PushNotificationActionPerformed } from '@capacitor/core';
-  const { PushNotifications } = Plugins;
-  
+
+const { PushNotifications } = Plugins;
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 
 })
-export class HomePage implements OnInit{
-
-  
+export class HomePage implements OnInit {
   constructor(private userAuthService: UserAuthService, private storage: Storage, private navController: NavController) {}
   ngOnInit() {
   console.log('Initializing HomePage');
@@ -62,7 +61,7 @@ export class HomePage implements OnInit{
       }
     );
   }
-  signout(){
+  signout() {
     this.storage.set('token', null);
     this.navController.navigateRoot('/signup');
   }

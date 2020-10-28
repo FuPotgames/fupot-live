@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "Lottie-Ionic",
+  "appId": "com.fupot.fupotlive",
+  "appName": "FuPotLive",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
