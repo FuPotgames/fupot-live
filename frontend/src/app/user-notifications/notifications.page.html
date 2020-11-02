@@ -1,9 +1,93 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>notifications</ion-title>
-  </ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Notifications
+      </div>
+
+<!-- SLIDE OUT MENU -->
+<ion-buttons slot="start">
+  <ion-menu-button menu="main-menu">
+    <ion-icon src="../../assets/menu.svg" color="fupot_grey"></ion-icon>
+  </ion-menu-button>    
+</ion-buttons>
+</ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <!--NEW NOTIFICATIONS-->
+
+  <div>
+    <ion-item style= "margin-top: 7%; font-weight:600;" color="fupot_grey">New Notifications</ion-item>
+  </div>
+
+  <div>
+  <ion-list>
+    <ion-item>
+      <ion-icon src="../../assets/ellipse.svg" size="small" slot="start" color="fupot_blue"></ion-icon>
+      notification (blue means food)
+    </ion-item>
+    <ion-item>
+      <ion-icon src="../../assets/ellipse.svg" size="small" slot="start" color="fupot_pink"></ion-icon>
+      notification (pink means shopping)
+    </ion-item> 
+    <ion-item>
+      <ion-icon src="../../assets/ellipse.svg" size="small" slot="start" color="fupot_teal"></ion-icon>
+      notification (teal means entertainment)
+    </ion-item> 
+    <ion-item>
+      <ion-icon src="../../assets/ellipse.svg" size="small" slot="start" color="fupot_purple"></ion-icon>
+      notification (purple means social)
+    </ion-item>
+  </ion-list>
+</div>
+
+<div>
+  <ion-item style= "margin-top: 7%; font-weight:600;" color="fupot_grey">Older Notifications</ion-item>
+</div>
+
+<div>
+<ion-list>
+  <ion-item>
+    <ion-icon src="../../assets/ellipse-outline.svg" size="small" slot="start"></ion-icon>
+    notification 1
+  </ion-item>
+  <ion-item>
+    <ion-icon src="../../assets/ellipse-outline.svg" size="small" slot="start"></ion-icon>
+    notification 2
+  </ion-item> 
+  <ion-item>
+    <ion-icon src="../../assets/ellipse-outline.svg" size="small" slot="start"></ion-icon>
+    notification 3
+  </ion-item> 
+  <ion-item>
+    <ion-icon src="../../assets/ellipse-outline.svg" size="small" slot="start"></ion-icon>
+    notification 4
+  </ion-item>
+</ion-list>
+</div>
+
 </ion-content>
+
+<!--BOTTOM NAV BAR-->        
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" style="background-color: #303030">
+    <ion-icon src="../../assets/home.svg" color="light"></ion-icon>Home</ion-tab-button>
+
+    <ion-tab-button tab="search" style="background-color: #303030">
+      <ion-icon src="../../assets/search-sharp.svg" color="light"></ion-icon>Search</ion-tab-button >
+
+      <ion-tab-button tab="search" style="background-color: #303030">
+      <ion-icon src="../../assets/notifications-sharp.svg" color="fupot_blue"></ion-icon>Notifications</ion-tab-button >
+
+
+      <ion-tab-button tab="profile" style="background-color: #303030">
+      <ion-icon src="../../assets/person.svg" color="light"></ion-icon>
+      Profile
+    </ion-tab-button  >
+  </ion-tab-bar>
+</ion-tabs>
