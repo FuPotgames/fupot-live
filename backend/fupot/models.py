@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from fcm_django.models import AbstractFCMDevice
+
 
 class Group(models.Model):
    """
@@ -12,6 +14,9 @@ class Group(models.Model):
    
    def __str__(self):
       return self.name
+
+class MyDevice(AbstractFCMDevice):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Question(models.Model):
     """

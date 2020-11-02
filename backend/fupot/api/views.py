@@ -9,9 +9,53 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from account.models import Account
 
-from fupot.models import Question, Submission, Win,Group
+from fupot.models import Question, Submission, Win,Group,MyDevice
 from fupot.api.serializers import UserQuestionSerializer, SubmissionSerializer, WinSerializer,CreateQuestionSerializer,\
-    GroupSerializer
+    GroupSerializer, NotificationSerializer
+
+from django.core.exceptions import ValidationError
+
+# TODO: Research more on topic/group based sending notification
+class SendNotification(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    """
+    Responsible for sending notifications
+    """
+    def get(self, request, format=None):
+        devices = MyDevice.objects.all()
+
+        devices.send_message(title=request.data['title'], body=request.data['body'], data={"test": "test"})
+        
+        return Response("Successfuly sent notifications to all users!!")
+
+class CreateGetNotificationView(generics.CreateAPIView):
+    """
+    Responsible for storing notification tokens from associated users
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = NotificationSerializer
+
+    def get(self, request):
+        queryset = MyDevice.objects.all()
+        serializer = NotificationSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        try:
+            MyDevice.objects.get(registration_id=data['registration_id'])
+            #if we get this far, we have an exact match for this form's data
+            return Response("Exists already!!")
+        except MyDevice.DoesNotExist:
+            #because we didn't get a match
+            submission = MyDevice.objects.create( \
+                user=request.user,\
+                    registration_id = data.get('registration_id'),\
+                        name=data.get('name'),\
+                            type=data.get('type'),\
+            )
+        
+            return Response(status=201, data=NotificationSerializer(submission).data)
 
 class CreateGetGroupView(generics.ListCreateAPIView):
     """

@@ -1,5 +1,14 @@
 from rest_framework import serializers
-from fupot.models import Question,Submission,Win,Group
+from fupot.models import Question,Submission,Win,Group,MyDevice
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    """
+	Serializes the Question model
+    """
+    class Meta:
+        model = MyDevice
+        fields = '__all__'
 
 class CreateQuestionSerializer(serializers.ModelSerializer):
     """
