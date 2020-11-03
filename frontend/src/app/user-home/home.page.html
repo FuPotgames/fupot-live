@@ -6,6 +6,7 @@
       <div style="text-align: center; font-size: 12pt;">
         Home
       </div>
+
 <!-- SLIDE OUT MENU -->
 <ion-buttons slot="start">
   <ion-menu-button menu="main-menu">
@@ -14,16 +15,12 @@
 </ion-buttons>
 </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <form  #form="ngForm" >
-    <ion-grid>
-      <ion-row color="primary" justify-content-center>
-        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-        
 
 <!-- List of user groups -->   
-          <div>    
-            <ion-card>
+          <div >    
+            <ion-card id="groupsList">
               <ion-card-header color="fupot_grey">
               <ion-card-subtitle class ="ion-text-center" style="font-size: 13pt;">My Groups</ion-card-subtitle>
             </ion-card-header>
@@ -64,29 +61,49 @@
           </div>
 
 <!-- ALL MY GROUPS --> 
-          <div style="text-align: center; font-size: 10; text-decoration-line: underline;">
-           <ion-label>ALL MY GROUPS</ion-label>
+          <div  style="text-align: center; font-size: 10; text-decoration-line: underline; padding-bottom: 5%">
+           <ion-label >ALL MY GROUPS</ion-label>
            <ion-icon src="../../assets/chevron-forward.svg" color = "fupot_grey" size="small"></ion-icon>
           </div>
 
 
 <!-- Find locations button -->          
-          <div style="margin-top: 10%;">
-            <ion-button  type="submit" [disabled]="form.invalid" expand="block" color="fupot_blue" shape="round" style="margin-left: 10%;margin-right: 10%;"><ion-label color="light" >Find Locations</ion-label></ion-button>
+          <div id="findLocations" style="margin-top: 10%;" >
+          <ion-button color="fupot_blue"  style="margin-left: 10%;margin-right: 10%; align-items: center;"><ion-label color="light" style="font-weight: bold; font-size: 13pt;" >Find Locations</ion-label></ion-button>
           </div>
+        
+<!-- LOCATION CATEGORY CIRCLES -->
+<div>
+            <ion-grid class="ion-text-center" > 
+              <ion-row>
+                <ion-col style="padding-left: 15%;">
+                  <div id="diningIcon" >
+                    <img src="../../assets/dining_icon.png" width="85%" height="85%">
+                  </div>
+                </ion-col>
+                <ion-col style="padding-right: 15%;">
+                  <div>
+                    <img id="shoppingIcon" src="../../assets/shopping_icon.png" width="85%" height="85%">
+                  </div>
+                </ion-col>
+              </ion-row>
 
-<!-- Location categories-->           
+              <ion-row style="padding-top: 2%;">
+                <ion-col style="padding-left: 15%;">
+                  <div>
+                    <img id="entertainmentIcon" src="../../assets/entertainment_icon.png" width="85%" height="85%">
+                  </div>
+                </ion-col>
+                <ion-col style="padding-right: 15%;">
+                  <div>
+                    <img id="socialIcon" src="../../assets/socialize_icon.png" width="85%" height="85%">
+                  </div>
 
-            <div class ="ion-text-center">
-              <img src="../../assets/dining_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 6%; padding-right: 2%">
-              <img src="../../assets/shopping_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 6%; padding-left: 2%">
-            </div>
-
-            <div class ="ion-text-center">
-             <img src="../../assets/entertainment_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 2%; padding-right: 2%">
-             <img src="../../assets/socialize_icon.png" width="30%" height="20%" style="padding-bottom: 2%; padding-top: 2%; padding-left: 2%">
-            </div>
-        </ion-col>
+                </ion-col>
+              </ion-row>
+            </ion-grid>   
+          </div>       
+        
         
 <!--BOTTOM NAV BAR-->        
         <ion-tabs>
@@ -102,16 +119,13 @@
   
 
               <ion-tab-button tab="profile" style="background-color: #303030">
-              <ion-icon src="../../assets/person.svg" color="light"></ion-icon>
-              Profile
+              <ion-icon src="../../assets/person.svg" color="light"></ion-icon>Profile
             </ion-tab-button  >
           </ion-tab-bar>
         </ion-tabs>
 
 
-      </ion-row>
-    </ion-grid>
-  </form>
+      
 </ion-content>
 
 
