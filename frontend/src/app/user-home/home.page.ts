@@ -1,5 +1,4 @@
-import { NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+import { NavController, Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 
@@ -10,15 +9,31 @@ import { NotificationService } from '../services/notification.service';
 
 })
 export class HomePage implements OnInit {
-  constructor(private storage: Storage, private navController: NavController, private notificationService: NotificationService) {}
-  ngOnInit() {
-    this.notificationService.setupNotification();
-  }
-  signout() {
-    this.storage.set('token', null);
-    this.navController.navigateRoot('/signup');
+
+  subscribe: any;
+
+  constructor(private notificationService: NotificationService, private platform: Platform) {
+    this.backButtonHandle();
   }
 
+  /*
+    Initializes everthing related to this ts file when the owner loads into their homepage
+  */
+ ngOnInit() {
+  this.notificationService.setupNotification();
+}
+
+/*
+  Handles the back button press if the user wants to leave 
+*/
+backButtonHandle() {
+  this.subscribe = this.platform.backButton.subscribeWithPriority(666666, () => {
+    if (this.constructor.name === 'HomePage') {
+        navigator['app'].exitApp();
+    }
+
+  });
+}
 
 
 }

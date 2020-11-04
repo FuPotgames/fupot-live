@@ -41,7 +41,7 @@ export class SigninPage implements OnInit {
           this.storage.set('phone',response['phone_number']);
 
           // redirecting our user after signup
-          this.navController.navigateRoot('/home');
+          this.navController.navigateRoot('/user-home');
         }
       },
       error => {

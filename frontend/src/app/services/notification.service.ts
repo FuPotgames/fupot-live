@@ -1,11 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-import {HTTP} from '@ionic-native/http/ngx';
-
 
 import {
   Plugins,
@@ -25,48 +22,51 @@ export class NotificationService {
   saveNotificationInfo: any;
   deviceInfo: any;
 
-  constructor(private userService: UserService, private http: HTTP) {}
+  constructor(private userService: UserService, private http: HttpClient) {}
 
-  // setup the header for requesting
+  // setup the headers for requesting
   initHeaders() {
     const headers = {
-      'Authorization': 'Token cc770567bf47d32f8ad0587cd4f581cbca794368',
+      Authorization: 'Token cc770567bf47d32f8ad0587cd4f581cbca794368',
       'Content-Type': 'application/json'
     };
     return headers;
   }
 
-  // This function prepares our token to save it to our server
+  // This function saves the token to the backend server
   setupToken(platform, token) {
     this.saveNotificationInfo = {
       name: '',
       registration_id: token.value,
       type: platform
     };
-    this.saveToken(this.saveNotificationInfo);
+    // this.saveTokenAndroid(this.saveNotificationInfo);
+    this.saveToken(this.saveNotificationInfo).subscribe(r => {
+        console.log(r);
+    },
+    e => {
+        console.log(e);
+    });
+
   }
   /*
     Initiates the post request with our backend
     Note: Later on, the link needs to be change to aws host server address
   */
-  saveToken(notificationData) {
-    this.http.post('http://192.168.1.221:8000/api/fupot/notification', notificationData, this.initHeaders())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  saveToken(notificationData): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(this.initHeaders())
+    };
+    return this.http.post('http://192.168.1.221:8000/api/fupot/notification', notificationData, httpOptions);
   }
 
   /*
-    Setup Notification for ios and android
-    TODO: Work on IOS for this matter sending notification with this backend system and after signup retrival of the token
+    Setup Notification for IOS and Android
   */
   async setupNotification() {
     this.deviceInfo = await Device.getInfo().then(value => {
       console.log(value);
-      if (value['platform'] !== 'web') {
+      if (value.platform !== 'web') {
         console.log('Initializing Notification');
 
         // Request permission to use push notifications
@@ -84,37 +84,33 @@ export class NotificationService {
         // On success, we should be able to receive notifications
         PushNotifications.addListener('registration',
           (token: PushNotificationToken) => {
-            if (value['platform'] === 'ios') {
-              alert('ios')
+            if (value.platform === 'ios') {
               this.setupToken('ios', token);
-            } else if (value['platform'] === 'android') {
-              alert('android');
+            } else if (value.platform === 'android') {
               this.setupToken('android', token);
-            } else {
-              alert('web');
             }
-            alert('Push registration success, token: ' + token.value);
+            //alert('Push registration success, token: ' + token.value);
           }
         );
 
         // Some issue with our setup and push will not work
         PushNotifications.addListener('registrationError',
           (error: any) => {
-            alert('Error on registration: ' + JSON.stringify(error));
+            //alert('Error on registration: ' + JSON.stringify(error));
           }
         );
 
         // Show us the notification payload if the app is open on our device
         PushNotifications.addListener('pushNotificationReceived',
           (notification: PushNotification) => {
-            alert('Push received: ' + JSON.stringify(notification));
+            //alert('Push received: ' + JSON.stringify(notification));
           }
         );
 
         // Method called when tapping on a notification
         PushNotifications.addListener('pushNotificationActionPerformed',
           (notification: PushNotificationActionPerformed) => {
-            alert('Push action performed: ' + JSON.stringify(notification));
+            //alert('Push action performed: ' + JSON.stringify(notification));
           }
         );
 

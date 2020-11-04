@@ -33,7 +33,7 @@ export class SignupPage implements OnInit {
     this.storage.get('token').then((token)=>{
       if(token !== null){
         console.log(token);
-        this.navController.navigateRoot('/home');
+        this.navController.navigateRoot('/user-home');
       }
     });
   }
@@ -52,7 +52,7 @@ export class SignupPage implements OnInit {
             this.storage.set('token', response.token);
 
             // redirecting our user after signup
-            this.navController.navigateRoot('/home');
+            this.navController.navigateRoot('/user-home');
           } 
           // shows alert if email and username already exists
           else if ((response['email'] !== undefined) && (response['username'] !== undefined)) {
