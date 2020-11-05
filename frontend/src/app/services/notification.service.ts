@@ -57,7 +57,7 @@ export class NotificationService {
     const httpOptions = {
       headers: new HttpHeaders(this.initHeaders())
     };
-    return this.http.post('http://192.168.1.221:8000/api/fupot/notification', notificationData, httpOptions);
+    return this.http.post('http://localhost:8000/api/fupot/notification', notificationData, httpOptions);
   }
 
   /*

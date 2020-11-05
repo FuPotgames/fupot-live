@@ -15,7 +15,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { HTTP } from '@ionic-native/http/ngx';
 
 
 @NgModule({
@@ -27,7 +26,6 @@ import { HTTP } from '@ionic-native/http/ngx';
     SplashScreen,
     UserAuthService,
     NotificationService,
-    HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
