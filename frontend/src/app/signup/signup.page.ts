@@ -60,18 +60,16 @@ export class SignupPage implements OnInit {
           }
           // shows alert if only email already exists 
           else if (response['email'] !== undefined) {
-            alert('Email already exist!');
+            alert(response['email']);
           } 
           // shows alert if only username already exists 
           else if (response['username'] !== undefined) {
-            alert('Username already exist!');
+            alert(response['username']);
           }
-      },
-      error => {
-        // shows phone number already exists 
-        if (error['error'] != undefined) {
-          alert('Phone number already exist!');
-        }
+          // shows alert if only username already exists 
+          else if (response['error'] !== undefined) {
+            alert(response['error']);
+          }
       }
     );
   }
