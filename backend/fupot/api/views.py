@@ -15,6 +15,77 @@ from fupot.api.serializers import UserQuestionSerializer, SubmissionSerializer, 
 
 from django.core.exceptions import ValidationError
 
+#================================================ Users APIs ==============================================================
+
+class JoinGroup(generics.CreateAPIView):
+    """
+    Responsible for Joining a Group
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GroupSerializer
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        groups = Group.objects.filter(user=self.request.user)
+        serializer = GroupSerializer(groups, many=True)
+        return Response(serializer.data)
+
+    # Joins a group by group_id
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        submission = Group.objects.get(id = data['group_id'])
+        submission.user.add(self.request.user)
+        submission.save()
+        return Response(status=201, data=GroupSerializer(submission).data)
+
+class GetJoinedGroups(generics.CreateAPIView):
+    """
+    Responsible for retreving all joined groups
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GroupSerializer
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        groups = Group.objects.filter(user=self.request.user)
+        serializer = GroupSerializer(groups, many=True)
+        return Response(serializer.data)
+
+#================================================================== Owner's APIs ============================================
+
+class CreateGroup(generics.CreateAPIView):
+    """
+    Responsible for Creating a Group by the Owner
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GroupSerializer
+
+    # creates a group by the owner
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        submission = Group.objects.create( \
+            owner=self.request.user,\
+                name = data.get('name'),\
+                    join_id=data.get('join_id'),\
+                        location=data.get('location'),\
+        )
+        submission.user.add(self.request.user)
+        return Response(status=201, data=GroupSerializer(submission).data)
+
+class GetGroups(generics.CreateAPIView):
+    """
+    Responsible for retreiving groups created by the Owner
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GroupSerializer
+
+    # creates a group by the owner
+    def get(self, request):
+        groups = Group.objects.filter(owner=self.request.user)
+        serializer = GroupSerializer(groups, many=True)
+        return Response(serializer.data)
+
+
 # TODO: Research more on topic/group based sending notification
 class SendNotification(APIView):
     permission_classes = (permissions.IsAuthenticated,)
