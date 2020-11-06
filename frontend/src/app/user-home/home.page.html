@@ -61,15 +61,15 @@
           </div>
 
 <!-- ALL MY GROUPS --> 
-          <div  style="text-align: center; font-size: 10; text-decoration-line: underline; padding-bottom: 5%">
-           <ion-label >ALL MY GROUPS</ion-label>
-           <ion-icon src="../../assets/chevron-forward.svg" color = "fupot_grey" size="small"></ion-icon>
+          <div  style="text-align: center; font-size: 10; text-decoration-line: underline; padding-bottom: 3%">
+           <ion-button color="fupot_grey"fill="clear" size="small">ALL MY GROUPS
+           <ion-icon src="../../assets/chevron-forward.svg" color = "fupot_grey" size="small"></ion-icon></ion-button>
           </div>
 
 
 <!-- Find locations button -->          
-          <div id="findLocations" style="margin-top: 10%;" >
-          <ion-button color="fupot_blue"  style="margin-left: 10%;margin-right: 10%; align-items: center;"><ion-label color="light" style="font-weight: bold; font-size: 13pt;" >Find Locations</ion-label></ion-button>
+          <div id="findLocations">
+          <ion-button (click)="search()" size="large" style="padding-bottom: 3%; padding-left: 2%; padding-right:2%;"expand ="block" shape="round" color="fupot_blue"><ion-label color="light" style="font-weight: bold; font-size: 13pt;" >Find Locations</ion-label></ion-button>
           </div>
         
 <!-- LOCATION CATEGORY CIRCLES -->

@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        All My Groups
+      </div>
+
+<!-- BACK BUTTON -->
+<ion-buttons id="backButton" slot="start" (click)="home()">
+<ion-icon src="../../assets/chevron-back.svg" size ="large" color="fupot_grey"></ion-icon>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- List of Sliding Items -->
+
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>A</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      Location
+    </ion-item>
+    <ion-item>
+      Location
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>B</ion-label>
+    </ion-item-divider>
+
+    <ion-item>
+      Location
+    </ion-item>
+    <ion-item>
+      Location
+    </ion-item>
+    <ion-item>
+      Location
+    </ion-item>
+    <ion-item>
+      Location
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>C</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      Location
+    </ion-item>
+    <ion-item>
+      Location
+    </ion-item>
+    <ion-item>
+      Location
+    </ion-item>
+
+
+  </ion-list>
+
+
+
+  <!--BOTTOM NAV BAR-->        
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home" style="background-color: #303030">
+      <ion-icon src="../../assets/home.svg" color="fupot_purple"></ion-icon>Home</ion-tab-button>
+
+      <ion-tab-button tab="search" style="background-color: #303030">
+        <ion-icon src="../../assets/search-sharp.svg" color="light"></ion-icon>Search</ion-tab-button >
+
+        <ion-tab-button tab="search" style="background-color: #303030">
+        <ion-icon src="../../assets/notifications-sharp.svg" color="light"></ion-icon>Notifications</ion-tab-button >
+
+
+        <ion-tab-button tab="profile" style="background-color: #303030">
+        <ion-icon src="../../assets/person.svg" color="light"></ion-icon>Profile
+      </ion-tab-button  >
+    </ion-tab-bar>
+  </ion-tabs>
+
+</ion-content>

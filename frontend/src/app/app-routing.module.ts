@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'owner-home', loadChildren: './owner-home/owner-home.module#OwnerHomePageModule' },
   { path: 'notifications', loadChildren: './user-notifications/notifications.module#NotificationsPageModule' },
   { path: 'games', loadChildren: './owner-games/games.module#GamesPageModule' },
+  { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
 ];
 
 @NgModule({
