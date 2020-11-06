@@ -31,7 +31,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 	def	save(self):
 		if Account.objects.filter(phone_number=self.validated_data['phone_number']).exists():
-			raise serializers.ValidationError({"error": "This phone number already exists."})
+			res = serializers.ValidationError({"error": "This phone number already exists."})
+			res.status_code = 200
+			raise res
 		else:
 			account = Account(
 					email=self.validated_data['email'],
