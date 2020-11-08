@@ -2,7 +2,7 @@ from django.urls import path
 
 from fupot.api.views import SubmissionView, WinnersView, CreateUserViewSubmission, \
      UserCreateQuestionView, UserEditQuestionView, QuestionView, CreateGetGroupView, UpdateDeleteGroupView, CreateGetNotificationView,\
-         SendNotification, JoinGroup, GetJoinedGroups, CreateGroup, GetGroups
+         SendNotification, JoinGroup, GetJoinedGroups, CreateGroup, GetGroups, CreateGameRoom, JoinGameRoom
 app_name = 'fupot'
 
 """ REST-FRAMEWORK MAIN URLS """
@@ -27,9 +27,13 @@ urlpatterns = [
     path('join-group', JoinGroup.as_view(), name="join-group"),
     path('get-joined-groups', GetJoinedGroups.as_view(), name="get-joined-groups"),
 
+    path('join-game', JoinGameRoom.as_view(), name="join-game"),
+
     # Owners APIs
     path('create-group', CreateGroup.as_view(), name="create-group"),
-    path('get-groups', GetGroups.as_view(), name="get-groups"),   
+    path('get-groups', GetGroups.as_view(), name="get-groups"), 
+
+    path('create-game', CreateGameRoom.as_view(), name="create-game"),  
 
     path('notification', CreateGetNotificationView.as_view(), name="notification"),
     path('send-notification', SendNotification.as_view(), name="notification"),   

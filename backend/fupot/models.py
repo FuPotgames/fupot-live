@@ -5,18 +5,24 @@ from fcm_django.models import AbstractFCMDevice
 
 class Group(models.Model):
    """
-   This will allow us to manage our categories.
+   This will allow us to manage owners' group.
    
-   Categories can relate to other categories for sub-categories
    """
    name = models.CharField(max_length=255, unique=True)
    join_id = models.CharField(max_length=255, unique=True)
    location = models.CharField(max_length=255, unique=True)
-   user = models.ManyToManyField(settings.AUTH_USER_MODEL)
-   owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,on_delete=models.CASCADE,related_name="+")
+   user = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+   owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="+")
    
    def __str__(self):
       return self.name
+
+class GameRoom(models.Model):
+    game_ended = models.BooleanField(default=False)
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+    join_user = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="+")
+
 
 class MyDevice(AbstractFCMDevice):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

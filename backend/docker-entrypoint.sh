@@ -19,7 +19,7 @@ fi
 if [[ $mode == "dev" ]]
 then
     echo "dev"
-    python manage.py  makemigrations
+    python manage.py makemigrations
     python manage.py migrate
     rm -r static
     sleep 2

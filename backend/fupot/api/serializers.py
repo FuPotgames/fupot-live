@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from fupot.models import Question,Submission,Win,Group,MyDevice
+from fupot.models import Question,Submission,Win,Group,MyDevice, GameRoom
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -8,6 +8,14 @@ class NotificationSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = MyDevice
+        fields = '__all__'
+
+class GameRoomSerializer(serializers.ModelSerializer):
+    """
+    Serializes the Game model
+    """
+    class Meta:
+        model = GameRoom
         fields = '__all__'
 
 class CreateQuestionSerializer(serializers.ModelSerializer):

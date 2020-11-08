@@ -11,7 +11,7 @@ from account.models import Account
 
 from fupot.models import Question, Submission, Win,Group,MyDevice
 from fupot.api.serializers import UserQuestionSerializer, SubmissionSerializer, WinSerializer,CreateQuestionSerializer,\
-    GroupSerializer, NotificationSerializer
+    GroupSerializer, NotificationSerializer, GameRoomSerializer, GameRoom
 
 from django.core.exceptions import ValidationError
 
@@ -51,7 +51,53 @@ class GetJoinedGroups(generics.CreateAPIView):
         serializer = GroupSerializer(groups, many=True)
         return Response(serializer.data)
 
+class JoinGameRoom(generics.CreateAPIView):
+    """
+    Responsible for Joining a GameRoom
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GameRoomSerializer
+
+    # Joins a game room
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        game_room = GameRoom.objects.filter(group_id = data['group_id'])
+        if not game_room.exists():
+            return Response("Group doesn't exist")
+        else:
+            field_value = getattr(game_room[0], 'game_ended')
+            if field_value == True:
+                return Response("Game has ended, come back later")
+            else:
+                submission = GameRoom.objects.get(group_id = data['group_id'])
+                submission.join_user.add(self.request.user)
+                submission.save()
+                return Response(status=201, data=GameRoomSerializer(submission).data)
+
 #================================================================== Owner's APIs ============================================
+
+class CreateGameRoom(generics.CreateAPIView):
+    """
+    Responsible for Creating a GameRoom by the Owner
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GameRoomSerializer
+
+    # creates a group by the owner
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        group = Group.objects.filter(id = data.get('group_id'))[0]
+
+        if GameRoom.objects.filter(group_id=group).exists():
+            return Response("Game Room already exists, please finish the game first!!")
+        else:
+            # Do something else...
+            submission = GameRoom.objects.create( \
+                owner=self.request.user,\
+                    group_id=group
+            )
+            return Response(status=201, data=GameRoomSerializer(submission).data)
+            
 
 class CreateGroup(generics.CreateAPIView):
     """
@@ -69,7 +115,6 @@ class CreateGroup(generics.CreateAPIView):
                     join_id=data.get('join_id'),\
                         location=data.get('location'),\
         )
-        submission.user.add(self.request.user)
         return Response(status=201, data=GroupSerializer(submission).data)
 
 class GetGroups(generics.CreateAPIView):
