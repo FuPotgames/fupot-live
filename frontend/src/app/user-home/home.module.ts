@@ -4,8 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { NavController } from '@ionic/angular';
-
-
 import { HomePage } from './home.page';
 
 @NgModule({
@@ -24,9 +22,5 @@ import { HomePage } from './home.page';
 })
 export class HomePageModule {
 
-  constructor( private navController: NavController ) { }
-
-  searchPage() {
-    this.navController.navigateRoot('/search');
-}
+  
 }

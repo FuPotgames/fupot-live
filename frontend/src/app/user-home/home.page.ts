@@ -1,6 +1,7 @@
 import { NavController, Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +13,12 @@ export class HomePage implements OnInit {
 
   subscribe: any;
 
-  constructor(private notificationService: NotificationService, private platform: Platform) {
+  constructor(private notificationService: NotificationService, private platform: Platform, private navController: NavController) {
     this.backButtonHandle();
+  }
+/* Should route user to search page but idk why it isnt working*/
+  findLocations() {
+    this.navController.navigateRoot('/search');
   }
 
   /*
