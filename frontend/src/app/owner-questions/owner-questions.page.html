@@ -1,0 +1,120 @@
+
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Questions
+      </div>
+<!-- BACK BUTTON -->
+<ion-buttons id="backButton" slot="start" (click)="ownerBack()">
+  <ion-icon src="../../assets/chevron-back.svg" size ="large" color="fupot_grey"></ion-icon>
+  </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+
+
+  <ion-list>
+  <div>
+  <ion-item style="margin-top: 5%;">
+    <ion-label>Question Type</ion-label>
+    <ion-select interface="popover">
+      <ion-select-option value="OpenEnded">Open Ended</ion-select-option>
+      <ion-select-option value="MultChoice">Multiple Choice</ion-select-option>
+    </ion-select>
+  </ion-item></div>
+
+  <!-- OPEN ENDED QUESTIONS -->
+  <div>
+  <ion-item>
+    <ion-label position="stacked">Question</ion-label>
+    <ion-input placeholder="Type Question"></ion-input>
+  </ion-item>
+  </div>  
+
+<div>
+  <ion-item style="margin-bottom: 5%;">
+    <ion-label position="stacked">Answer</ion-label>
+    <ion-input placeholder="Type Answer"></ion-input>
+  </ion-item>
+</div>
+
+<div>
+<ion-item style="margin-bottom: 5%;">
+<ion-label style="justify-content: left;"># of Winners: </ion-label>
+<ion-input type="number" placeholder="# winners"></ion-input>
+<ion-icon style="justify-content: right;" src="../../assets/add-circle-outline.svg" color="fupot_grey"></ion-icon>
+<ion-icon style="justify-content: right;" src="../../assets/remove-circle-outline.svg" color="fupot_grey"></ion-icon>
+</ion-item>
+</div>
+
+<div>
+  <ion-item>
+  <ion-label style="justify-content: left;">Time Limit: </ion-label>
+  <ion-input type="number" placeholder="# winners"></ion-input>
+  <ion-icon style="justify-content: right;" src="../../assets/add-circle-outline.svg" color="fupot_grey"></ion-icon>
+  <ion-icon style="justify-content: right;" src="../../assets/remove-circle-outline.svg" color="fupot_grey"></ion-icon>
+  </ion-item>
+  </div>
+
+  
+</ion-list>
+
+<div class="ion-text-center">
+  <ion-button fill="outline" color="fupot_purple" shape="round">SAVE</ion-button>
+</div>
+
+<!-- MULTIPLE CHOICE QUESTIONS -->
+
+<ion-list>
+    <div>
+    <ion-item style="margin-top: 5%; margin-bottom: 3%;">
+      <ion-label>Question Type</ion-label>
+      <ion-select interface="popover">
+        <ion-select-option value="OpenEnded">Open Ended</ion-select-option>
+        <ion-select-option value="MultChoice">Multiple Choice</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  
+    <div>
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label position="stacked">Question</ion-label>
+      <ion-input placeholder="Type Question"></ion-input>
+    </ion-item>
+    </div>  
+
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label>Option 1</ion-label>
+    <ion-input placeholder=" Type Answer"></ion-input>
+    <ion-toggle size="small"></ion-toggle>
+    </ion-item>
+
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label>Option 2</ion-label>
+    <ion-input placeholder="Type Answer"></ion-input>
+    <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label >Option 3</ion-label>
+    <ion-input placeholder="Type Answer"></ion-input>
+    <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item >
+      <ion-label >Option 4</ion-label>
+    <ion-input placeholder="Type Answer"></ion-input>
+    <ion-toggle></ion-toggle>
+    </ion-item>
+
+</ion-list>
+
+<div class="ion-text-center">
+  <ion-button fill="outline" color="fupot_purple" shape="round">SAVE</ion-button>
+</div>
+
+</ion-content>

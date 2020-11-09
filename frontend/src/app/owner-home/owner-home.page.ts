@@ -21,6 +21,23 @@ export class OwnerHomePage implements OnInit {
   ngOnInit() {
     this.notificationService.setupNotification();
   }
+/* i set this up the same on owner-creategame.ts but not working here */
+
+  createGame() {
+    this.navController.navigateRoot('/owner-creategame');
+  }
+
+  sendNotification() {
+    this.navController.navigateRoot('/owner-home');
+  }
+
+  groupMembers() {
+    this.navController.navigateRoot('/owner-home');
+  }
+
+  goGames() {
+    this.navController.navigateRoot('/owner-games')
+  }
 
   /*
     Clears out the user by changing token to null value and logout the user

@@ -1,0 +1,57 @@
+<ion-header style="margin-bottom: 5%;">
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Create Game
+      </div>
+<!-- BACK BUTTON -->
+<ion-buttons id="backButton" slot="start" (click)="ownerBack()">
+  <ion-icon src="../../assets/chevron-back.svg" size ="large" color="fupot_grey"></ion-icon>
+  </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+ 
+ <div style="margin-bottom: 5%;"> 
+   <ion-item >
+    <ion-label>Game Title:</ion-label>
+    <ion-input style="text-align: right;" placeholder="Enter Game Title"></ion-input>
+  </ion-item></div>
+
+
+  <div style="margin-bottom: 5%;">
+    <ion-item>
+    <ion-label >Game Code:</ion-label>
+    <ion-input placeholder=" Enter Game Code" style="text-align: right;"></ion-input>
+  </ion-item></div>
+
+  <div style="margin-bottom: 5%;">
+    <ion-item>
+      <ion-label>Game Start Date:</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" placeholder="Select Date"></ion-datetime>
+    </ion-item>
+  </div>
+
+  <div style="margin-bottom: 10%;"> 
+    <ion-item>
+      <ion-label>Game Start Time:</ion-label>
+      <ion-datetime displayFormat="HH:mm" placeholder="Select Time"></ion-datetime>
+    </ion-item>
+ </div>
+
+ <div class="ion-text-center" style="margin-top: 4%;">
+   <ion-button (click)="createGame()" expand ="block" shape="round" color="fupot_blue" style="margin-left: 4%; margin-right: 4%;">
+     Create Game
+   </ion-button>
+ </div>
+
+ <div  style="text-align: center; text-decoration-line: underline; margin-top: 5%;">
+  <ion-button (click)="scheduledGames()" color="fupot_grey" fill="clear" size="small"> Scheduled Games
+  <ion-icon src="../../assets/chevron-forward.svg" color="fupot_grey" size="small"></ion-icon></ion-button>
+ </div>
+
+    
+</ion-content>  

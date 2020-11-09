@@ -20,15 +20,15 @@
 <ion-item class="ion-text-center" style= "margin-top: 7%;" color="dark">Buffalo Wild Wings</ion-item>
   
 <!-- NEED TO CHANGE THESE COLORS TO FUPOT COLORS-->
-  <div><ion-button color="fupot_blue" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%; margin-top: 5%;">Create Game</ion-button></div>
-  <div><ion-button color="fupot_pink" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Send Notification</ion-button></div>
-  <div><ion-button color="fupot_teal" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Group Members</ion-button></div>
+  <div><ion-button (click)="createGame()" color="fupot_blue" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%; margin-top: 5%;">Create Game</ion-button></div>
+  <div><ion-button (click)="sendNotification()" color="fupot_pink" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Send Notification</ion-button></div>
+  <div><ion-button (click)="groupMembers()" color="fupot_teal" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Group Members</ion-button></div>
 
 
 <!-- BOTTOM NAV BAR -->  
   <ion-tabs>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="home" style="background-color: #303030">
+      <ion-tab-button (click)="goGames" tab="home" style="background-color: #303030">
         <ion-icon src="../../assets/home.svg" color="fupot_purple"></ion-icon>
         <ion-label color="light">Home</ion-label>
       </ion-tab-button>
