@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+
+
+<!-- BACK BUTTON -->
+<ion-buttons id="backButton" slot="start" (click)="goBack()">
+<ion-icon src="../../assets/chevron-back.svg" size ="large" color="fupot_grey"></ion-icon>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div style="margin-top: 5%; text-align: center;">
+<ion-label style="font-size: 15pt; font-weight: bold;" color="fupot_grey"> This Location's Group Page </ion-label></div>
+<div style="text-align: center;"><ion-label color="fupot_grey" style="font-size: 10pt; font-weight: 300;" >You are a member of this group.</ion-label></div>
+
+<div style="margin-top: 5%; margin-bottom: 5%;">
+<ion-item color="fupot_grey"><ion-label > Updates: </ion-label></ion-item></div>
+
+<div style="margin-left: 2%;" class="chatBubble bubble-bottom-left"> bubble will fill with notifications from owner to user </div>
+<div style="margin-left: 2%; margin-top: 8%;" class="chatBubble bubble-bottom-left">We are hosting FuPot Live games Thursday-Sunday! Come play for a chance to win free Apps.</div>
+
+ <div class="ion-text-center" style="margin-top: 20%; margin-left: 10%;margin-right: 10%;">
+  <ion-button (click)="joinGame()" expand="block" color="fupot_blue" shape="round"><ion-label style="font-size: 15pt; font-weight: bold;" color="light">JOIN GAME</ion-label></ion-button>
+</div>
+
+</ion-content>

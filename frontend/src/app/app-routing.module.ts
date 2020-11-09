@@ -14,6 +14,14 @@ const routes: Routes = [
   { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
   { path: 'owner-questions', loadChildren: './owner-questions/owner-questions.module#OwnerQuestionsPageModule' },
   { path: 'owner-creategame', loadChildren: './owner-creategame/owner-creategame.module#OwnerCreategamePageModule' },
+  { path: 'owner-scheduledgames', loadChildren: './owner-scheduledgames/owner-scheduledgames.module#OwnerScheduledgamesPageModule' },
+  { path: 'owner-profile', loadChildren: './owner-profile/owner-profile.module#OwnerProfilePageModule' },
+  { path: 'owner-members', loadChildren: './owner-members/owner-members.module#OwnerMembersPageModule' },
+  { path: 'owner-notifications', loadChildren: './owner-notifications/owner-notifications.module#OwnerNotificationsPageModule' },
+  { path: 'user-joingame', loadChildren: './user-joingame/user-joingame.module#UserJoingamePageModule' },
+  { path: 'user-location', loadChildren: './user-location/user-location.module#UserLocationPageModule' },
+  { path: 'user-answer', loadChildren: './user-answer/user-answer.module#UserAnswerPageModule' },
+  { path: 'user-submit', loadChildren: './user-submit/user-submit.module#UserSubmitPageModule' },
 ];
 
 @NgModule({

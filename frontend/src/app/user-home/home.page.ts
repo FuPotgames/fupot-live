@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   }
 /* Should route user to search page but idk why it isnt working*/
   findLocations() {
-    this.navController.navigateRoot('/search');
+    this.navController.navigateRoot(['/search']);
   }
 
   /*
