@@ -94,7 +94,8 @@ class CreateGameRoom(generics.CreateAPIView):
             # Do something else...
             submission = GameRoom.objects.create( \
                 owner=self.request.user,\
-                    group_id=group
+                    group_id=group,\
+                        location=data.get('location')
             )
             return Response(status=201, data=GameRoomSerializer(submission).data)
             
@@ -109,13 +110,14 @@ class CreateGroup(generics.CreateAPIView):
     # creates a group by the owner
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
         data = request.data
-        submission = Group.objects.create( \
-            owner=self.request.user,\
-                name = data.get('name'),\
-                    join_id=data.get('join_id'),\
-                        location=data.get('location'),\
-        )
-        return Response(status=201, data=GroupSerializer(submission).data)
+        if Group.objects.filter(name=data.get('name')).exists():
+            return Response("Group already exists")
+        else:
+            submission = Group.objects.create( \
+                owner=self.request.user,\
+                    name = data.get('name')
+            )
+            return Response(status=201, data=GroupSerializer(submission).data)
 
 class GetGroups(generics.CreateAPIView):
     """
