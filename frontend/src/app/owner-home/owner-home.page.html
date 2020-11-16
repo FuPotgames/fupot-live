@@ -17,12 +17,24 @@
 
 <!-- BUTTONS HOME SCREEN-->
 <ion-content class="justify-content-center">
-<ion-item class="ion-text-center" style= "margin-top: 7%;" color="dark">Buffalo Wild Wings</ion-item>
+
+  <div >
+    <ion-item lines="none" id="profileHeader" style="margin-top: 5%;" color="fupot_grey">
+      <ion-thumbnail slot="start">
+        <img id="profileIcon" src="../../assets/person-circle-outline.svg"> </ion-thumbnail>
+
+      <ion-label style="margin-left: 4%;">
+        <h3 style="font-size: 15pt; font-weight: bold;" color="fupot_grey"> FuPot Live Location Name</h3>
+      
+      </ion-label>
+    </ion-item>
+  </div>
   
 <!-- NEED TO CHANGE THESE COLORS TO FUPOT COLORS-->
-  <div><ion-button (click)="createGame()" color="fupot_blue" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%; margin-top: 5%;">Create Game</ion-button></div>
-  <div><ion-button (click)="sendNotification()" color="fupot_pink" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Send Notification</ion-button></div>
-  <div><ion-button (click)="groupMembers()" color="fupot_teal" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Group Members</ion-button></div>
+
+  <div><ion-item lines="none"> <ion-button (click)="createQuestion()" color="fupot_blue" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%; margin-top: 5%;">Create Question</ion-button></ion-item></div>
+  <div><ion-item lines="none"> <ion-button (click)="sendNotification()" color="fupot_pink" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Send Notification</ion-button></ion-item></div>
+  <div><ion-item lines="none"> <ion-button (click)="groupMembers()" color="fupot_teal" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Group Members</ion-button></ion-item></div>
 
 
 <!-- BOTTOM NAV BAR -->  

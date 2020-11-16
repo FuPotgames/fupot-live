@@ -21,6 +21,19 @@ export class HomePage implements OnInit {
     this.navController.navigateRoot(['/search']);
   }
 
+  diningSearch(){
+    this.navController.navigateRoot(['/search']);
+  }
+
+  allGroups() {
+    this.navController.navigateRoot(['/user-grouplist']);
+  }
+
+  locationPage() {
+    this.navController.navigateRoot(['/user-location']);
+  }
+
+ 
   /*
     Initializes everthing related to this ts file when the owner loads into their homepage
   */

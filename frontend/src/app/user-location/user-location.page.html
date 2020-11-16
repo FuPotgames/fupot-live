@@ -13,18 +13,32 @@
 </ion-header>
 
 <ion-content>
-<div style="margin-top: 5%; text-align: center;">
-<ion-label style="font-size: 15pt; font-weight: bold;" color="fupot_grey"> This Location's Group Page </ion-label></div>
-<div style="text-align: center;"><ion-label color="fupot_grey" style="font-size: 10pt; font-weight: 300;" >You are a member of this group.</ion-label></div>
+
+  <div >
+    <ion-item lines="none" id="profileHeader" style="margin-top: 5%;">
+      <ion-thumbnail slot="start">
+        <img id="profileIcon" src="../../assets/person-circle-outline.svg"> </ion-thumbnail>
+
+      <ion-label style="margin-left: 4%;">
+        <h3 style="font-size: 15pt; font-weight: bold;" color="fupot_grey"> FuPot Live Location Name</h3>
+        <p><ion-button id="follow" shape="round" color="fupot_blue" style="margin-top: 3%;"><ion-icon color="light" src="../../assets/add-circle-outline.svg"></ion-icon>
+          <ion-label color="light" style="font-weight: bolder;">Join Group</ion-label> </ion-button></p>
+      </ion-label>
+    </ion-item>
+  </div>
 
 <div style="margin-top: 5%; margin-bottom: 5%;">
-<ion-item color="fupot_grey"><ion-label > Updates: </ion-label></ion-item></div>
+<ion-item color="fupot_grey"><ion-label style="font-weight: bold;"> Updates: </ion-label></ion-item></div>
 
-<div style="margin-left: 2%;" class="chatBubble bubble-bottom-left"> bubble will fill with notifications from owner to user </div>
-<div style="margin-left: 2%; margin-top: 8%;" class="chatBubble bubble-bottom-left">We are hosting FuPot Live games Thursday-Sunday! Come play for a chance to win free Apps.</div>
+<!-- CHAT BUBBLES -->
+<div class="chatBubble chatBubbleCorner" color="fupot_blue"><ion-label>Updates and notifications sent by the owner will display here</ion-label></div>
+<div class="chatBubble chatBubbleCorner" color="fupot_blue"><ion-label>Updates and notifications sent by the owner will display here</ion-label></div>
+
+
+<!-- Answer Questions -->
 
  <div class="ion-text-center" style="margin-top: 20%; margin-left: 10%;margin-right: 10%;">
-  <ion-button (click)="joinGame()" expand="block" color="fupot_blue" shape="round"><ion-label style="font-size: 15pt; font-weight: bold;" color="light">JOIN GAME</ion-label></ion-button>
+  <ion-button (click)="goAnswer()" expand="block" color="fupot_blue" shape="round"><ion-label style="font-size: 15pt; font-weight: bold;" color="light">Answer Questions</ion-label></ion-button>
 </div>
 
 </ion-content>

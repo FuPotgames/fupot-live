@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-owner-notifications',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OwnerNotificationsPage implements OnInit {
 
-  constructor() { }
+  constructor(private navController: NavController) { }
+
+  ownerBack() {
+    this.navController.navigateRoot('/owner-home');
+  }
 
   ngOnInit() {
   }

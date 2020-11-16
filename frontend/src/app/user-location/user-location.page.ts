@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
 
+
 @Component({
   selector: 'app-user-location',
   templateUrl: './user-location.page.html',
@@ -13,11 +14,13 @@ export class UserLocationPage implements OnInit {
   ngOnInit() {
   }
 
-  joinGame() {
-    this.navController.navigateRoot('/user-joingame');
+  goAnswer() {
+    this.navController.navigateRoot('/user-answer');
   }
 
   goBack() {
     this.navController.navigateRoot('/search');
   }
+
+
 }

@@ -23,20 +23,20 @@ export class OwnerHomePage implements OnInit {
   }
 /* i set this up the same on owner-creategame.ts but not working here */
 
-  createGame() {
-    this.navController.navigateRoot('/owner-creategame');
+  createQuestion() {
+    this.navController.navigateRoot(['/owner-questions']);
   }
 
   sendNotification() {
-    this.navController.navigateRoot('/owner-home');
+    this.navController.navigateRoot(['/owner-notifications']);
   }
 
   groupMembers() {
-    this.navController.navigateRoot('/owner-home');
+    this.navController.navigateRoot(['/owner-members']);
   }
 
   goGames() {
-    this.navController.navigateRoot('/owner-games')
+    this.navController.navigateRoot(['/owner-games'])
   }
 
   /*
