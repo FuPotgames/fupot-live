@@ -1,79 +1,22 @@
-<ion-header class="ion-no-border">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Header - No Border</ion-title>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 6%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Profile
+      </div>
+      <ion-buttons id="backButton" slot="start" (click)="home()">
+        <ion-icon src="../../assets/chevron-back.svg" size ="large" color="fupot_grey"></ion-icon>
+        </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-card>
-  <ion-card-header class="ion-text-center" style="font-size: 15pt">
-    <img src="../../assets/main_logo.png">
-    <ion-label>Profile</ion-label>
-  </ion-card-header>
-
-  <ion-card-content class="ion-text-center">
-   <ion-grid>
-  <ion-row>
-    <ion-col>
-      <div>
-       
-      </div>
-    </ion-col>
-    <ion-col>
-      <div>
-        <img src="../../assets/avatar_icon.png">
-      </div>
-    </ion-col>
-    <ion-col>
-      <div>
-       
-      </div>
-    </ion-col>
-  </ion-row>
-</ion-grid></ion-card-content>
-</ion-card>
-
-<div>
-  <ion-item> 
-    
-  </ion-item>
-</div>
-
-<ion-grid class="ion-text-center" style="font-size: 8pt;">
-  <ion-row class="ion-justify-content-center">
-    <ion-col >
-      <img src="../../assets/blue_ribbon.png" width="71" height="100">
-      <div><ion-label>FuPot Live Locations</ion-label></div>
-    </ion-col>
-
-    <ion-col>
-      <img src="../../assets/pink_ribbon_icon.png" width="71" height="100">
-      <div><ion-label>Groups Joined</ion-label></div>
-    </ion-col>
-
-    <ion-col>
-      <img src="../../assets/purple_ribbon_icon.png" width="71" height="100">
-      <ion-label>Questions Answered</ion-label>
-    </ion-col>
-
-  </ion-row>
+<ion-content>
 
 
 
-  <!-- Bottom menu bar -->
-           <ion-tabs>
-              <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="home" style="background-color: #303030">
-                  <img src="../../assets/home_icon.png" width="20%" height="50%">
-                  Home
-                </ion-tab-button >
-                <ion-tab-button tab="search" style="background-color: #303030">
-                  <img src="../../assets/search_icon.png" width="20%" height="50%">
-                  Search
-                </ion-tab-button >
-                <ion-tab-button tab="profile" style="background-color: #303030">
-                  <img src="../../assets/profile_rollover_icon.png" width="20%" height="50%">
-                  Profile
-                </ion-tab-button  >
-              </ion-tab-bar>
-            </ion-tabs>
+
+
+</ion-content>

@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OwnerProfilePage implements OnInit {
 
+  showMe: boolean;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  show() {
+    this.showMe = !this.showMe;
   }
 
 }

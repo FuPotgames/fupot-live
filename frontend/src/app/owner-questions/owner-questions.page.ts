@@ -8,6 +8,10 @@ import { NavController } from '@ionic/angular';
 })
 export class OwnerQuestionsPage implements OnInit {
 
+  private selectedSegment: string = 'openEnded'
+  
+  showMe: boolean;
+  
   constructor( private navController: NavController) { }
 
   ngOnInit() {
@@ -17,5 +21,19 @@ export class OwnerQuestionsPage implements OnInit {
     this.navController.navigateRoot('/owner-creategame');
   }
 
+    segmentChanged(event:any){
+      console.log(event.target.value);
+      this.selectedSegment=event.target.value
+
+    }
+
+    show() {
+      this.showMe = !this.showMe;
+    }
+    
+
+  
   
 }
+
+

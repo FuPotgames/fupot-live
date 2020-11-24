@@ -1,11 +1,11 @@
 
-<ion-header>
+<ion-header style="margin-bottom: 3%;">
   <ion-toolbar>
     <div class="ion-text-center">
       <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
       </div >
       <div style="text-align: center; font-size: 12pt;">
-        Questions
+        New Question
       </div>
 <!-- BACK BUTTON -->
 <ion-buttons id="backButton" slot="start" (click)="ownerBack()">
@@ -15,19 +15,23 @@
   </ion-header>
 
 <ion-content>
+<ion-label style="margin-left: 4%; margin-bottom: 3%;">Question Type</ion-label>
+<ion-toolbar (ionChange)="segmentChanged($event)" mode="ios" size="large" style="margin-top: 3%;">
+  <ion-segment value="openEnded" >
+  <ion-segment-button value="openEnded">
+    <ion-label> Open Ended </ion-label>
+  </ion-segment-button>
+
+  <ion-segment-button value="multChoice">
+    <ion-label> Multiple Choice </ion-label>
+  </ion-segment-button>
+</ion-segment> 
+</ion-toolbar>
 
 
-  <ion-list>
-  <div>
-  <ion-item style="margin-top: 5%;">
-    <ion-label>Question Type</ion-label>
-    <ion-select interface="popover">
-      <ion-select-option value="OpenEnded">Open Ended</ion-select-option>
-      <ion-select-option value="MultChoice">Multiple Choice</ion-select-option>
-    </ion-select>
-  </ion-item></div>
-
-  <!-- OPEN ENDED QUESTIONS -->
+<!-- OPEN ENDED QUESTIONS -->
+<div *ngIf="selectedSegment == 'openEnded'">
+  <ion-list >
   <div>
   <ion-item>
     <ion-label position="stacked">Question</ion-label>
@@ -44,42 +48,50 @@
 
 <div>
 <ion-item style="margin-bottom: 5%;">
-<ion-label style="justify-content: left;"># of Winners: </ion-label>
-<ion-input type="number" placeholder="# winners"></ion-input>
-<ion-icon style="justify-content: right;" src="../../assets/add-circle-outline.svg" color="fupot_grey"></ion-icon>
-<ion-icon style="justify-content: right;" src="../../assets/remove-circle-outline.svg" color="fupot_grey"></ion-icon>
+  <ion-icon src="../../assets/gift-outline.svg" size="sm" ></ion-icon>
+<ion-label style="justify-content: left; margin-left: 3%;"> Winner? </ion-label>
+<ion-checkbox (click)="show()"></ion-checkbox>
 </ion-item>
+
+<div *ngIf="showMe">
+<ion-item lines="none"><ion-label>Winner Title:</ion-label><ion-input placeholder="Winner Title"></ion-input></ion-item>
+<ion-item lines="none"><ion-label>Winner Body: </ion-label><ion-input placeholder="Winner Body"></ion-input></ion-item>
+<ion-item lines="none"><ion-label>Loser Title:</ion-label><ion-input placeholder="Loser Title"></ion-input></ion-item>
+<ion-item><ion-label>Loser Body:</ion-label><ion-input placeholder="Loser Body"></ion-input></ion-item></div>
 </div>
 
 <div>
   <ion-item>
-  <ion-label style="justify-content: left;">Time Limit: </ion-label>
-  <ion-input type="number" placeholder="# winners"></ion-input>
-  <ion-icon style="justify-content: right;" src="../../assets/add-circle-outline.svg" color="fupot_grey"></ion-icon>
-  <ion-icon style="justify-content: right;" src="../../assets/remove-circle-outline.svg" color="fupot_grey"></ion-icon>
+   <ion-label>Question Date</ion-label>
+  <ion-datetime displayFormat="D MMM YYYY" placeholder="Select Date"></ion-datetime>
+</ion-item>
+  </div>
+  <div>
+    <ion-item>
+    <ion-label> Start Time </ion-label>
+    <ion-datetime displayFormat="HH:mm" placeholder="Select Start Time"></ion-datetime>
+  </ion-item>
+  </div>
+  <div>
+    <ion-item>
+    <ion-label> End Time </ion-label>
+    <ion-datetime displayFormat="HH:mm" placeholder="Select End Time"></ion-datetime>
   </ion-item>
   </div>
 
-  
 </ion-list>
 
-<div class="ion-text-center">
-  <ion-button fill="outline" color="fupot_purple" shape="round">SAVE</ion-button>
+<div class="ion-text-center" style="padding-left: 10%; padding-right: 10%;">
+  <ion-button fill="outline" color="fupot_purple" shape="round" expand="block">SAVE</ion-button>
+  <div><ion-button fill="outline" color="fupot_blue" shape="round" expand="block">ADD QUESTION</ion-button></div>
+  
+
+</div>
 </div>
 
 <!-- MULTIPLE CHOICE QUESTIONS -->
-
-<ion-list>
-    <div>
-    <ion-item style="margin-top: 5%; margin-bottom: 3%;">
-      <ion-label>Question Type</ion-label>
-      <ion-select interface="popover">
-        <ion-select-option value="OpenEnded">Open Ended</ion-select-option>
-        <ion-select-option value="MultChoice">Multiple Choice</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
-  
+<div *ngIf="selectedSegment == 'multChoice'" >
+<ion-list >
     <div>
     <ion-item style="margin-bottom: 5%;">
       <ion-label position="stacked">Question</ion-label>
@@ -111,10 +123,46 @@
     <ion-toggle></ion-toggle>
     </ion-item>
 
+    <div>
+      <ion-item style="margin-bottom: 5%;">
+        <ion-icon src="../../assets/gift-outline.svg" size="sm" ></ion-icon>
+      <ion-label style="justify-content: left; margin-left: 3%;"> Winner? </ion-label>
+      <ion-checkbox (click)="show()"></ion-checkbox>
+      </ion-item>
+      <div *ngIf="showMe">
+      <ion-item lines="none"><ion-label>Winner Title:</ion-label><ion-input placeholder="Winner Title"></ion-input></ion-item>
+      <ion-item lines="none"><ion-label>Winner Body: </ion-label><ion-input placeholder="Winner Body"></ion-input></ion-item>
+      <ion-item lines="none"><ion-label>Loser Title:</ion-label><ion-input placeholder="Loser Title"></ion-input></ion-item>
+      <ion-item lines="none"><ion-label>Loser Body:</ion-label><ion-input placeholder="Loser Body"></ion-input></ion-item></div>
+      </div>
+      
+      <div>
+        <ion-item>
+         <ion-label>Question Date</ion-label>
+        <ion-datetime displayFormat="D MMM YYYY" placeholder="Select Date"></ion-datetime>
+      </ion-item>
+        </div>
+        <div>
+          <ion-item>
+          <ion-label> Start Time </ion-label>
+          <ion-datetime displayFormat="HH:mm" placeholder="Select Start Time"></ion-datetime>
+        </ion-item>
+        </div>
+        <div>
+          <ion-item>
+          <ion-label> End Time </ion-label>
+          <ion-datetime displayFormat="HH:mm" placeholder="Select End Time"></ion-datetime>
+        </ion-item>
+        </div>
+
 </ion-list>
 
-<div class="ion-text-center">
-  <ion-button fill="outline" color="fupot_purple" shape="round">SAVE</ion-button>
+
+  <div class="ion-text-center" style="padding-left: 10%; padding-right: 10%;">
+  <ion-button fill="outline" color="fupot_purple" shape="round" expand="block">SAVE</ion-button>
+  <div><ion-button fill="outline" color="fupot_blue" shape="round" expand="block">ADD QUESTION</ion-button></div>
+  </div>
+
 </div>
 
 </ion-content>
