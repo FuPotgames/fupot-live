@@ -13,10 +13,11 @@ const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('../owner-games/games.module').then(m => m.GamesPageModule)
+                        loadChildren: () => import('../owner-questions/owner-questions.module').then(m => m.OwnerQuestionsPageModule)
                     }
                 ]
             },
+            
             {
                 path: 'profile',
                 children: [
@@ -28,7 +29,7 @@ const routes: Routes = [
             },
             {
                 path: '', 
-                redirectTo:'/tabs/questions',
+                redirectTo:'questions',
                 pathMatch: 'full'
             }
             
@@ -36,7 +37,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: '/tabs/questions',
+        redirectTo: 'questions',
         pathMatch: 'full'
     }
 ];

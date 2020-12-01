@@ -1,0 +1,34 @@
+ion-content {
+    
+    --background: url(../../assets/bg_mid .png) no-repeat center/cover fixed;
+  
+  }
+
+
+.card {
+    margin: 0 auto;
+
+    .header {
+        height: 200px;
+
+        .avatar {
+            width: 160px;
+            height: 160px;
+            position: relative;
+            margin: 0 auto;
+
+            img {
+                display: block;
+                border-radius: 50%;
+                position: absolute;
+                bottom: calc(-1*(80px + 4px));
+                border: 8px solid #EF519D;
+                background-color: #d3d3d3;
+            }
+        }
+    }
+}
+
+.statCircles {
+background: transparent;
+}

@@ -40,13 +40,22 @@
 <!-- BOTTOM NAV BAR -->  
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-  </ion-tab-button tab= "Home">
-    <ion-icon src='../../assets/home.svg'></ion-icon>
+    <ion-tab-button (click)="goGames" tab="home" style="background-color: #303030">
+      <ion-icon src="../../assets/home.svg" color="light"></ion-icon>
+      <ion-label color="light">Home</ion-label>
+    </ion-tab-button>
 
-  </ion-tab-button>
+    <ion-tab-button tab="questions" style="background-color: #303030">
+      <ion-icon src="../../assets/help-circle.svg" color="fupot_pink" size="large"></ion-icon>
+      <ion-label color="light">Questions</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="Profile" style="background-color: #303030">
+      <ion-icon src="../../assets/person.svg" color= "light"></ion-icon>
+      <ion-label color="light">Profile</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
-
 
 
 </ion-content>
