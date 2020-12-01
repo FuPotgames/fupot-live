@@ -1,38 +1,30 @@
 from rest_framework import serializers
-from fupot.models import Question,Submission,Win,Group,MyDevice, GameRoom
+from fupot.models import Question,Submission,Result,Group,MyDevice,GroupNotification,UserStatistics,OwnerStatistics
 
+
+class GroupNotificationSerializer(serializers.ModelSerializer):
+    """
+	Serializes the GroupNotification model
+    """
+    class Meta:
+        model = GroupNotification
+        fields = '__all__'
 
 class NotificationSerializer(serializers.ModelSerializer):
     """
-	Serializes the Question model
+	Serializes the Notification model
     """
     class Meta:
         model = MyDevice
         fields = '__all__'
 
-class GameRoomSerializer(serializers.ModelSerializer):
-    """
-    Serializes the Game model
-    """
-    class Meta:
-        model = GameRoom
-        fields = '__all__'
-
-class CreateQuestionSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     """
 	Serializes the Question model
     """
     class Meta:
         model = Question
         fields = '__all__'
-
-class UserQuestionSerializer(serializers.ModelSerializer):
-    """
-	Serializes the User Question model
-    """
-    class Meta:
-        model = Question
-        fields = ['id','title', 'prompt', 'bg_img', 'max_winners']
 
 class SubmissionSerializer(serializers.ModelSerializer):
     """
@@ -47,14 +39,32 @@ class SubmissionSerializer(serializers.ModelSerializer):
         username = submission.user.username
         return username
 
-class WinSerializer(serializers.ModelSerializer):
+class ResultSerializer(serializers.ModelSerializer):
+    """
+	Serializes the Result model
+    """
     class Meta:
-        model = Win
-        fields = ['submission']
+        model = Result
+        fields ='__all__'
 class GroupSerializer(serializers.ModelSerializer):
     """
 	Serializes the Group model
     """
     class Meta:
         model = Group
+        fields = '__all__'
+
+class OwnerStatisticsSerializer(serializers.ModelSerializer):
+    """
+	Serializes the OwnerStatistics model
+    """
+    class Meta:
+        model = OwnerStatistics
+        fields ='__all__'
+class UserStatisticsSerializer(serializers.ModelSerializer):
+    """
+	Serializes the UserStatistics model
+    """
+    class Meta:
+        model = UserStatistics
         fields = '__all__'

@@ -2,7 +2,9 @@ from rest_framework import serializers
 
 from account.models import Account
 
-
+"""
+Serializer for Login Info
+"""
 class LoginSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Account
@@ -14,7 +16,9 @@ class LoginSerializer(serializers.ModelSerializer):
 		password = data.get('password')
 		email = data.get('email')
 
-
+"""
+Serializer for Registration Info
+"""
 class RegistrationSerializer(serializers.ModelSerializer):
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
@@ -47,4 +51,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
 			account.set_password(password)
 			account.save()
 			return account
-			
+
+"""
+Serializer for Account Properties Info
+"""
+class AccountPropertiesSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Account
+		fields = ['pk','email','username']
+
+	

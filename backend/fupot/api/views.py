@@ -2,18 +2,34 @@ from rest_framework import status
 from rest_framework.request import Request
 from typing import Any
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework.generics import ListAPIView
 from rest_framework import generics, permissions
 from rest_framework.decorators import permission_classes
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from account.models import Account
 
-from fupot.models import Question, Submission, Win,Group,MyDevice
-from fupot.api.serializers import UserQuestionSerializer, SubmissionSerializer, WinSerializer,CreateQuestionSerializer,\
-    GroupSerializer, NotificationSerializer, GameRoomSerializer, GameRoom
+from fupot.models import Question, Submission,Group,MyDevice,GroupNotification,Result,OwnerStatistics,UserStatistics
+from fupot.api.serializers import SubmissionSerializer, ResultSerializer,\
+    GroupSerializer, NotificationSerializer, QuestionSerializer, GroupNotificationSerializer,OwnerStatisticsSerializer,\
+    UserStatisticsSerializer
 
 from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from django.core import serializers
+import json
+import datetime
+from collections import OrderedDict
+import operator
+from django.http.response import JsonResponse
+
+from django.contrib.auth.forms import PasswordResetForm
+from django.shortcuts import render
+
+from rest_framework.pagination import PageNumberPagination
 
 #================================================ Users APIs ==============================================================
 
@@ -47,59 +63,50 @@ class GetJoinedGroups(generics.CreateAPIView):
 
     # Gets all groups that are joined by this user
     def get(self, request):
+        paginator = PageNumberPagination()
+        paginator.page_size = 5
+
         groups = Group.objects.filter(user=self.request.user)
-        serializer = GroupSerializer(groups, many=True)
+
+        result_page = paginator.paginate_queryset(groups, request)
+
+        serializer = GroupSerializer(result_page, many=True)
         return Response(serializer.data)
 
-class JoinGameRoom(generics.CreateAPIView):
+class ListSearchGroups(ListAPIView):
     """
-    Responsible for Joining a GameRoom
+    Responsible for searching groups
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('name','address','establishment_type','owner__username')
+    
+class GetUserQuestions(generics.CreateAPIView):
+    """
+    Responsible for retreving all user questions based on which group that they are part off 
     """
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = GameRoomSerializer
+    serializer_class = QuestionSerializer
 
-    # Joins a game room
-    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
-        data = request.data
-        game_room = GameRoom.objects.filter(group_id = data['group_id'])
-        if not game_room.exists():
-            return Response("Group doesn't exist")
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        data = self.request.data
+        if data.get('group') is None:
+            return Response({'reponse':"group id is required"})
         else:
-            field_value = getattr(game_room[0], 'game_ended')
-            if field_value == True:
-                return Response("Game has ended, come back later")
-            else:
-                submission = GameRoom.objects.get(group_id = data['group_id'])
-                submission.join_user.add(self.request.user)
-                submission.save()
-                return Response(status=201, data=GameRoomSerializer(submission).data)
+            try:
+                group_instance = Group.objects.get(id = data.get('group'), user = request.user)
+                questions = Question.objects.filter(group = group_instance)
+                serializer = QuestionSerializer(questions, many=True)
+                return Response(serializer.data)
+            except(Group.DoesNotExist):
+                return Response({'reponse':"User must join the group first"})
 
-#================================================================== Owner's APIs ============================================
-
-class CreateGameRoom(generics.CreateAPIView):
-    """
-    Responsible for Creating a GameRoom by the Owner
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = GameRoomSerializer
-
-    # creates a group by the owner
-    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
-        data = request.data
-        group = Group.objects.filter(id = data.get('group_id'))[0]
-
-        if GameRoom.objects.filter(group_id=group).exists():
-            return Response("Game Room already exists, please finish the game first!!")
-        else:
-            # Do something else...
-            submission = GameRoom.objects.create( \
-                owner=self.request.user,\
-                    group_id=group,\
-                        location=data.get('location')
-            )
-            return Response(status=201, data=GameRoomSerializer(submission).data)
+#================================================ Owner's APIs ============================================
             
-
 class CreateGroup(generics.CreateAPIView):
     """
     Responsible for Creating a Group by the Owner
@@ -110,41 +117,222 @@ class CreateGroup(generics.CreateAPIView):
     # creates a group by the owner
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
         data = request.data
-        if Group.objects.filter(name=data.get('name')).exists():
-            return Response("Group already exists")
-        else:
-            submission = Group.objects.create( \
-                owner=self.request.user,\
-                    name = data.get('name')
-            )
-            return Response(status=201, data=GroupSerializer(submission).data)
+        group = Group.objects.filter(owner=self.request.user)
+        if group.exists():
+            tmpJson = serializers.serialize("json",group)
+            tmpObj = json.loads(tmpJson)
 
-class GetGroups(generics.CreateAPIView):
+            return JsonResponse(tmpObj+[{'reponse':"Group already exists with this owner"}], safe=False)
+        else:
+            try:
+                submission = Group.objects.create( \
+                    owner=self.request.user,\
+                        name = data.get('name'),\
+                            address = data.get('address'),\
+                                phone_number = self.request.user.phone_number,\
+                                    email = self.request.user.email,\
+                                        latitude = data.get('latitude'),\
+                                            longitude = data.get('longitude'),\
+                                                establishment_type = data.get('establishment_type'),\
+                )
+                return Response(status=201, data=GroupSerializer(submission).data)
+            except:
+                return Response(status=201, data={'reponse':"name and address must be unique"})
+
+class EditGroup(APIView):
     """
-    Responsible for retreiving groups created by the Owner
+    Responsible for updating group properties by id
     """
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = GroupSerializer
+    def patch(self, request, pk):
+        group = Group.objects.get(id=pk)
+        user = request.user
 
-    # creates a group by the owner
+        if group.owner != user:
+            return Response({'response':"You don't have permission to edit that"})
+        else:
+            serializer = GroupSerializer(group, data=request.data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class CreateQuestionView(generics.CreateAPIView):
+    """
+    Responsible for Creating a question by the owner
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = QuestionSerializer
+
+    # creates a question by the owner
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        
+        group = Group.objects.get(id = data.get('group'))
+        user = request.user
+
+        if group.owner != user:
+            return Response({'response':"You don't have permission to edit that"})
+        else:
+            group_instance = Group.objects.get(id = data.get('group'))
+            try:
+                submission = Question.objects.create( \
+                    bg_img=data.get('bg_img'),\
+                        title = data.get('title'),\
+                            prompt=data.get('prompt'),\
+                                starts_at = data.get('starts_at'),\
+                                    ends_at = data.get('ends_at'),\
+                                        sent = data.get('sent'),\
+                                            has_winner = data.get('has_winner'),\
+                                                answers_1 = data.get('answers_1'),\
+                                                    answers_2 = data.get('answers_2'),\
+                                                        answers_3 = data.get('answers_3'),\
+                                                            answers_4 = data.get('answers_4'),\
+                                                                correct_answer = data.get('correct_answer'),\
+                                                                    group = group_instance,\
+                                                                        owner = request.user,\
+                                                                            location = data.get('location'),\
+                )
+                return Response(status=201, data=QuestionSerializer(submission).data)
+            except:
+                return Response({'reponse':"title, prompt, starts_at, ends_at,answers_1, answers_2,answers_3, answers_4, correct_answer, location are required  "})
+
+class EditQuestion(APIView):
+    """
+    Responsible for updating question by question id
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    def patch(self, request, pk):
+        question = Question.objects.get(id = pk)
+        user = request.user
+        if question.owner != user:
+            return Response({'response':"You don't have permission to edit that"})
+        else:
+            serializer = QuestionSerializer(question, data=request.data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GetOwnerQuestions(generics.CreateAPIView):
+    """
+    Responsible for retreving all owner questions
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = QuestionSerializer
+
+    # Gets all groups that are joined by this user
     def get(self, request):
-        groups = Group.objects.filter(owner=self.request.user)
-        serializer = GroupSerializer(groups, many=True)
+        questions = Question.objects.filter(owner=self.request.user)
+        serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
 
-
-# TODO: Research more on topic/group based sending notification
-class SendNotification(APIView):
+class CreateSubmissionView(generics.CreateAPIView):
+    """
+    Responsible for submitting answers by the users
+    """
     permission_classes = (permissions.IsAuthenticated,)
-    """
-    Responsible for sending notifications
-    """
-    def get(self, request, format=None):
-        devices = MyDevice.objects.all()
+    serializer_class = SubmissionSerializer
 
-        devices.send_message(title=request.data['title'], body=request.data['body'], data={"test": "test"})
+    # creates a question by the owner
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        data = request.data
+        if (data.get('group') is None) or (data.get('answer') is None) or (data.get('question') is None):
+            return Response({'reponse': "Group id, answer and question id are required"})
+        else:
+            try:
+                group_instance = Group.objects.get(id = data.get('group'), user = request.user)
+                question_instance = Question.objects.get(id = data.get('question'))
+                submission = Submission.objects.create( \
+                        group = group_instance,\
+                            answer = data.get('answer'),\
+                                question = question_instance,\
+                                    user = request.user
+                    )
+                return Response(status=201, data=SubmissionSerializer(submission).data)
+            except(Group.DoesNotExist):
+                return Response({'reponse':"User must join the group first"})
+
+class NotifyResults(generics.CreateAPIView):
+    """
+    Responsible for checking a question and notifying users who won and loss and post the results on the results section
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    # Gets all groups that are joined by this user
+    def delete(self, request,pk):
+        question_id = request.data.get('question_id')
+        group = Group.objects.get(id=pk)
+        user = request.user
+
+        if group.owner != user:
+            return Response({'response':"You don't have permission to check the answers"})
+
+        group_instance = Group.objects.get(id = pk)
+        submissions = Submission.objects.filter(group = group_instance)
+        question = Question.objects.get(group = group_instance, id = question_id)
+
+        correct_answer = question.correct_answer
+        prompt = question.prompt
+
+        losers = []
+        winners = []
+
+        create_results = []
+
+        for x in submissions:
+            if x.answer == correct_answer:
+                winners.append({'id':x.id,'question':x.question,'answer':x.answer,'user':x.user,'created_at':x.created_at})
+                create_results.append(
+                    {
+                        'group_instance': group_instance.id,
+                        'question': prompt,
+                        'correct_answer':correct_answer,
+                        'user_answer':x.answer,
+                        'correct':True,
+                        'user':x.user.id
+                    }
+                )
+
+            else:
+                losers.append({'id':x.id,'question':x.question,'answer':x.answer,'user':x.user,'created_at':x.created_at})
+                create_results.append(
+                    {
+                        'group_instance': group_instance.id,
+                        'question': prompt,
+                        'correct_answer':correct_answer,
+                        'user_answer':x.answer,
+                        'correct':False,
+                        'user':x.user.id
+                    }
+                )
         
-        return Response("Successfuly sent notifications to all users!!")
+        winner = sorted(winners, key=lambda k: k['created_at'])[0]
+        
+        
+        
+        winner_devices = MyDevice.objects.filter(user=winner['user'].id)
+        winner_devices.send_message(title=request.data['winner_title'], body=request.data['winner_body'], data={"extra_data": request.data['extra_data']})
+
+        loser_uids = [loser['user'].id for loser in losers]
+
+        loser_devices = MyDevice.objects.filter(user__in= loser_uids)
+        loser_devices.send_message(title=request.data['loser_title'], body=request.data['loser_body'], data={"extra_data": request.data['extra_data']})
+
+        #print(winner_devices)
+        #print(loser_devices)
+
+        #print(create_results)
+        
+
+        serializer = ResultSerializer(data=create_results, many=True)
+        question.delete()
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'reponse': "Successfully checked the answer for that question, notified users who won and loss and stored them in the database",'Winner': winner['user'].username})
 
 class CreateGetNotificationView(generics.CreateAPIView):
     """
@@ -154,8 +342,14 @@ class CreateGetNotificationView(generics.CreateAPIView):
     serializer_class = NotificationSerializer
 
     def get(self, request):
+        paginator = PageNumberPagination()
+        paginator.page_size = 5
+
         queryset = MyDevice.objects.all()
-        serializer = NotificationSerializer(queryset, many=True)
+
+        result_page = paginator.paginate_queryset(queryset, request)
+
+        serializer = NotificationSerializer(result_page, many=True)
         return Response(serializer.data)
     
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
@@ -175,83 +369,248 @@ class CreateGetNotificationView(generics.CreateAPIView):
         
             return Response(status=201, data=NotificationSerializer(submission).data)
 
-class CreateGetGroupView(generics.ListCreateAPIView):
+class SendNotificationToGroup(generics.CreateAPIView):
     """
-    Responsible for creating and showing groups in JSON Response
+    Responsible for sending notifications/messages to a group and stores those notifications on the database(GroupNotifications)
     """
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
 
-class UpdateDeleteGroupView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Responsible for updating and deleting specific group by id
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    # Gets all groups that are joined by this user
+    def create(self, request,pk):
+        try:
+            data = request.data
+            group = Group.objects.get(id=pk)
+            user = request.user
 
-class QuestionView(APIView):
+            user_ids = []
+
+            if group.owner != user:
+                return Response({'response':"You don't have permission to send messages"})
+            else:
+                for x in group.user.all():
+                    user_ids.append(x.id)
+                
+                print(user_ids)
+                devices = MyDevice.objects.filter(user__in= user_ids)
+                devices.send_message(title=data.get('title'), body=data.get('body'), data={"extra_data": data.get('extra_data')})
+
+                try:
+                    group_notification = GroupNotification.objects.create( \
+                        group = group,\
+                            owner = request.user,\
+                                message = data.get('body'),\
+                    )
+                    return Response(status=201, data=GroupNotificationSerializer(group_notification).data)
+                except:
+                    return Response({'reponse':"Doesn't exist"})
+                
+                return Response({'response':"Successfully sent the message to that group"})
+
+        except Group.DoesNotExist:
+            return Response({'response':"Group doesn't exist with that id"})
+
+class CreateOwnerStatistics(generics.CreateAPIView):
+    """
+    Responsible for Creating a statistic for owner when registered
+    """
     permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = OwnerStatisticsSerializer
+
+    # creates a question by the owner
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        try:
+            if OwnerStatistics.objects.filter(owner=request.user).exists():
+                return Response(status=201, data={'reponse':"Only one entry per user"})
+            else:
+                statistics = OwnerStatistics.objects.create(owner=request.user)
+                return Response(status=201, data=OwnerStatisticsSerializer(statistics).data)
+        except:
+            return Response({'reponse':"Something went wrong.."})
+
+class CreateUserStatistics(generics.CreateAPIView):
     """
-    Responsible for showing questions in JSON Response
+    Responsible for Creating a statistic for user when registered
     """
-    def get(self, request, format=None):
-        data = request.data
-        questions = Question.objects.filter(group=int(data.get('group')))
-        serializer = UserQuestionSerializer(questions, many=True)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserStatisticsSerializer
+
+    # creates a question by the owner
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
+        try:
+            if UserStatistics.objects.filter(user=request.user).exists():
+                return Response(status=201, data={'reponse':"Only one entry per user"})
+            else:
+                statistics = UserStatistics.objects.create(user=request.user)
+                return Response(status=201, data=UserStatisticsSerializer(statistics).data)
+        except UserStatistics.DoesNotExist:
+            return Response({'reponse':"Something went wrong.."})
+
+#===============================================General APIs===================================================
+class GetGroupMessages(generics.CreateAPIView):
+    """
+    Responsible for retreving all the group messages by the group_id
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GroupNotificationSerializer
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        data = self.request.data
+        if data.get('group') is None:
+            return Response({'reponse':"group id is required"})
+        else:
+            try:
+                paginator = PageNumberPagination()
+                paginator.page_size = 5
+
+                group_instance = Group.objects.get(id = data.get('group'), user = request.user)
+                group_notifications = GroupNotification.objects.filter(group = group_instance)
+
+                result_page = paginator.paginate_queryset(group_notifications, request)
+
+                serializer = GroupNotificationSerializer(result_page, many=True)
+                return Response(serializer.data)
+            except(Group.DoesNotExist):
+                return Response({'reponse':"User must join the group first"})
+
+class ResultStatus(APIView):
+    """
+    Responsible for retreve each of the question status by the user
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ResultSerializer
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        try:
+            results = Result.objects.filter(user = request.user)
+            serializer = ResultSerializer(results, many=True)
+            return Response(serializer.data)
+        except(Result.DoesNotExist):
+            return Response({'reponse':"No results were found with that specific user"})
+
+class RemoveStatus(APIView):
+    """
+    Responsible for removing status notification
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    def delete(self, request, pk):
+        try:
+            result = Result.objects.get(user=request.user,id=pk)
+            user = request.user
+            if result.user != user:
+                return Response({'response':"You don't have permission to remove that"})
+            else:
+                result.delete()
+                return Response({'response':"Status removed!"})
+        except Result.DoesNotExist:
+            return Response({'reponse':"No results were found with that specific user"})
+
+class UpdateOwnerStatistics(APIView):
+    """
+    Responsible for updating group properties by id
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    def patch(self, request, pk):
+        group = Group.objects.get(id=pk)
+        user = request.user
+
+        if group.owner != user:
+            return Response({'response':"Permission Denied"})
+        else:
+            owner = OwnerStatistics.objects.get(owner = request.user)
+
+            question_asked = int(owner.question_asked)
+            prizes_issued = int(owner.prizes_issued)
+
+            newdict={}
+            newdict.update(request.data)
+            
+            if len(newdict.keys()) == 1:
+                for x in newdict.keys():
+                    if x == 'question_asked':
+                        user_input_question_asked = int(''.join(newdict[x]))
+                        total = question_asked + user_input_question_asked
+                        newdict.update({'question_asked':total})
+                    elif x == 'prizes_issued':
+                        user_input_prizes_issued = int(''.join(newdict[x]))
+                        total = prizes_issued + user_input_prizes_issued
+                        newdict.update({'prizes_issued':total})
+            
+            serializer = OwnerStatisticsSerializer(owner, data=newdict,partial=True)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdateUserStatistics(APIView):
+    """
+    Responsible for updating group properties by id
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    def patch(self, request, pk):
+        group = Group.objects.get(id=pk)
+        user = request.user
+
+        if group.owner != user:
+            return Response({'response':"Permission Denied"})
+        else:
+            user = UserStatistics.objects.get(user = request.user)
+
+            questions_answered = int(user.questions_answered)
+            groups_joined = int(user.groups_joined)
+            prizes_won = int(user.prizes_won)
+
+            newdict={}
+            newdict.update(request.data)
+            
+            if len(newdict.keys()) == 1:
+                for x in newdict.keys():
+                    if x == 'questions_answered':
+                        user_input_questions_answered = int(''.join(newdict[x]))
+                        total = questions_answered + user_input_questions_answered
+                        newdict.update({'questions_answered':total})
+                    elif x == 'groups_joined':
+                        user_input_groups_joined = int(''.join(newdict[x]))
+                        total = groups_joined + user_input_groups_joined
+                        newdict.update({'groups_joined':total})
+                    elif x == 'prizes_won':
+                        user_input_prizes_won = int(''.join(newdict[x]))
+                        total = prizes_won + user_input_prizes_won
+                        newdict.update({'prizes_won':total})
+            
+            serializer = UserStatisticsSerializer(user, data=newdict,partial=True)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GetOwnerStatistics(APIView):
+    """
+    Responsible for retreving owner statistics
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = OwnerStatisticsSerializer
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        statistics = OwnerStatistics.objects.filter(owner=self.request.user)
+        serializer = OwnerStatisticsSerializer(statistics, many=True)
         return Response(serializer.data)
 
-class  UserEditQuestionView(generics.UpdateAPIView):
+class GetUserStatistics(APIView):
     """
-    Responsible for Store Owners Edit Question in JSON Response
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = Question.objects.all()
-    serializer_class = CreateQuestionSerializer
-    
-class  UserCreateQuestionView(generics.CreateAPIView):
-    """
-    Responsible for Store Owners Create Question in JSON Response
+    Responsible for retreving user statistics
     """
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = Question.objects.all()
-    serializer_class = CreateQuestionSerializer
+    serializer_class = UserStatisticsSerializer
 
-class CreateUserViewSubmission(generics.CreateAPIView):
-    """
-    Responsible for users to submit their answers
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = UserQuestionSerializer
-
-    
-    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
-        data = request.data
-        user_submissions =Submission.objects.filter(question_id = data.get('question'),user=request.user,group=data.get('group'))
-        if user_submissions.count() > 0:
-            return Response(status=409)
-        submission = Submission.objects.create( \
-            user=request.user,\
-                question_id = data.get('question'),\
-                    answer=data.get('answer'),\
-                        group = data.get('group')
-        )
-        return Response(status=201, data=SubmissionSerializer(submission).data)
-
-class SubmissionView(generics.ListAPIView):
-    """
-    Responsible for showing submissions in JSON Response
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = Submission.objects.all()
-    serializer_class = SubmissionSerializer
-
-
-class WinnersView(generics.ListAPIView):
-    """
-    Responsible for showing winners in JSON Response
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = Win.objects.all()
-    serializer_class = WinSerializer
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        statistics = UserStatistics.objects.filter(user=self.request.user)
+        serializer = UserStatisticsSerializer(statistics, many=True)
+        return Response(serializer.data)
