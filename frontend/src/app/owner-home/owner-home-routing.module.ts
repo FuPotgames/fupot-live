@@ -29,7 +29,7 @@ const routes: Routes = [
             },
             {
                 path: '', 
-                redirectTo:'questions',
+                redirectTo:'tabs/profile',
                 pathMatch: 'full'
             }
             
@@ -37,7 +37,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'questions',
+        redirectTo: 'tabs/questions',
         pathMatch: 'full'
     }
 ];
