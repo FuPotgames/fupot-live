@@ -19,7 +19,7 @@ export class OwnerHomePage implements OnInit {
     Initializes everthing related to this ts file when the owner loads into their homepage
   */
   ngOnInit() {
-    this.notificationService.setupNotification();
+    //this.notificationService.setupNotification();
   }
 /* i set this up the same on owner-creategame.ts but not working here */
 
@@ -36,7 +36,7 @@ export class OwnerHomePage implements OnInit {
   }
 
   goGames() {
-    this.navController.navigateRoot(['/owner-games'])
+    this.navController.navigateRoot(['/owner-games']);
   }
 
   /*
