@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'user-location', loadChildren: './user-location/user-location.module#UserLocationPageModule' },
   { path: 'user-answer', loadChildren: './user-answer/user-answer.module#UserAnswerPageModule' },
   { path: 'user-submit', loadChildren: './user-submit/user-submit.module#UserSubmitPageModule' },
+  { path: 'test-api', loadChildren: './test-api/test-api.module#TestApiPageModule' },
 ];
 
 @NgModule({

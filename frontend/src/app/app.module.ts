@@ -1,5 +1,8 @@
-import { NotificationService } from './services/notification.service';
-import { UserAuthService } from './services/user-auth.service';
+import { GroupDataService } from './services/owner-services/group-data.service';
+import { TokenInterceptorService } from './services/general-services/token-interceptor.service';
+import { GroupService } from './services/owner-services/group.service';
+import { NotificationService} from './services/general-services/notification.service';
+import { AuthDataService } from './services/auth-services/auth-data.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -11,11 +14,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
-
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,8 +26,15 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
-    UserAuthService,
+    AuthDataService,
+    GroupService,
     NotificationService,
+    GroupDataService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

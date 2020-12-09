@@ -1,6 +1,6 @@
 import { NavController, Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../services/general-services/notification.service';
 import { Router } from '@angular/router';
 
 @Component({

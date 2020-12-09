@@ -1,5 +1,6 @@
+import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { UserService } from './user.service';
+import { AccountCreationService } from '../auth-services/account-creation.service';
 
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -22,7 +23,7 @@ export class NotificationService {
   saveNotificationInfo: any;
   deviceInfo: any;
 
-  constructor(private userService: UserService, private http: HttpClient) {}
+  constructor(private accountCreationService: AccountCreationService, private http: HttpClient) {}
 
   // setup the headers for requesting
   initHeaders() {
@@ -57,7 +58,7 @@ export class NotificationService {
     const httpOptions = {
       headers: new HttpHeaders(this.initHeaders())
     };
-    return this.http.post('http://localhost:8000/api/fupot/notification', notificationData, httpOptions);
+    return this.http.post(environment.BASE_API_URL + '/api/fupot/notification', notificationData, httpOptions);
   }
 
   /*

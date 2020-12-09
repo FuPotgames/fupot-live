@@ -1,8 +1,8 @@
+import { AuthDataService } from './../services/auth-services/auth-data.service';
 import { Component, OnInit } from '@angular/core';
-import { UserAuthService } from './../services/user-auth.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../services/general-services/notification.service';
 
 
 
@@ -19,7 +19,7 @@ export class OwnerHomePage implements OnInit {
     Initializes everthing related to this ts file when the owner loads into their homepage
   */
   ngOnInit() {
-    //this.notificationService.setupNotification();
+    this.notificationService.setupNotification();
   }
 /* i set this up the same on owner-creategame.ts but not working here */
 
