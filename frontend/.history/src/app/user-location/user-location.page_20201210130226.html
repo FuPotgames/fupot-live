@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+
+
+<!-- BACK BUTTON -->
+<ion-buttons slot="start">
+  <ion-back-button defaultHref="user-tabs"></ion-back-button>
+</ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+<ion-content>
+
+ <div style="margin-top: 12%;">
+  <ion-card color="fupot_grey"> 
+    <div class="img-wrapper" style="margin-bottom: 10%;">
+      <img src="../../assets/people.svg"/>
+      <ion-button color="light">
+        <ion-icon slot="icon-only" src="../../assets/camera-outline.svg" color="medium">
+        </ion-icon>
+      </ion-button>
+    </div>
+    <ion-card-content class="ion-text-center">
+     <div style="margin: 8;"> <ion-label style="font-size: large; font-weight: bold;">Establishment Name</ion-label> </div>
+    </ion-card-content>
+  </ion-card></div>
+
+<div style="margin-top: 5%; margin-bottom: 5%;">
+<ion-item color="fupot_grey"><ion-label style="font-weight: bold;"> Updates: </ion-label></ion-item></div>
+
+<!-- CHAT BUBBLES -->
+<div class="chatBubble chatBubbleCorner" color="fupot_blue"><ion-label>Updates and notifications sent by the owner will display here</ion-label></div>
+<div class="chatBubble chatBubbleCorner" color="fupot_blue"><ion-label>Updates and notifications sent by the owner will display here</ion-label></div>
+
+
+<!-- Answer Questions -->
+
+ <div class="ion-text-center" style="margin-top: 20%; margin-left: 10%;margin-right: 10%;">
+  <ion-button (click)="goAnswer()" expand="block" color="fupot_blue"><ion-label style="font-size: 15pt; font-weight: bold;" color="light">Answer Questions</ion-label></ion-button>
+</div>
+
+</ion-content>
