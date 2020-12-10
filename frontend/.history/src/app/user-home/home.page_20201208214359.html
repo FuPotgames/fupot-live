@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Home
+      </div>
+
+<!-- SLIDE OUT MENU -->
+<ion-buttons slot="start">
+  <ion-menu-button menu="main-menu">
+    <ion-icon src="../../assets/menu.svg" color="fupot_grey"></ion-icon>
+  </ion-menu-button>    
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<!-- List of user groups -->   
+          <div >    
+            <ion-card id="groupsList">
+              <ion-card-header color="fupot_grey" id="listHeader">
+              <ion-card-subtitle class ="ion-text-center" style="font-size: 13pt;">My Groups</ion-card-subtitle>
+            </ion-card-header>
+            
+            <div> 
+            <ion-item (click)="locationPage" slot="start">  
+              <ion-icon src="../../assets/person-circle-outline.svg" size="large" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
+              <ion-label>Buffalo Wild Wings </ion-label>
+              <ion-item lines="none"> <ion-label >3.7mi</ion-label>
+                <ion-icon src="../../assets/chevron-forward.svg" size="small"></ion-icon></ion-item></ion-item>
+          </div>
+
+          <div>
+            <ion-item >
+              <ion-icon src="../../assets/person-circle-outline.svg" size="large" color="fupot_pink" style="padding-right: 5%;"></ion-icon>             
+               <ion-label>Target</ion-label>
+               <ion-item lines="none"><ion-label >4.6mi</ion-label>
+                <ion-icon src="../../assets/chevron-forward.svg" size="small"></ion-icon></ion-item></ion-item>
+          </div>
+
+          <div>
+            <ion-item >
+              <ion-icon src="../../assets/person-circle-outline.svg" size="large" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
+              <ion-label>Bowl America</ion-label>              
+              <ion-item lines="none"><ion-label >6.3mi</ion-label>
+                <ion-icon src="../../assets/chevron-forward.svg" size="small"></ion-icon></ion-item></ion-item>
+          </div>
+
+          <div>
+            <ion-item>
+              <ion-icon src="../../assets/person-circle-outline.svg" size="large" color="fupot_purple" style="padding-right: 5%;"></ion-icon>              
+              <ion-label>Pete's Bar</ion-label>
+            <ion-item lines="none"><ion-label >7.8mi</ion-label>
+              <ion-icon src="../../assets/chevron-forward.svg" size="small"></ion-icon></ion-item></ion-item>
+            </div>
+          
+          </ion-card>
+          </div>
+
+<!-- ALL MY GROUPS --> 
+           <div style="text-align: center; font-size: 10; text-decoration-line: underline;">
+           <ion-button id="allGroups" (click)="allGroups()" class="ion-text-center" color="fupot_grey" fill="clear" size="small">ALL MY GROUPS
+           <ion-icon src="../../assets/chevron-forward.svg" color = "fupot_grey" size="small"></ion-icon></ion-button>
+          </div>
+
+
+<!-- Find locations button-- button is still too small but now centered and clicks -->          
+            <div style="padding-top: 3%; padding-bottom: 3%;">
+  
+            <ion-button id="findLocations" (click)="findLocations()" size="default" expand="block" color="fupot_blue"> 
+            <ion-label color="light" style="font-weight: bold; font-size: 13pt;">Find Locations</ion-label></ion-button></div>
+        
+<!-- LOCATION CATEGORY CIRCLES -->
+<div>
+            <ion-grid class="ion-text-center" > 
+              <ion-row>
+                <ion-col style="padding-left: 15%;">
+                  <div  >
+                  <img id="dining_icon" src="../../assets/dining_icon.png" width="85%" height="85%" >
+                  </div>
+                </ion-col>
+                <ion-col style="padding-right: 15%;">
+                  <div>
+                    <img id="shoppingIcon" src="../../assets/shopping_icon.png" width="85%" height="85%">
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row style="padding-top: 2%;">
+                <ion-col style="padding-left: 15%;">
+                  <div>
+                    <img id="entertainmentIcon" src="../../assets/entertainment_icon.png" width="85%" height="85%">
+                  </div>
+                </ion-col>
+                <ion-col style="padding-right: 15%;">
+                  <div>
+                    <img id="socialIcon" src="../../assets/socialize_icon.png" width="85%" height="85%">
+                  </div>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>   
+          </div>       
+    
+
+      
+</ion-content>
+
+
+

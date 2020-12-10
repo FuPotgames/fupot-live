@@ -1,0 +1,14 @@
+ion-tab-button {
+    --ripple-color: var(--ion-color-medium);
+    --color: var(--ion-color-medium);
+    --color-selected: var(--ion-color-medium);
+  }
+  
+  ion-tab-button.tab-selected {
+    --background: var(--ion-color-light);
+    --color-selected: var(--ion-color-fupot_teal);
+  }
+
+.userTabs {
+    background-color: #303030;
+}

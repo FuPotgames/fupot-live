@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-user-grouplist',
   templateUrl: './user-grouplist.page.html',
@@ -9,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserGrouplistPage implements OnInit {
 
-  constructor( ) { }
+  constructor() { }
 
   ngOnInit() {
   }
-
 
 }

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="50%" height="15%" style="padding-bottom: 1%;padding-top: 6%;">
+      </div >
+      <div style="text-align: center; font-size: 12pt;">
+        Scheduled Questions
+      </div>
+      <ion-buttons id="backButton" slot="start" (click)="home()">
+        <ion-icon src="../../assets/chevron-back.svg" size ="large" color="fupot_grey"></ion-icon>
+        </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row style="align-items: center;">
+      <ion-col size="sm" style="align-items: center;">
+        <ion-icon size="large" src="../../assets/time-outline.svg"></ion-icon>
+        <ion-row style="align-items: center;"><ion-label style="font-size: 10pt;">7:30pm</ion-label></ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" shape="round" color="fupot_blue" size="large" style="margin: 5%;" fill="outline"> <ion-label color="fupot_blue">Saved Question</ion-label></ion-button>
+      </ion-col>
+    </ion-row>    
+    
+    <ion-row style="align-items: center;">
+      <ion-col size="sm" style="align-items: center;">
+        <ion-icon size="large" src="../../assets/time-outline.svg"></ion-icon>
+        <ion-row style="align-items: center;"><ion-label style="font-size: 10pt;">7:45pm</ion-label></ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" shape="round" color="fupot_blue" size="large" style="margin: 5%;" fill="outline"> <ion-label color="fupot_blue">Saved Question</ion-label></ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="align-items: center;">
+      <ion-col size="sm" style="align-items: center;">
+        <ion-icon size="large" src="../../assets/gift-outline.svg"></ion-icon>
+        <ion-row style="align-items: center; text-align: center;">
+          <ion-label style="font-size: 10pt; ">See<br>Winner</ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" shape="round" color="fupot_blue" size="large" style="margin: 5%;" fill="outline"> <ion-label color="fupot_blue">Saved Question</ion-label></ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button (click)="goGames" tab="home" style="background-color: #303030">
+        <ion-icon src="../../assets/home.svg" color="light"></ion-icon>
+        <ion-label color="light">Home</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="search" style="background-color: #303030">
+        <ion-icon src="../../assets/help-circle.svg" color="fupot_pink" size="large"></ion-icon>
+        <ion-label color="light">Games</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="Profile" style="background-color: #303030">
+        <ion-icon src="../../assets/person.svg" color= "light"></ion-icon>
+        <ion-label color="light">Profile</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+</ion-content>

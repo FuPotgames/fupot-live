@@ -1,0 +1,12 @@
+
+    .segment-button {
+        ion-label {
+            color: var(--ion-color-medium);
+        }
+    }
+    
+    .segment-button-checked {
+        ion-label {
+            color: var(--ion-color-light) !important;
+        }
+    }

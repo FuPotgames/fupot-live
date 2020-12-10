@@ -1,0 +1,17 @@
+
+
+.avatar {
+    width: 75px;
+    height: 75px;
+    position: relative;
+    margin: 0 auto;
+
+    img {
+        display: block;
+        border-radius: 50%;
+        position: center;
+        bottom: calc(-1*(80px + 4px));
+        border: 5px solid #EF519D;
+        background-color: #d3d3d3;
+left: 14px;    }
+}

@@ -1,0 +1,8 @@
+ion-segment-button {
+    --background:transparent;
+    --background-checked: #805DA7;
+    --border-color: #303030;
+    ion-label {
+        ::selection { color: red; }
+    }
+}
