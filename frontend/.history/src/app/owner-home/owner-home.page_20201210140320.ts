@@ -14,7 +14,7 @@ export class OwnerHomePage implements OnInit {
   }
 
   goQuestions() {
-    this.navController.navigateRoot(["/owner-questions"]);
+    this.navController.navigateRoot(["/owner-quesitons"]);
   }
 
   goNotifications() {

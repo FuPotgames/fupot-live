@@ -17,6 +17,9 @@ export class OwnerQuestionsPage implements OnInit {
   ngOnInit() {
   }
 
+  ownerBack() {
+    this.navController.navigateRoot('/owner-creategame');
+  }
 
     segmentChanged(event:any){
       console.log(event.target.value);
@@ -27,8 +30,6 @@ export class OwnerQuestionsPage implements OnInit {
     show() {
       this.showMe = !this.showMe;
     }
-
-  
     
 
   

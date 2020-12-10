@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'profile', loadChildren: './user-profile/profile.module#ProfilePageModule' },
   { path: 'search', loadChildren: './user-search/search.module#SearchPageModule' },
+  { path: 'owner-home', loadChildren: './owner-tabs/owner-tabs.module#OwnerTabsPageModule' }, 
   { path: 'notifications', loadChildren: './user-notifications/notifications.module#NotificationsPageModule' },
   { path: 'games', loadChildren: './owner-games/games.module#GamesPageModule' },
   { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
@@ -30,7 +31,6 @@ const routes: Routes = [
   { path: 'owner-tab2', loadChildren: './owner-tab2/owner-tab2.module#OwnerTab2PageModule' },
   { path: 'owner-tab3', loadChildren: './owner-tab3/owner-tab3.module#OwnerTab3PageModule' },
   { path: 'owner-tabs', loadChildren: './owner-tabs/owner-tabs.module#OwnerTabsPageModule' },
-  { path: 'owner-guidelines', loadChildren: './owner-guidelines/owner-guidelines.module#OwnerGuidelinesPageModule' },
   { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
 
 ];

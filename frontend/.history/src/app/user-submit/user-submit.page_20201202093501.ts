@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-user-submit',
@@ -8,12 +7,9 @@ import { NavController } from '@ionic/angular';
 })
 export class UserSubmitPage implements OnInit {
 
-  constructor(private navController: NavController) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  goHome() {
-    this.navController.navigateRoot(["/user-tabs"]);
-  }
 }

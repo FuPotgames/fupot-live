@@ -15,7 +15,7 @@
 </ion-toolbar>
 </ion-header>
 
-<!-- Establishment Name Header -->
+<!-- BUTTONS HOME SCREEN-->
 <ion-content class="justify-content-center">
 
   <div >
@@ -30,14 +30,12 @@
     </ion-item>
   </div>
   
-<!-- BUTTONS -->
+<!-- NEED TO CHANGE THESE COLORS TO FUPOT COLORS-->
 
-<div><ion-button (click)="goQuestions()" size="large" color="fupot_blue" expand="block" style="margin-left: 5%;margin-right: 5%; margin-top: 8%;">
-  <ion-label color="light" style="font-weight: bold; font-size: large;">Create Questions</ion-label></ion-button></div>
-<div><ion-button (click)="goNotifications()" size="large" color="fupot_pink" expand="block"  style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
-  <ion-label color="light" style="font-weight: bold; font-size: large;">Send Notifications</ion-label></ion-button></div>
-<div><ion-button (click)="goMembers()" size="large" color="fupot_purple" expand="block" style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
-  <ion-label color="light" style="font-weight: bold; font-size: large;">Group Members</ion-label></ion-button></div>
+  <div><ion-item lines="none"> <ion-button (click)="createQuestion()" color="fupot_blue" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%; margin-top: 5%;">Create Question</ion-button></ion-item></div>
+  <div><ion-item lines="none"> <ion-button (click)="sendNotification()" color="fupot_pink" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Send Notification</ion-button></ion-item></div>
+  <div><ion-item lines="none"> <ion-button (click)="groupMembers()" color="fupot_teal" expand="block" shape="round" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;">Group Members</ion-button></ion-item></div>
+
 
 
 </ion-content>

@@ -7,17 +7,23 @@
       <div style="text-align: center; font-size: 12pt;">
         Questions
       </div>
+<!-- SLIDE OUT MENU -->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu">
+        <ion-icon src="../../assets/menu.svg" color="fupot_grey"></ion-icon>
+      </ion-menu-button>    
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
   
 
 <!-- BUTTONS -->
   <ion-content class="ownerGames">
-  <div><ion-button   (click)="goQuestions()" size="large" color="fupot_blue" expand="block" style="margin-left: 5%;margin-right: 5%; margin-top: 8%;">
+  <div><ion-button size="large" color="fupot_blue" expand="block" style="margin-left: 5%;margin-right: 5%; margin-top: 8%;">
     <ion-label color="light" style="font-weight: bold; font-size: large;">New Question</ion-label></ion-button></div>
-  <div><ion-button   (click)="goSaved()" size="large" color="fupot_pink" expand="block"  style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
+  <div><ion-button size="large" color="fupot_pink" expand="block"  style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
     <ion-label color="light" style="font-weight: bold; font-size: large;">Saved Questions</ion-label></ion-button></div>
-  <div><ion-button   (click)="goGuidelines()" size="large" color="fupot_purple" expand="block" style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
+  <div><ion-button size="large" color="fupot_purple" expand="block" style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
     <ion-label color="light" style="font-weight: bold; font-size: large;">Guidelines</ion-label></ion-button></div>
 
 
