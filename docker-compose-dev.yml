@@ -4,6 +4,7 @@ volumes:
   static_volume:
 services:
   nginx:
+    restart: always
     image: nginx
     depends_on:
       - frontend
@@ -18,7 +19,7 @@ services:
       - "./backend:/src"
     command: ["nginx","-g","daemon off;"]
   db:
-    image: postgres:alpine
+    image: postgres:11.9
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}

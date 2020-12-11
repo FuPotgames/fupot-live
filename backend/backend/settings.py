@@ -33,8 +33,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
-    'fcm_django'
+    'fcm_django',
+    'dbbackup'
 ]
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR + '/backup'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

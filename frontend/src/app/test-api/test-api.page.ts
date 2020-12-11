@@ -22,7 +22,6 @@ export class TestApiPage implements OnInit {
         latitude: 38.6414608275342,
         longitude: -77.3016720201729
     };
-
   }
   async createGroup(groupData) {
     this.groupService.createGroup(groupData).subscribe(async res => {

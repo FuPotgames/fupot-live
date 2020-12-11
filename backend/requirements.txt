@@ -7,3 +7,5 @@ python-decouple==3.3
 django-cors-headers
 fcm-django
 cryptography
+django-dbbackup
+django-crontab
