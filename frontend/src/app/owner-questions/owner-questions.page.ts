@@ -8,7 +8,7 @@ import { NavController } from '@ionic/angular';
 })
 export class OwnerQuestionsPage implements OnInit {
 
-  private selectedSegment: string = 'openEnded'
+  selectedSegment: string = 'openEnded'
   
   showMe: boolean;
   

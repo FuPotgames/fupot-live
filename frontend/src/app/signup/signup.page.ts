@@ -1,23 +1,29 @@
+import { AuthService } from './../services/auth-services/auth.service';
 import { AuthDataService } from './../services/auth-services/auth-data.service';
-import { AccountCreationService } from '../services/auth-services/account-creation.service';
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
-  providers: [AccountCreationService]
+  providers: [AuthService]
 })
 export class SignupPage implements OnInit {
   registerValues: any;
   // tslint:disable-next-line: max-line-length
-  constructor(private accountCreationService: AccountCreationService,private authDataService:AuthDataService, private navController: NavController) {}
+  constructor(
+    private authService: AuthService,
+    private authDataService:AuthDataService, 
+    private navController: NavController,
+    private menuController:MenuController
+    ) {}
 
   // starts up our signup page with logo animation and setting default input values
   ngOnInit() {
     this.logo_animation();
+    this.menuController.swipeGesture(false);
     this.registerValues = {
       email: '',
       username: '',
@@ -33,12 +39,12 @@ export class SignupPage implements OnInit {
     var token = await this.authDataService.get_token();
     if(token !== null){
       console.log(token);
-      this.navController.navigateRoot('/owner-home');
+      this.navController.navigateRoot('/owner-tabs');
     }
   }
   // Register a New User through our User Service
   async registerNewUser() {
-    this.accountCreationService.register(this.registerValues).subscribe(
+    this.authService.register(this.registerValues).subscribe(
       async response => {
         // successfully registered a user and stored token
         if (response['response'] !== undefined) {
@@ -49,7 +55,8 @@ export class SignupPage implements OnInit {
             await this.authDataService.set_token(response["token"]);
 
             // redirecting our user after signup
-            this.navController.navigateRoot('/user-home');
+            this.navController.navigateRoot('/owner-tabs');
+            this.menuController.swipeGesture(true);
           } 
           // shows alert if email and username already exists
           else if ((response['email'] !== undefined) && (response['username'] !== undefined)) {

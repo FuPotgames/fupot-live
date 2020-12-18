@@ -30,8 +30,7 @@ export class TokenInterceptorService implements HttpInterceptor {
                     return next.handle(request);
                   } else{
                     const headers = request.headers
-                            .set('Authorization', 'Token ' + token)
-                            .append('Content-Type', 'application/json');
+                            .set('Authorization', 'Token ' + token);
                     const requestClone = request.clone({
                      headers 
                     });

@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-owner-home',
@@ -8,9 +9,12 @@ import { NavController } from '@ionic/angular';
 })
 export class OwnerHomePage implements OnInit {
 
-  constructor(private navController: NavController) { }
+  constructor(private navController: NavController,private router:Router,private menuController:MenuController) { 
+
+  }
 
   ngOnInit() {
+    this.menuController.swipeGesture(true);
   }
 
   goQuestions() {
@@ -23,6 +27,12 @@ export class OwnerHomePage implements OnInit {
 
   goMembers() {
     this.navController.navigateRoot(["/owner-members"]);
+  }
+
+  testPage(){
+    //this.navController.navigateRoot(["/test-api"]);
+    //this.router.navigateByUrl("/test-api");
+    this.navController.navigateForward("/test-api")
   }
 
 }

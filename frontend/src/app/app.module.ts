@@ -18,11 +18,12 @@ import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS} from '@angular/co
 import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { QuestionDataService } from './services/owner-services/question-data.service';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,FormsModule,IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot({swipeBackEnabled: false}), AppRoutingModule,HttpClientModule,FormsModule,IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,
@@ -30,6 +31,7 @@ import { IonicStorageModule } from '@ionic/storage';
     GroupService,
     NotificationService,
     GroupDataService,
+    QuestionDataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
@@ -39,4 +41,6 @@ import { IonicStorageModule } from '@ionic/storage';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  
+}

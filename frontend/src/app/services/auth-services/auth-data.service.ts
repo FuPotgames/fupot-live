@@ -21,6 +21,10 @@ export class AuthDataService {
     var email = this.storage.get('email');
     return email;
   }
+  async get_avatar(){
+    var avatar = this.storage.get('avatar');
+    return avatar;
+  }
   async get_phone(){
     var phone = this.storage.get('phone');
     return phone;
@@ -35,6 +39,9 @@ export class AuthDataService {
   }
   async set_email(email){
     await this.storage.set('email',email);
+  }
+  async set_avatar(avatar){
+    await this.storage.set('avatar',avatar);
   }
   async set_phone(phone){
     await this.storage.set('phone',phone);

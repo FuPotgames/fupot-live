@@ -1,6 +1,6 @@
+import { AuthService } from './../auth-services/auth.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { AccountCreationService } from '../auth-services/account-creation.service';
 
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -23,7 +23,7 @@ export class NotificationService {
   saveNotificationInfo: any;
   deviceInfo: any;
 
-  constructor(private accountCreationService: AccountCreationService, private http: HttpClient) {}
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
   // setup the headers for requesting
   initHeaders() {
