@@ -8,15 +8,21 @@
       </div>
 <!-- SLIDE OUT MENU -->
 <ion-buttons slot="start">
-  <ion-menu-button menu="main-menu">
+  <ion-menu-button menu="main-menu" id="menu">
     <ion-icon src="../../assets/menu.svg" color="dark"></ion-icon>
-  </ion-menu-button>    
+  </ion-menu-button>   
 </ion-buttons>
 </ion-toolbar>
 </ion-header>
 
 <!-- Establishment Name Header -->
 <ion-content class="justify-content-center">
+
+   <!--  <div id="questionBg">
+    <ion-item lines="none" color="none">
+    <ion-icon src="../../assets/person-circle-outline.svg" size="large" id="icon" color="light"></ion-icon>
+    <ion-label id="label1" style="padding-left: 3%; font-size: 16pt;" color="light" >Establishment Name</ion-label>
+    </ion-item></div> -->
 
   <div >
     <ion-item lines="none" id="profileHeader" style="margin-top: 5%;" color="fupot_grey">
@@ -32,13 +38,15 @@
   
 <!-- BUTTONS -->
 
-<div><ion-button (click)="goQuestions()" size="large" color="fupot_blue" expand="block" style="margin-left: 5%;margin-right: 5%; margin-top: 8%;">
-  <ion-label color="light" style="font-weight: bold; font-size: large;">Create Questions</ion-label></ion-button></div>
-<div><ion-button (click)="goNotifications()" size="large" color="fupot_pink" expand="block"  style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
-  <ion-label color="light" style="font-weight: bold; font-size: large;">Send Notifications</ion-label></ion-button></div>
-<div><ion-button (click)="goMembers()" size="large" color="fupot_purple" expand="block" style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
-  <ion-label color="light" style="font-weight: bold; font-size: large;">Group Members</ion-label></ion-button></div>
+
+<div><ion-button id="questionButton" (click)="goQuestions()" size="large" color="fupot_blue" expand="block" style="margin-left: 5%;margin-right: 5%; margin-top: 8%;">
+  <ion-label id="label" color="light" style="font-weight: bold; font-size: large;">Create Questions</ion-label></ion-button></div>
+<div><ion-button id="notificationsButton" (click)="goNotifications()" size="large" color="fupot_pink" expand="block"  style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
+  <ion-label id="label" color="light" style="font-weight: bold; font-size: large;">Send Notifications</ion-label></ion-button></div>
+<div><ion-button id="membersButton" (click)="goMembers()" size="large" color="fupot_purple" expand="block" style="margin-left: 5%;margin-right: 5%;margin-top: 6%;">
+  <ion-label id="label" color="light" style="font-weight: bold; font-size: large;">Group Members</ion-label></ion-button></div>
   <ion-button (click)="testPage()"></ion-button>
+
 
 
 </ion-content>
