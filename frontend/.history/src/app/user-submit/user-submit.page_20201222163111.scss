@@ -39,7 +39,7 @@ $deg: 360deg / $numOfColBlocks;
 
 $red: #EF519D;
 $yellow: #805DA7;
-$blue: #61C8CF;
+$blue: #4D9ED7;
 
 $blocksColors: (
   1: $red,
@@ -91,7 +91,7 @@ body {
     padding: $pad;
     border-radius: $contBr;
     perspective: 1000px;
-    animation: demoAnim $totalAT ease-in-out infinite, contAnim $totalAT infinite;
+    animation: demoAnim $totalAT ease-in-out , contAnim $totalAT infinite;
 
     &-rotater {
       position: absolute;
