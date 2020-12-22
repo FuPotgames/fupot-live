@@ -26,6 +26,11 @@ from django.template.loader import render_to_string, get_template
 
 from cryptography.fernet import Fernet
 
+import base64
+
+from django.core.files.base import ContentFile
+from time import time
+
 """
 View for registering the user or the owner
 """
@@ -172,7 +177,7 @@ def update_account_view(request):
     try:
         account = Account.objects.get(email=request.data.get('old_email'))
         user = request.user
-
+        
         if account != user:
             return Response({'response':"You don't have permission to change"})
         try:
@@ -180,13 +185,35 @@ def update_account_view(request):
         except Account.DoesNotExist:
             return Response(status = status.HTTP_400_NOT_FOUND)
         if request.method == 'PATCH':
-            serializer = AccountPropertiesSerializer(account,data=request.data,partial=True)
+            data = request.POST.copy()
+            if data.get('b64') != None:
+                print('Worked on b64')
+                format, imgstr = data['b64'].split(';base64,') 
+                ext = format.split('/')[-1] 
+
+                data['avatar'] = ContentFile(base64.b64decode(imgstr), name=str(int(time()))+'.' + ext)
+            else:
+                data = request.data
+
+            serializer = AccountPropertiesSerializer(account,data=data,partial=True)
             data = {}
             if serializer.is_valid():
                 serializer.save()
                 data['response'] = "Account Update success"
+                data['username'] = serializer.data['username']
+                data['email'] = serializer.data['email']
+                data['avatar'] = serializer.data['avatar']
                 return Response(data=data)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     except Account.DoesNotExist:
         return Response({'response':"Permission Denied"})
+
+def qdict_to_dict(qdict):
+    """Convert a Django QueryDict to a Python dict.
+
+    Single-value fields are put in directly, and for multi-value fields, a list
+    of all values is stored at the field's key.
+
+    """
+    return {k: v[0] if len(v) == 1 else v for k, v in qdict.lists()}
 

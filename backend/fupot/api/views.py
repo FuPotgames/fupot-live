@@ -9,8 +9,11 @@ from rest_framework.generics import ListAPIView
 from rest_framework import generics, permissions
 from rest_framework.decorators import permission_classes
 from rest_framework.pagination import PageNumberPagination
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework.permissions import IsAuthenticated
 from account.models import Account
+
+from account.api.serializers import AccountPropertiesSerializer
 
 from fupot.models import Question, Submission,Group,MyDevice,GroupNotification,Result,OwnerStatistics,UserStatistics
 from fupot.api.serializers import SubmissionSerializer, ResultSerializer,\
@@ -192,7 +195,11 @@ class CreateQuestionView(generics.CreateAPIView):
                                                                     group = group_instance,\
                                                                         owner = request.user,\
                                                                             location = data.get('location'),\
-                )
+                                                                                winner_title = data.get('winner_title'),\
+                                                                                    loser_title = data.get('loser_title'),\
+                                                                                        winner_body = data.get('winner_body'),\
+                                                                                            loser_body = data.get('loser_body'),\
+                                                                                                extra_data = data.get('extra_data'))
                 return Response(status=201, data=QuestionSerializer(submission).data)
             except:
                 return Response({'reponse':"title, prompt, starts_at, ends_at,answers_1, answers_2,answers_3, answers_4, correct_answer, location are required  "})
@@ -226,6 +233,40 @@ class GetOwnerQuestions(generics.CreateAPIView):
         questions = Question.objects.filter(owner=self.request.user)
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
+
+class GetGroupMembers(APIView):
+    """
+    Responsible for retreving all the grouo members by the group id
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        data = request.data
+        
+        group = Group.objects.get(id = data.get('group'))
+        user = request.user
+
+        if group.owner != user:
+            return Response({'response':"You don't have permission to see that"})
+        
+        members = group.user.all().order_by('username')
+        
+        paginator = Paginator(members, 5)
+        page = request.GET.get('page')
+
+        try:
+            members = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            members = paginator.page(1)
+            return Response({'response':"page number must be integer"})
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            members = paginator.page(paginator.num_pages)
+            return Response({'response':"out of range"})
+        serializer = AccountPropertiesSerializer(members, many=True)
+        return Response(serializer.data)
+        
 
 class CreateSubmissionView(generics.CreateAPIView):
     """
@@ -272,6 +313,12 @@ class NotifyResults(generics.CreateAPIView):
         submissions = Submission.objects.filter(group = group_instance)
         question = Question.objects.get(group = group_instance, id = question_id)
 
+        winner_title = question.winner_title
+        loser_title = question.loser_title
+        winner_body = question.winner_body
+        loser_body = question.loser_body
+        extra_data = question.extra_data
+
         correct_answer = question.correct_answer
         prompt = question.prompt
 
@@ -312,17 +359,12 @@ class NotifyResults(generics.CreateAPIView):
         
         
         winner_devices = MyDevice.objects.filter(user=winner['user'].id)
-        winner_devices.send_message(title=request.data['winner_title'], body=request.data['winner_body'], data={"extra_data": request.data['extra_data']})
+        winner_devices.send_message(title=winner_title, body=winner_body, data={"extra_data": extra_data})
 
         loser_uids = [loser['user'].id for loser in losers]
 
         loser_devices = MyDevice.objects.filter(user__in= loser_uids)
-        loser_devices.send_message(title=request.data['loser_title'], body=request.data['loser_body'], data={"extra_data": request.data['extra_data']})
-
-        #print(winner_devices)
-        #print(loser_devices)
-
-        #print(create_results)
+        loser_devices.send_message(title=loser_title, body=loser_body, data={"extra_data": extra_data})
         
 
         serializer = ResultSerializer(data=create_results, many=True)

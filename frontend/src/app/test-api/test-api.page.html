@@ -1,9 +1,34 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>test-api</ion-title>
+  <ion-toolbar color="primary">
   </ion-toolbar>
 </ion-header>
-
+ 
 <ion-content>
+  <ion-list>
+    <ion-item *ngFor="let question of questions" (click)="questionItemClicked($event);">{{question.id}} {{question.title}} {{question.prompt}}</ion-item>
+  </ion-list>
 
+  <!-- PROFILE CARD --> 
+
+  <div style="margin-top: 12%;">
+    <ion-card color="fupot_grey">
+      <input
+      type="file"
+      #fileInput
+      (change)="uploadFile($event)"
+      hidden="true"
+      accept="image/*"
+    />
+      <div class="img-wrapper">
+        <img [src]="image_url"/>
+        <ion-button color="light" (click)="selectImageSource()">
+          <ion-icon slot="icon-only" src="../../assets/camera-outline.svg" color="medium">
+          </ion-icon>
+        </ion-button>
+      </div>
+      <ion-card-content class="ion-text-center">
+        <ion-label style="font-size: large; font-weight: bold;">Establishment Name</ion-label>
+      </ion-card-content>
+    </ion-card></div>
 </ion-content>
+

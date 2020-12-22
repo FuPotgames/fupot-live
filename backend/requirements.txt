@@ -8,4 +8,4 @@ django-cors-headers
 fcm-django
 cryptography
 django-dbbackup
-django-crontab
+django-extra-fields

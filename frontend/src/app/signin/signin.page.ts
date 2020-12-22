@@ -1,24 +1,30 @@
+import { AuthService } from './../services/auth-services/auth.service';
 import { AuthDataService } from './../services/auth-services/auth-data.service';
 import { Component, OnInit } from '@angular/core';
-import { AccountCreationService } from '../services/auth-services/account-creation.service';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
-  providers: [AccountCreationService]
+  providers: [AuthService]
 })
 export class SigninPage implements OnInit {
 
   loginValues: any;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private accountCreationService: AccountCreationService, private authDataService:AuthDataService , private navController: NavController) { }
+  constructor(
+    private authService: AuthService,
+     private authDataService:AuthDataService,
+     private navController: NavController,
+     private menuController:MenuController
+     ) { }
 
   ngOnInit() {
     this.logo_animation();
+    this.menuController.swipeGesture(false);
     this.loginValues = {
       username: '',
       password: '',
@@ -27,7 +33,7 @@ export class SigninPage implements OnInit {
 
   // Login a User through our User Service
   async loginUser() {
-    this.accountCreationService.login(this.loginValues).subscribe(
+    this.authService.login(this.loginValues).subscribe(
       async response => {
         // successfully loggedin a user and stored token
         if (response['token'] !== undefined){
@@ -41,7 +47,8 @@ export class SigninPage implements OnInit {
           await this.authDataService.set_token(response["token"]);
 
           // redirecting our user after signup
-          this.navController.navigateRoot('/user-home');
+          this.navController.navigateRoot('/owner-tabs');
+          this.menuController.swipeGesture(true);
         }
       },
       error => {

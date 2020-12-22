@@ -39,6 +39,12 @@ class Question(models.Model):
     prompt = models.TextField(max_length=1027, unique=False, blank=True, null=True)
     starts_at = models.TimeField()
     ends_at = models.TimeField()
+
+    winner_title = models.CharField(max_length=255, unique=False, blank=True, null=True)
+    loser_title = models.CharField(max_length=255, unique=False, blank=True, null=True)
+    winner_body = models.TextField(max_length=1027, unique=False, blank=True, null=True)
+    loser_body = models.TextField(max_length=1027, unique=False, blank=True, null=True)
+    extra_data = models.CharField(max_length=255, unique=False, blank=True, null=True)
     
     closed = models.BooleanField(default=False)
     has_winner = models.BooleanField(default=False)

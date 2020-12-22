@@ -8,13 +8,6 @@
     "SplashScreen": {
       "launchShowDuration": 3000
     }
-  }
-  ,
-  "cordova": {
-    "preferences": {
-      "ScrollEnabled": "false",
-      "android-minSdkVersion": "19",
-      "BackupWebStorage": "none"
-    }
-  }
+  },
+  "cordova": {}
 }

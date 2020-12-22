@@ -49,12 +49,7 @@ class Account(AbstractBaseUser):
     is_superuser			= models.BooleanField(default=False)
  
     # Later on, we can add more fields to our Users Here!!###
-    avatar = models.ImageField(upload_to='fupot/user/avatars/', default='fupot/user/avatars/default_user.png')
-    birthday = models.DateField(blank=True, null=True)
-    fucoins = models.IntegerField(default=0)
-    login_streak = models.IntegerField(default=0)
-    num_wins = models.IntegerField(default=0)
-    sex = models.CharField(max_length=63, default='human')
+    avatar = models.ImageField(upload_to='fupot/user/avatars/',blank=True,null=True)
 
 
     USERNAME_FIELD = 'email'
@@ -77,3 +72,15 @@ class Account(AbstractBaseUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+@receiver(models.signals.pre_save, sender=Account)
+def delete_file_on_change_extension(sender, instance, **kwargs):
+   if instance.pk:
+      try:
+         old_avatar = Account.objects.get(pk=instance.pk).avatar
+      except Account.DoesNotExist:
+         return
+      else:
+         new_avatar = instance.avatar
+         if old_avatar and old_avatar.url != new_avatar.url:
+            old_avatar.delete(save=False)

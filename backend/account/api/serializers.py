@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from account.models import Account
+from drf_extra_fields.fields import Base64ImageField
 
 """
 Serializer for Login Info
@@ -52,12 +53,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
 			account.save()
 			return account
 
+
+
 """
 Serializer for Account Properties Info
 """
 class AccountPropertiesSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Account
-		fields = ['pk','email','username']
-
-	
+    class Meta:
+        model = Account
+        fields = ['pk','email','username', 'avatar']
