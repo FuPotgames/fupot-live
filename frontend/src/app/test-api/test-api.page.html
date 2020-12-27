@@ -5,12 +5,25 @@
  
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let question of questions" (click)="questionItemClicked($event);">{{question.id}} {{question.title}} {{question.prompt}}</ion-item>
+    <ion-item *ngFor="let question of questions" (click)="questionItemClicked($event,question);">{{question.id}} {{question.title}} {{question.prompt}}</ion-item>
   </ion-list>
+  
+
+  <ion-card *ngFor="let msg of messages">
+    <ion-item>
+      {{msg.message}}
+
+      {{msg.created_at}}
+    </ion-item>
+  </ion-card>
+ 
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <!-- PROFILE CARD --> 
 
-  <div style="margin-top: 12%;">
+  <!-- <div style="margin-top: 12%;">
     <ion-card color="fupot_grey">
       <input
       type="file"
@@ -29,6 +42,6 @@
       <ion-card-content class="ion-text-center">
         <ion-label style="font-size: large; font-weight: bold;">Establishment Name</ion-label>
       </ion-card-content>
-    </ion-card></div>
+    </ion-card></div> -->
 </ion-content>
 

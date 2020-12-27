@@ -50,9 +50,16 @@ class GroupSerializer(serializers.ModelSerializer):
     """
 	Serializes the Group model
     """
+    mile = serializers.SerializerMethodField('get_mile')
     class Meta:
         model = Group
         fields = '__all__'
+    def get_mile(self, group):
+        try:
+            mile = group.distance.mi
+            return mile
+        except:
+            pass
 
 class OwnerStatisticsSerializer(serializers.ModelSerializer):
     """

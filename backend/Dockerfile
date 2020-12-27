@@ -8,7 +8,7 @@ RUN apt-get install -y \
 	postgresql-9.5 \
 	postgresql-contrib
 
-RUN /usr/local/bin/python -m pip install --upgrade pip
+RUN /usr/local/bin/python -m pip install --upgrade pip && apt-get install -y binutils libproj-dev gdal-bin python-gdal python3-gdal
 
 ARG DJANGO_DEBUG
 ARG DJANGO_SECRET_KEY

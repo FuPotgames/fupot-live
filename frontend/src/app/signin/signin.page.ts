@@ -45,6 +45,7 @@ export class SigninPage implements OnInit {
           await this.authDataService.set_email(response["email"]);
           await this.authDataService.set_phone(response["phone_number"]);
           await this.authDataService.set_token(response["token"]);
+          await this.authDataService.set_is_verified(response["is_verified"]);
 
           // redirecting our user after signup
           this.navController.navigateRoot('/owner-tabs');

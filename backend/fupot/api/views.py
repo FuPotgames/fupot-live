@@ -34,6 +34,12 @@ from django.shortcuts import render
 
 from rest_framework.pagination import PageNumberPagination
 
+from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import D
+from django.contrib.gis.db.models.functions import Distance
+
+from django.contrib.gis.geos import GEOSGeometry
+
 #================================================ Users APIs ==============================================================
 
 class JoinGroup(generics.CreateAPIView):
@@ -67,9 +73,14 @@ class GetJoinedGroups(generics.CreateAPIView):
     # Gets all groups that are joined by this user
     def get(self, request):
         paginator = PageNumberPagination()
-        paginator.page_size = 5
+        paginator.page_size = 4
 
-        groups = Group.objects.filter(user=self.request.user)
+        latitude = float(self.request.GET['lat'])
+        longitude = float(self.request.GET['long'])
+
+        # Here you can do the following thing:
+        point = Point(longitude, latitude)
+        groups = Group.objects.filter(user=self.request.user,location__distance_lte=(point, D(m=1.609e+6))).annotate(distance=Distance('location', point)).order_by('distance')
 
         result_page = paginator.paginate_queryset(groups, request)
 
@@ -78,14 +89,28 @@ class GetJoinedGroups(generics.CreateAPIView):
 
 class ListSearchGroups(ListAPIView):
     """
-    Responsible for searching groups
+    Responsible for searching groups and returning 4 nearby places
     """
-    queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (permissions.IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('name','address','establishment_type','owner__username')
+
+    def get_queryset(self):
+        try:
+            latitude = float(self.request.GET['lat'])
+            longitude = float(self.request.GET['long'])
+
+            # Here you can do the following thing:
+            point = Point(longitude, latitude)
+            groups = Group.objects.filter(location__distance_lte=(point, D(m=1.609e+6))).annotate(distance=Distance('location', point)).order_by('distance')
+
+            # And use it as you wish in the filtering below:
+
+            return groups
+        except:
+            return []
     
 class GetUserQuestions(generics.CreateAPIView):
     """
@@ -96,12 +121,12 @@ class GetUserQuestions(generics.CreateAPIView):
 
     # Gets all groups that are joined by this user
     def get(self, request):
-        data = self.request.data
-        if data.get('group') is None:
+        data = request.GET['group']
+        if data is None:
             return Response({'reponse':"group id is required"})
         else:
             try:
-                group_instance = Group.objects.get(id = data.get('group'), user = request.user)
+                group_instance = Group.objects.get(id = data, user = request.user)
                 questions = Question.objects.filter(group = group_instance)
                 serializer = QuestionSerializer(questions, many=True)
                 return Response(serializer.data)
@@ -136,8 +161,9 @@ class CreateGroup(generics.CreateAPIView):
                                     email = self.request.user.email,\
                                         latitude = data.get('latitude'),\
                                             longitude = data.get('longitude'),\
-                                                establishment_type = data.get('establishment_type'),\
+                                                establishment_type = data.get('establishment_type')
                 )
+                submission.user.add(self.request.user)
                 return Response(status=201, data=GroupSerializer(submission).data)
             except:
                 return Response(status=201, data={'reponse':"name and address must be unique"})
@@ -276,24 +302,61 @@ class CreateSubmissionView(generics.CreateAPIView):
     serializer_class = SubmissionSerializer
 
     # creates a question by the owner
-    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:    
-        data = request.data
-        if (data.get('group') is None) or (data.get('answer') is None) or (data.get('question') is None):
-            return Response({'reponse': "Group id, answer and question id are required"})
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        data = request.data    
+        group = data.get('group')
+        answer = data.get('answer')
+        question = data.get('question')
+        latitude = data.get('lat')
+        longitude = data.get('long')
+        try:
+            group_instance = Group.objects.get(id = group, user = request.user)
+
+            pnt = GEOSGeometry('SRID=4326;POINT('+str(longitude)+' '+str(latitude)+')')
+            pnt2 = GEOSGeometry('SRID=4326;POINT('+str(group_instance.longitude)+' '+str(group_instance.latitude)+')')
+
+            # km to ft
+            distance_diff = ((pnt.distance(pnt2) * 100) * 3280.84)
+            print(distance_diff)
+            if distance_diff <= 500:
+                question_instance = Question.objects.get(id = question)
+                sub = Submission.objects.filter(question = question_instance)
+                if sub.exists():
+                    return Response(status=201, data=SubmissionSerializer(sub[0]).data)
+                else:
+                    submission = Submission.objects.create( \
+                                        group = group_instance,\
+                                            answer = answer,\
+                                                question = question_instance,\
+                                                    user = request.user
+                    )
+                    return Response(status=201, data=SubmissionSerializer(submission).data)
+            else:
+                return Response({'reponse': "You must be at the establishment or near it"})
+        except(Group.DoesNotExist):
+            return Response({'reponse':"User must join the group first"})
+
+
+class GetUserSubmissions(generics.CreateAPIView):
+    """
+    Responsible for retreving all user submissions based on their group
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = SubmissionSerializer
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        data = request.GET['group']
+        if data is None:
+            return Response({'reponse':"group id is required"})
         else:
             try:
-                group_instance = Group.objects.get(id = data.get('group'), user = request.user)
-                question_instance = Question.objects.get(id = data.get('question'))
-                submission = Submission.objects.create( \
-                        group = group_instance,\
-                            answer = data.get('answer'),\
-                                question = question_instance,\
-                                    user = request.user
-                    )
-                return Response(status=201, data=SubmissionSerializer(submission).data)
+                group_instance = Group.objects.get(id = data, user = request.user)
+                submissions = Submission.objects.filter(group = group_instance)
+                serializer = SubmissionSerializer(submissions, many=True)
+                return Response(serializer.data)
             except(Group.DoesNotExist):
                 return Response({'reponse':"User must join the group first"})
-
 class NotifyResults(generics.CreateAPIView):
     """
     Responsible for checking a question and notifying users who won and loss and post the results on the results section
@@ -302,7 +365,7 @@ class NotifyResults(generics.CreateAPIView):
 
     # Gets all groups that are joined by this user
     def delete(self, request,pk):
-        question_id = request.data.get('question_id')
+        question_id = request.GET['question_id']
         group = Group.objects.get(id=pk)
         user = request.user
 
@@ -497,16 +560,18 @@ class GetGroupMessages(generics.CreateAPIView):
 
     # Gets all groups that are joined by this user
     def get(self, request):
-        data = self.request.data
-        if data.get('group') is None:
+        group = request.GET['group']
+        if group is None:
             return Response({'reponse':"group id is required"})
         else:
             try:
                 paginator = PageNumberPagination()
-                paginator.page_size = 5
+                paginator.page_size = 30
 
-                group_instance = Group.objects.get(id = data.get('group'), user = request.user)
-                group_notifications = GroupNotification.objects.filter(group = group_instance)
+                group_instance = Group.objects.get(id = group, user = request.user)
+                group_notifications = GroupNotification.objects.filter(group = group_instance).order_by('created_at')
+
+                
 
                 result_page = paginator.paginate_queryset(group_notifications, request)
 
@@ -574,16 +639,21 @@ class UpdateOwnerStatistics(APIView):
                         user_input_question_asked = int(''.join(newdict[x]))
                         total = question_asked + user_input_question_asked
                         newdict.update({'question_asked':total})
+                        
                     elif x == 'prizes_issued':
                         user_input_prizes_issued = int(''.join(newdict[x]))
                         total = prizes_issued + user_input_prizes_issued
                         newdict.update({'prizes_issued':total})
             
+                        
             serializer = OwnerStatisticsSerializer(owner, data=newdict,partial=True)
 
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                group_members = Group.objects.get(owner=self.request.user).user.count()
+                data = serializer.data
+                data['group_members'] = group_members
+                return Response(data)
             
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -592,11 +662,11 @@ class UpdateUserStatistics(APIView):
     Responsible for updating group properties by id
     """
     permission_classes = (permissions.IsAuthenticated,)
-    def patch(self, request, pk):
-        group = Group.objects.get(id=pk)
+    def patch(self, request):
+        user_stat = UserStatistics.objects.get(user=request.user)
         user = request.user
 
-        if group.owner != user:
+        if user_stat.user != user:
             return Response({'response':"Permission Denied"})
         else:
             user = UserStatistics.objects.get(user = request.user)
@@ -641,8 +711,12 @@ class GetOwnerStatistics(APIView):
     # Gets all groups that are joined by this user
     def get(self, request):
         statistics = OwnerStatistics.objects.filter(owner=self.request.user)
+        group_members = Group.objects.get(owner=self.request.user).user.count()
         serializer = OwnerStatisticsSerializer(statistics, many=True)
-        return Response(serializer.data)
+
+        data = serializer.data
+        data[0]['group_members'] = group_members
+        return Response(data)
 
 class GetUserStatistics(APIView):
     """

@@ -6,7 +6,7 @@ from fupot.api.views import CreateGetNotificationView,\
          JoinGroup, GetJoinedGroups, CreateGroup, EditGroup, CreateQuestionView, GetOwnerQuestions, GetUserQuestions,\
              EditQuestion, CreateSubmissionView, NotifyResults,SendNotificationToGroup,GetGroupMessages,ResultStatus,\
              RemoveStatus, CreateOwnerStatistics, CreateUserStatistics, UpdateOwnerStatistics, UpdateUserStatistics,\
-             GetOwnerStatistics, GetUserStatistics,ListSearchGroups, GetGroupMembers
+             GetOwnerStatistics, GetUserStatistics,ListSearchGroups, GetGroupMembers, GetUserSubmissions
 app_name = 'fupot'
 
 
@@ -27,9 +27,10 @@ urlpatterns = [
 
     path('get-user-questions', GetUserQuestions.as_view(), name="get-user-question"),
     path('answer-question', CreateSubmissionView.as_view(), name="answer-question"),
+    path('get-user-submissions', GetUserSubmissions.as_view(), name="get-user-submissions"),
 
     path('create-user-statistics', CreateUserStatistics.as_view(), name="create-user-statistics"),
-    path('update-user-statistics/<int:pk>', UpdateUserStatistics.as_view(), name="update-user-statistics"),
+    path('update-user-statistics', UpdateUserStatistics.as_view(), name="update-user-statistics"),
 
     path('get-user-statistics', GetUserStatistics.as_view(), name="get-user-statistics"),
     

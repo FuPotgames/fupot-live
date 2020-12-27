@@ -47,6 +47,7 @@ def registration_view(request):
             data['phone_number'] = account.phone_number
             token = Token.objects.get(user=account).key
             data['token'] = token
+            data['is_verified'] = account.is_verified
 
             user_data = serializer.data
             user = Account.objects.get(email=account.email)
@@ -83,7 +84,7 @@ class ResendConfirmEmail(generics.GenericAPIView):
 
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request):
+    def post(self, request):
         try:
             data = request.data
             user = Account.objects.get(email=data.get('email'))
@@ -203,6 +204,7 @@ def update_account_view(request):
                 data['username'] = serializer.data['username']
                 data['email'] = serializer.data['email']
                 data['avatar'] = serializer.data['avatar']
+                data['is_verified'] = serializer.data['is_verified']
                 return Response(data=data)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     except Account.DoesNotExist:

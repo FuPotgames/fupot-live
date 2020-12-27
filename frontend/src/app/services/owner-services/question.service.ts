@@ -27,4 +27,10 @@ export class QuestionService {
    editQuestion(question_id,questionData): Observable<any> {
     return this.http.patch(environment.BASE_API_URL + '/api/fupot/edit-question/'+question_id,questionData);
   }
+
+  /* Check answers, notify winners and losers and delete that question from database
+   and store that result for every user so they could delete their notfications later on */
+  checkQuestion(group_id,question_id): Observable<any> {
+    return this.http.delete(environment.BASE_API_URL + '/api/fupot/notify_results/'+group_id+'?question_id='+question_id);
+  }
 }

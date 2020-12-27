@@ -1,4 +1,3 @@
-import { AuthService } from './../auth-services/auth.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 
@@ -23,16 +22,16 @@ export class NotificationService {
   saveNotificationInfo: any;
   deviceInfo: any;
 
-  constructor(private authService: AuthService, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   // setup the headers for requesting
-  initHeaders() {
-    const headers = {
-      Authorization: 'Token cc770567bf47d32f8ad0587cd4f581cbca794368',
-      'Content-Type': 'application/json'
-    };
-    return headers;
-  }
+  // initHeaders() {
+  //   const headers = {
+  //     Authorization: 'Token cc770567bf47d32f8ad0587cd4f581cbca794368',
+  //     'Content-Type': 'application/json'
+  //   };
+  //   return headers;
+  // }
 
   // This function saves the token to the backend server
   setupToken(platform, token) {
@@ -55,10 +54,10 @@ export class NotificationService {
     Note: Later on, the link needs to be change to aws host server address
   */
   saveToken(notificationData): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders(this.initHeaders())
-    };
-    return this.http.post(environment.BASE_API_URL + '/api/fupot/notification', notificationData, httpOptions);
+    // const httpOptions = {
+    //   headers: new HttpHeaders(this.initHeaders())
+    // };
+    return this.http.post(environment.BASE_API_URL + '/api/fupot/notification', notificationData);
   }
 
   /*
@@ -96,26 +95,36 @@ export class NotificationService {
 
         // Some issue with our setup and push will not work
         PushNotifications.addListener('registrationError',
-          (error: any) => {
+          () => {
             //alert('Error on registration: ' + JSON.stringify(error));
           }
         );
 
         // Show us the notification payload if the app is open on our device
         PushNotifications.addListener('pushNotificationReceived',
-          (notification: PushNotification) => {
+          () => {
             //alert('Push received: ' + JSON.stringify(notification));
           }
         );
 
         // Method called when tapping on a notification
         PushNotifications.addListener('pushNotificationActionPerformed',
-          (notification: PushNotificationActionPerformed) => {
+          () => {
             //alert('Push action performed: ' + JSON.stringify(notification));
           }
         );
 
       }
     });
+  }
+
+  // Send a post request to send group messages
+  sendGroupMessages(group_id,messageData): Observable<any> {
+    return this.http.post(environment.BASE_API_URL + '/api/fupot/notify-group/'+group_id,messageData);
+  }
+
+  // Send a post request to send group messages
+  getGroupMessages(group_id,paginated_index): Observable<any> {
+    return this.http.get(environment.BASE_API_URL + '/api/fupot/get-group-messages?'+'group='+group_id+'&page='+paginated_index);
   }
 }

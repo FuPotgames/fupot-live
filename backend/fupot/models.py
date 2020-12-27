@@ -3,23 +3,35 @@ from django.conf import settings
 from fcm_django.models import AbstractFCMDevice
 from django.core.validators import RegexValidator
 
+from django.contrib.gis.geos import Point
+from django.contrib.gis.db import models as gis_models
+from django.db.models.manager import Manager
+
 
 class Group(models.Model):
    """
    This will allow us to manage owners' group.
    """
-   name = models.CharField(max_length=255, unique=False)
-   address = models.CharField(max_length=255, unique=True)
-   establishment_type = models.CharField(max_length=255, null =True,blank=True)
-   email = models.EmailField(verbose_name="email", max_length=60, blank=True,null=True)
+   name = gis_models.CharField(max_length=255, unique=False)
+   address = gis_models.CharField(max_length=255, unique=True)
+   establishment_type = gis_models.CharField(max_length=255, null =True,blank=True)
+   email = gis_models.EmailField(verbose_name="email", max_length=60, blank=True,null=True)
    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-   phone_number = models.CharField(validators=[phone_regex], max_length=17,null=True, blank=True) # validators should be a list
+   phone_number = gis_models.CharField(validators=[phone_regex], max_length=17,null=True, blank=True) # validators should be a list
 
-   latitude = models.FloatField(null=True,blank=True)
-   longitude = models.FloatField(null=True,blank=True)
+   latitude = gis_models.FloatField(null=True,blank=True)
+   longitude = gis_models.FloatField(null=True,blank=True)
+   
+   location = gis_models.PointField(geography=True, srid=4326,null=True,blank=True)
 
-   user = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-   owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="+",blank=True)
+   user = gis_models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+   owner = gis_models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="+",blank=True)
+
+   objects = Manager()
+
+   def save(self, **kwargs):
+       self.location = Point(self.longitude, self.latitude)
+       super(Group, self).save(**kwargs)
    
    def __str__(self):
       return self.name
@@ -95,6 +107,7 @@ class Submission(models.Model):
                                   default=False,
                                   help_text="Is this a correct answer?",
                                   verbose_name="Correct")
+
     
     def __str__(self):
       return self.answer
@@ -144,3 +157,17 @@ class UserStatistics(models.Model):
     groups_joined = models.IntegerField(default=0,blank=True,null=True)
     prizes_won = models.IntegerField(default=0,blank=True,null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+
+""" from django.contrib.gis.geos import Point
+from django.contrib.gis.db import models as gis_models
+from django.db.models.manager import Manager
+
+class Store(models.Model):
+    name = gis_models.CharField(max_length=100)
+    location = gis_models.PointField(geography=True, srid=4326,null=True,blank=True)
+    longitude = gis_models.FloatField()
+    latitude = gis_models.FloatField()
+    objects = Manager()
+    def save(self, **kwargs):
+        self.location = Point(self.longitude, self.latitude)
+        super(Store, self).save(**kwargs) """

@@ -33,6 +33,10 @@ export class AuthDataService {
     var token = this.storage.get('token');
     return token;
   }
+  async get_is_verified(){
+    var is_verified = this.storage.get('is_verified');
+    return is_verified;
+  }
 
   async set_username(username){
     await this.storage.set('username',username);
@@ -48,6 +52,9 @@ export class AuthDataService {
   }
   async set_token(token){
     await this.storage.set('token',token);
+  }
+  async set_is_verified(is_verified){
+    await this.storage.set('is_verified',is_verified);
   }
   
   async clear_token(){

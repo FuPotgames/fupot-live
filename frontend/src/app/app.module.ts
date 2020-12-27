@@ -1,3 +1,7 @@
+import { UserStatisticsService } from './services/user-services/user-statistics.service';
+import { UserQuestionService } from './services/user-services/user-question.service';
+import { UserGroupService } from './services/user-services/user-group.service';
+import { StatisticsService } from './services/owner-services/statistics.service';
 import { GroupDataService } from './services/owner-services/group-data.service';
 import { TokenInterceptorService } from './services/general-services/token-interceptor.service';
 import { GroupService } from './services/owner-services/group.service';
@@ -19,6 +23,8 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { QuestionDataService } from './services/owner-services/question-data.service';
+import { StatisticsDataService } from './services/owner-services/statistics-data.service';
+import { UserStatisticsDataService } from './services/user-services/user-statistics-data.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,11 +33,20 @@ import { QuestionDataService } from './services/owner-services/question-data.ser
   providers: [
     StatusBar,
     SplashScreen,
+    
     AuthDataService,
-    GroupService,
     NotificationService,
+    
+    GroupService,
     GroupDataService,
     QuestionDataService,
+    StatisticsService,
+    StatisticsDataService,
+
+    UserGroupService,
+    UserQuestionService,
+    UserStatisticsService,
+    UserStatisticsDataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

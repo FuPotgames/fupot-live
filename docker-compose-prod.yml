@@ -19,7 +19,7 @@ services:
       - "./backend:/src"
     command: ["nginx","-g","daemon off;"]
   db:
-    image: postgres:alpine
+    image: postgis/postgis:11-3.1-alpine
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -37,6 +37,7 @@ services:
     volumes:
       - "./frontend/src:/usr/src/fupot/src"
       - "./frontend/www:/usr/src/fupot/www"
+      - "./frontend/node_modules:/usr/src/fupot/node_modules"
       
   backend:
     restart: always
