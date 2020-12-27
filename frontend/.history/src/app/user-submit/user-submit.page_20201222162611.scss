@@ -32,19 +32,19 @@ ion-content {
   padding: 0;
 }
 
-$bgColor: #303030;
+$bgColor: #61C8CF;
 
 $numOfColBlocks: 3; // must be higher than 2
 $deg: 360deg / $numOfColBlocks;
 
 $red: #EF519D;
 $yellow: #805DA7;
-$blue: #61C8CF;
+$blue: #4D9ED7;
 
 $blocksColors: (
   1: $red,
   2: $yellow,
-  3: $blue,
+  3: $blue
 );
 
 
@@ -106,7 +106,7 @@ body {
     &-inner {
       overflow: hidden;
       position: relative;
-      height: 100%;
+      height: 50%;
       background: $bgColor;
       border-radius: inherit;
     }

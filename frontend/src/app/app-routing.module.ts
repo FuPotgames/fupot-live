@@ -32,6 +32,8 @@ const routes: Routes = [
   { path: 'owner-tabs', loadChildren: './owner-tabs/owner-tabs.module#OwnerTabsPageModule' },
   { path: 'owner-guidelines', loadChildren: './owner-guidelines/owner-guidelines.module#OwnerGuidelinesPageModule' },
   { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
+  { path: 'owner-signup', loadChildren: './owner-signup/owner-signup.module#OwnerSignupPageModule' },
+  { path: 'user-signup', loadChildren: './user-signup/user-signup.module#UserSignupPageModule' },
 
 ];
 
