@@ -67,19 +67,15 @@
 <div *ngIf="showMe" style="padding-left: 5%;" class="details">
 
     <ion-label>Name</ion-label>
-    <ion-input placeholder="Establishment Name"></ion-input>
+    <ion-input [(ngModel)]="editData['name']" placeholder="Establishment Name"></ion-input>
     
     <ion-label position="stacked">Address</ion-label>
-    <ion-input placeholder="Address Line 1"></ion-input>
-    <ion-input placeholder="Address Line 2"></ion-input>
-    <ion-input placeholder="City"></ion-input>
-    <ion-input placeholder="State"></ion-input>
-    <ion-input placeholder="Zip Code"></ion-input>
+    <ion-input [(ngModel)]="editData['address']" placeholder="Address"></ion-input>
 
     <ion-label>Phone Number</ion-label>
     <ion-input placeholder="Phone Number"></ion-input>
 
-  <div style="text-align: center;"><ion-button fill="outline" color="fupot_purple" shape="round">SAVE</ion-button></div>
+  <div style="text-align: center;"><ion-button (click)="test()" fill="outline" color="fupot_purple" shape="round">SAVE</ion-button></div>
 
   </div>
 

@@ -18,15 +18,15 @@
     
     <ion-item>
       <ion-label style="font-size: 11pt;" position="floating">LOCATION NAME</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="groupData['name']"></ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label style="font-size: 11pt;"  position="floating"> ADDRESS</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="groupData['address']" ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label style="font-size: 11pt;"  position="floating">EMAIL</ion-label>
       <ion-input></ion-input>
     </ion-item>
@@ -44,12 +44,12 @@
     <ion-item>
       <ion-label style="font-size: 11pt;"  position="floating">CONFIRM PASSWORD</ion-label>
       <ion-input></ion-input>
-    </ion-item>
+    </ion-item> -->
 
   </ion-list>
 
   <div class="ion-text-center">
-    <ion-button id="buttonPurple" size="default" expand="block" color="fupot_purple" style="margin-left: 4%; margin-right: 4%;">
-    <ion-label id="labelLocations" color="light" style="font-weight: bold; font-size: large;">Create Account</ion-label>
+    <ion-button (click)="createGroup()" id="buttonPurple" size="default" expand="block" color="fupot_purple" style="margin-left: 4%; margin-right: 4%;">
+    <ion-label id="labelLocations" color="light" style="font-weight: bold; font-size: large;">Create Group</ion-label>
   </ion-button></div>
 </ion-content>
