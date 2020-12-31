@@ -1,0 +1,28 @@
+<ion-header style="margin-bottom: 5%;">
+  <ion-toolbar>
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="45%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 10pt;">
+        Settings
+      </div>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <ion-list style="padding: 3%;">
+    <ion-item>
+      <ion-label style="font-size: 11pt;" position="floating">LOCATION NAME</ion-label>
+      <ion-input [(ngModel)]="groupData['name']"></ion-input>
+    </ion-item>
+
+    
+    <ion-item>
+      <ion-label style="font-size: 11pt;"  position="floating"> ADDRESS</ion-label>
+      <ion-input [(ngModel)]="groupData['address']" ></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+
+</ion-content>
