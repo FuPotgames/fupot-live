@@ -20,8 +20,8 @@ ion-row{
 //customizations to the user/owner selection 
 
 ion-segment-button {
-    --background: white;
-    --background-checked: var(--ion-color-fupot_purple) ;
+    --background:transparent;
+    --background-checked: #4D9ED7;
     --border-color: #303030;
 }
 

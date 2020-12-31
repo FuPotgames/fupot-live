@@ -13,9 +13,9 @@
             </div>
 
           <!-- Signin as option -->
-          <div class="ion-text-center" style="margin: 4%;">
-            <ion-label style=" margin-bottom: 3%; font-weight: bold;" color="light">Sign Up as: </ion-label>
-            <ion-toolbar (ionChange)="segmentChanged($event)" size="large" style="margin-top: 3%;" color="transparent">
+          <div class="ion-text-center">
+            <ion-label style="margin-left: 4%; margin-bottom: 3%;">Sign Up as: </ion-label>
+            <ion-toolbar (ionChange)="segmentChanged($event)" mode="ios" size="large" style="margin-top: 3%;" color="transparent">
             <ion-segment value="asUser" >
               <ion-segment-button value="asUser" id="segment-button">
               <ion-label> User </ion-label>

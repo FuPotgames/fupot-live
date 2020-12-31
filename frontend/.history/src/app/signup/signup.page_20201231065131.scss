@@ -16,16 +16,6 @@ ion-row{
     justify-content: center;
     --ion-item-background: transparent;
 }
-
-//customizations to the user/owner selection 
-
-ion-segment-button {
-    --background: white;
-    --background-checked: var(--ion-color-fupot_purple) ;
-    --border-color: #303030;
-}
-
-
 // Added margin around our middle section of the userinputs
 .middle_section{
     margin-left: 5%;
