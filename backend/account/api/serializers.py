@@ -9,7 +9,7 @@ Serializer for Login Info
 class LoginSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Account
-		fields = ['email','username','phone_number','token']
+		fields = ['email','username','phone_number','token','user_type']
 
 		extra_kwargs = {'password': {'write_only': True}}
 
@@ -28,7 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Account
-		fields = ['email', 'username', 'password', 'password2','phone_number']
+		fields = ['email', 'username', 'password', 'password2','phone_number','user_type']
 		extra_kwargs = {
 				'password': {'write_only': True},
 		}	
@@ -43,7 +43,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
 			account = Account(
 					email=self.validated_data['email'],
 					username=self.validated_data['username'],
-					phone_number=self.validated_data['phone_number']
+					phone_number=self.validated_data['phone_number'],
+					user_type = self.validated_data['user_type']
 				)
 			password = self.validated_data['password']
 			password2 = self.validated_data['password2']

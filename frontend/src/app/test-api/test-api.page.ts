@@ -46,6 +46,8 @@ export class TestApiPage implements OnInit {
   page = 1;
   maximumPages;
 
+  csrf_token = '';
+
   has_group = true; // group creation helper
   constructor(
     private groupService: GroupService,
@@ -112,13 +114,13 @@ export class TestApiPage implements OnInit {
     
 
 
-    await this.createGroup();
-    this.group_id = await this.groupDataService.get_id();
-    await this.getQuestions();
+    //await this.createGroup();
+    //this.group_id = await this.groupDataService.get_id();
+    //await this.getQuestions();
 
-    await this.getAccountProperties();
+    //await this.getAccountProperties();
     
-    await this.resendConfirmEmail(await this.authDataService.get_email());
+    //await this.resendConfirmEmail(await this.authDataService.get_email());
 
     //await this.sendGroupMessages(this.group_id,this.messageData);
 
@@ -154,12 +156,12 @@ export class TestApiPage implements OnInit {
     //   "questions_answered": '2'
     // })
 
-    await this.getOwnerStatistics();
+    //await this.getOwnerStatistics();
 
     //await this.getResultStatus();
-    await this.deleteResultStatus(1);
+    //await this.deleteResultStatus(1);
 
-
+    //await this.forgotPasswordRequest('tahmidahmed1000@gmail.com');
   }
 
   async getLocation() {
@@ -653,6 +655,19 @@ export class TestApiPage implements OnInit {
 
     }, error => {
       console.log('Something went wrong with deleting result status');
+    });
+  }
+
+  // sends a forgot password link to specified email
+  async forgotPasswordRequest(email) {
+    this.authService.mockForgotPassword().subscribe(async res => {
+
+    }, async error => {
+      this.authService.forgotPassword(email).subscribe(async res => {
+        console.log(res);
+  
+      }, error => {
+      });
     });
   }
   

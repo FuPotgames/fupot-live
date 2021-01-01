@@ -47,9 +47,11 @@ class Account(AbstractBaseUser):
     is_active				= models.BooleanField(default=True)
     is_staff				= models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
+
  
     # Later on, we can add more fields to our Users Here!!###
     avatar = models.ImageField(upload_to='fupot/user/avatars/',blank=True,null=True)
+    user_type = models.CharField(max_length=30, unique=False)
 
 
     USERNAME_FIELD = 'email'

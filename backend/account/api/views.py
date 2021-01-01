@@ -44,6 +44,7 @@ def registration_view(request):
             data['response'] = 'successfully registered new user.'
             data['email'] = account.email
             data['username'] = account.username
+            data['user_type'] = account.user_type
             data['phone_number'] = account.phone_number
             token = Token.objects.get(user=account).key
             data['token'] = token
@@ -130,7 +131,8 @@ class CustomAuthToken(ObtainAuthToken):
             'username': user.username,
             'email': user.email,
             'phone_number':user.phone_number,
-            'verified':user.is_verified
+            'verified':user.is_verified,
+            'user_type':user.user_type
         })
 
 """

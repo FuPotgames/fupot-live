@@ -12,13 +12,16 @@ import { NavController, MenuController } from '@ionic/angular';
 })
 export class SignupPage implements OnInit {
   registerValues: any;
+  userStatus:any;
   // tslint:disable-next-line: max-line-length
   constructor(
     private authService: AuthService,
     private authDataService:AuthDataService, 
     private navController: NavController,
     private menuController:MenuController
-    ) {}
+    ) {
+     
+    }
 
   // starts up our signup page with logo animation and setting default input values
   ngOnInit() {
@@ -44,39 +47,62 @@ export class SignupPage implements OnInit {
   }
   // Register a New User through our User Service
   async registerNewUser() {
-    this.authService.register(this.registerValues).subscribe(
-      async response => {
-        // successfully registered a user and stored token
-        if (response['response'] !== undefined) {
-            // stores the userdata in localstorage
-            await this.authDataService.set_username(response["username"]);
-            await this.authDataService.set_email(response["email"]);
-            await this.authDataService.set_phone(response["phone_number"]);
-            await this.authDataService.set_token(response["token"]);
-            await this.authDataService.set_is_verified(response["is_verified"]);
-
-            // redirecting our user after signup
-            this.navController.navigateRoot('/owner-tabs');
-            this.menuController.swipeGesture(true);
-          } 
-          // shows alert if email and username already exists
-          else if ((response['email'] !== undefined) && (response['username'] !== undefined)) {
-            alert('Email and Username already exist!');
-          }
-          // shows alert if only email already exists 
-          else if (response['email'] !== undefined) {
-            alert(response['email']);
-          } 
-          // shows alert if only username already exists 
-          else if (response['username'] !== undefined) {
-            alert(response['username']);
-          }
-          // shows alert if only username already exists 
-          else if (response['error'] !== undefined) {
-            alert(response['error']);
-          }
-      }
-    );
+    console.log(this.userStatus);
+    if (this.userStatus != undefined){
+      this.authService.register(this.registerValues).subscribe(
+        async response => {
+          // successfully registered a user and stored token
+          if (response['response'] !== undefined) {
+              // stores the userdata in localstorage
+              await this.authDataService.set_username(response["username"]);
+              await this.authDataService.set_email(response["email"]);
+              await this.authDataService.set_phone(response["phone_number"]);
+              await this.authDataService.set_token(response["token"]);
+              await this.authDataService.set_is_verified(response["verified"]);
+              await this.authDataService.set_user_type(response["user_type"]);
+  
+              
+              if (this.userStatus == 'asUser'){
+                // redirecting our user after signup
+                console.log('user page');
+                this.navController.navigateRoot('/user-tabs');
+                this.menuController.swipeGesture(true);
+              }
+              else{
+                // redirecting our user after signup
+                console.log('owner page');
+                //this.navController.navigateRoot('/owner-tabs');
+                this.navController.navigateRoot('/owner-signup');
+                this.menuController.swipeGesture(true);
+              }
+              
+              
+              
+              
+              
+            } 
+            // shows alert if email and username already exists
+            else if ((response['email'] !== undefined) && (response['username'] !== undefined)) {
+              alert('Email and Username already exist!');
+            }
+            // shows alert if only email already exists 
+            else if (response['email'] !== undefined) {
+              alert(response['email']);
+            } 
+            // shows alert if only username already exists 
+            else if (response['username'] !== undefined) {
+              alert(response['username']);
+            }
+            // shows alert if only username already exists 
+            else if (response['error'] !== undefined) {
+              alert(response['error']);
+            }
+        }
+      );
+    }
+    else{
+      alert('Choose a user type');
+    }
   }
 
   // Animating our FuPotLive Logo
@@ -90,6 +116,11 @@ export class SignupPage implements OnInit {
     duration: 1000,
     iterations: Infinity,
   });
+  }
+
+  segmentChanged($event){
+    this.userStatus =  event['detail'].value;
+    this.registerValues['user_type'] = this.userStatus
   }
 
 }

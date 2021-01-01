@@ -1,5 +1,6 @@
 import os
 from decouple import config
+from corsheaders.defaults import default_headers
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -70,12 +71,31 @@ AUTH_USER_MODEL = 'account.Account'
 FCM_DEVICE_MODEL = 'fupot.MyDevice'
 
 
-# CORS Config
+# settings.py
 CORS_ORIGIN_ALLOW_ALL = True
 
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = False
 
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
 ROOT_URLCONF = 'backend.urls'
 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-xsrf-token',
+    'x-requested-with',
+]
 
 TEMPLATES = [
     {

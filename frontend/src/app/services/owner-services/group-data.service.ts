@@ -40,6 +40,7 @@ export class GroupDataService {
   async set_id(group_id){
     await this.storage.set('group_id', group_id);
   }
+  
   async set_name(group_name){
     await this.storage.set('group_name', group_name);
   }

@@ -61,5 +61,13 @@ export class AuthDataService {
     await this.storage.clear();
   }
 
+  async set_user_type(user_type){
+    await this.storage.set('user_type', user_type);
+  }
+  async get_user_type(){
+    var user_type = this.storage.get('user_type');
+    return user_type;
+  }
+
 
 }

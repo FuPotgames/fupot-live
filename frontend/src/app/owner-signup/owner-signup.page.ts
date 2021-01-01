@@ -15,6 +15,7 @@ export class OwnerSignupPage implements OnInit {
   groupData: {};  // for creating group purposes
   group_id:string; // for retrieving the id from the groupData service
   has_group = true; // group creation helper
+  establishment_type:string;
   constructor(
     private groupService: GroupService,
     private groupDataService: GroupDataService,
@@ -52,7 +53,8 @@ export class OwnerSignupPage implements OnInit {
   */
  
  async createGroup(groupData?) {
-  await this.getLocation();
+  if(this.establishment_type != undefined){
+    await this.getLocation();
   this.groupService.createGroup(groupData).subscribe(async res => {
     try{
       if (res['1']['reponse'] == 'Group already exists with this owner'){
@@ -89,6 +91,16 @@ export class OwnerSignupPage implements OnInit {
   }, error => {
     console.log(error);
   });
-}
+  }
+  else{
+    alert('Please choose a category type')
+  }
+  
+  }
+  onChange($event){
+    this.establishment_type =  event['detail'].value;
+    this.groupData['establishment_type'] = this.establishment_type
+  }
+
 
 }

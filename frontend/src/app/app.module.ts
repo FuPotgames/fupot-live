@@ -18,7 +18,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
@@ -29,7 +29,10 @@ import { UserStatisticsDataService } from './services/user-services/user-statist
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot({swipeBackEnabled: false}), AppRoutingModule,HttpClientModule,FormsModule,IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot({swipeBackEnabled: false}), AppRoutingModule,
+    HttpClientModule,
+    HttpClientXsrfModule,
+    FormsModule,IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,

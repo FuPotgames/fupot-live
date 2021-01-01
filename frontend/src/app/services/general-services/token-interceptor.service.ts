@@ -1,6 +1,6 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpXsrfTokenExtractor } from '@angular/common/http';
 
 import { from, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ intercepting the request by adding Token XXXX to headers on every request
 */
 export class TokenInterceptorService implements HttpInterceptor {
   accountToken: string;
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private csrf: HttpXsrfTokenExtractor) {
     this.getToken();
   }
   intercept(request: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>>{
@@ -32,7 +32,7 @@ export class TokenInterceptorService implements HttpInterceptor {
                     const headers = request.headers
                             .set('Authorization', 'Token ' + token);
                     const requestClone = request.clone({
-                     headers 
+                     headers
                     });
                     return next.handle(requestClone);
                   }

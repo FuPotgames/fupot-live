@@ -1,7 +1,8 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService{
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private csrf:HttpXsrfTokenExtractor) { }
 
   // Responsible for creating user accounts
   register(userData): Observable<any> {
@@ -36,5 +37,20 @@ export class AuthService{
   resendConfirmEmail(email): Observable<any> {
     return this.http.post(environment.BASE_API_URL + '/resend-confirm_email/',{email:email});
   }
+
+  // Responsible for sending password reset email
+  forgotPassword(email): Observable<any> {
+    var formdata = new FormData();
+    formdata.set('email',email);
+    formdata.set('csrfmiddlewaretoken',this.csrf.getToken());
+    return this.http.post(environment.BASE_API_URL + '/password-reset/',formdata,{withCredentials: true,headers:{'X-XSRF-TOKEN':this.csrf.getToken()}});
+  }
+
+  // mock get request for csrf token
+  mockForgotPassword(): Observable<any> {
+    return this.http.get(environment.BASE_API_URL + '/password-reset/');
+  }
+
+
 
 }
