@@ -1,0 +1,32 @@
+<ion-content>
+  <!-- Using web animation lib to animate our logo section --> 
+  <script src="web-animations.min.js"></script>
+  <!-- Using forms for collecting user information and parseing it later on --> 
+  <form  #form="ngForm" >
+    <ion-grid>
+      <ion-row color="primary" class="ion-justify-content-center">
+        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+          <div style="padding-bottom: 3%;">
+            <!-- Fupot Logo Section --> 
+          <div id="signup_logo_animation" class="ion-text-center">
+            <img src="../../assets/load_screen_logo.png" width="75%" height="20%" style="padding-bottom: 5%;">
+            </div>
+
+          <ion-label  id="bottom_text_style" class="label_style">A confimation email has sent to your inbox</ion-label>
+          <!-- Middle user inputs section for signup  *ngIf="true" -->
+          </div>
+
+    
+
+          <!-- Button Section with texts -->
+          <div style="margin-top: 10%;">
+            <div class="ion-text-center">
+              <ion-button (click) = "getAccountProperties()" fill="outline" id="customized_create_account_button" type="submit">Verify</ion-button>
+            </div>
+              <ion-label (click)="resendConfirmEmail()" id="bottom_text_style" class="label_style" ><a id="bottom_text_style" >Resend Confirmation Email</a></ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

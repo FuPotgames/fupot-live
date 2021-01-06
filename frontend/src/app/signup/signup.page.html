@@ -15,8 +15,8 @@
           <!-- Signin as option -->
           <div class="ion-text-center" style="margin: 4%;">
             <ion-label style=" margin-bottom: 3%; font-weight: bold;" color="light">Sign Up as: </ion-label>
-            <ion-toolbar (ionChange)="segmentChanged($event)" mode="ios" style="margin-top: 3%;" color="transparent">
-            <ion-segment >
+            <ion-toolbar  mode="ios" style="margin-top: 3%;" color="transparent">
+            <ion-segment (ionChange)="segmentChanged($event)">
               <ion-segment-button value="asUser" id="segment-button">
               <ion-label> User </ion-label>
               </ion-segment-button>
@@ -54,7 +54,7 @@
           <!-- Button Section with texts -->
           <div style="margin-top: 10%;">
             <div class="ion-text-center">
-              <ion-button (click)="registerNewUser()" [disabled]="form.invalid" fill="outline" id="customized_create_account_button" type="submit">Create Account</ion-button>
+              <ion-button (click) = "registerNewUser()" [disabled]="form.invalid" fill="outline" id="customized_create_account_button" type="submit">Create Account</ion-button>
             </div>
               <ion-label id="bottom_text_style" class="label_style">By creating an account, you agree to our Terms</ion-label>
               <ion-row class="label_style">

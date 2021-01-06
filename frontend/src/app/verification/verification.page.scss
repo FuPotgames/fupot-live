@@ -1,0 +1,83 @@
+// Setting up background image for the signup page
+ion-content{
+    --color: rgb(0, 0, 0);
+    --background:none;
+    background: url('../../assets/splash_background.svg') no-repeat center/cover fixed;
+    background-size: cover;
+}
+// Making our layout transparent with out background image
+ion-grid{
+    --ion-item-background: transparent;
+}
+// Adjusted the row to be centered in the middle
+ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --ion-item-background: transparent;
+}
+
+//customizations to the user/owner selection 
+
+ion-segment-button {
+    --background: white;
+    --background-checked: var(--ion-color-fupot_purple) ;
+    --border-color: #303030;
+}
+
+
+// Added margin around our middle section of the userinputs
+.middle_section{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+// Customize our signup button
+#customized_create_account_button{
+    --background:rgb(240, 0, 160);
+    --box-shadow: none;
+    --border-radius: 25px;
+    text-transform: none;
+    margin: auto;
+    font-size:150%;
+    font-weight: bolder;
+    height: 2em;
+    color: white;
+    --border-color:white ;
+    
+}
+
+// Making our bottom terms and sign in text to be in one line each
+.label_style{
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: center;
+    display:flex;
+    margin-top: 2%;
+    font-size: small;
+}
+// Set a custom border for the middle section
+.custom_border{
+    border-bottom: 1px solid #F1F1F1;
+}
+// Padded middle section vertically
+.padding_middle_section{
+    padding-bottom: 3%;
+}
+//Padded between icons
+.padding_between_icons{
+    padding-right: 2%;
+}
+// Added white color for the border
+ion-item {
+    --border-color: white;
+    margin-bottom: 2%;
+  }
+// Customized the middle section inputs
+#middle_inputs_style{
+    color: white;
+    font-weight: bold;
+}
+// Customized the bottom section texts
+#bottom_text_style{
+    color: white;
+}

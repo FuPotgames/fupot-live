@@ -60,7 +60,7 @@ export class SigninPage implements OnInit {
             }
           }
           else{
-            alert('Please verify your email');
+            this.navController.navigateRoot('/verification');
           }
 
           

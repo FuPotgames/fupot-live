@@ -8,10 +8,10 @@ const { Geolocation } = Plugins;
 
 @Component({
   selector: 'app-owner-signup',
-  templateUrl: './owner-signup.page.html',
-  styleUrls: ['./owner-signup.page.scss'],
+  templateUrl: './group-creation.page.html',
+  styleUrls: ['./group-creation.page.scss'],
 })
-export class OwnerSignupPage implements OnInit {
+export class GroupCreation implements OnInit {
   groupData: {};  // for creating group purposes
   group_id:string; // for retrieving the id from the groupData service
   has_group = true; // group creation helper

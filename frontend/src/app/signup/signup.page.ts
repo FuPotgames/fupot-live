@@ -51,6 +51,7 @@ export class SignupPage implements OnInit {
     if (this.userStatus != undefined){
       this.authService.register(this.registerValues).subscribe(
         async response => {
+          console.log(response);
           // successfully registered a user and stored token
           if (response['response'] !== undefined) {
               // stores the userdata in localstorage
@@ -65,14 +66,14 @@ export class SignupPage implements OnInit {
               if (this.userStatus == 'asUser'){
                 // redirecting our user after signup
                 console.log('user page');
-                this.navController.navigateRoot('/user-tabs');
+                this.navController.navigateRoot('/verification');
                 this.menuController.swipeGesture(true);
               }
               else{
                 // redirecting our user after signup
                 console.log('owner page');
                 //this.navController.navigateRoot('/owner-tabs');
-                this.navController.navigateRoot('/owner-signup');
+                this.navController.navigateRoot('/verification');
                 this.menuController.swipeGesture(true);
               }
               
@@ -97,6 +98,8 @@ export class SignupPage implements OnInit {
             else if (response['error'] !== undefined) {
               alert(response['error']);
             }
+        }, error => {
+          console.log(error);
         }
       );
     }

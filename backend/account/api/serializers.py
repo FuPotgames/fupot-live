@@ -62,4 +62,4 @@ Serializer for Account Properties Info
 class AccountPropertiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['pk','email','username', 'avatar','is_verified']
+        fields = ['pk','email','username', 'avatar','is_verified','user_type']
