@@ -26,11 +26,11 @@
 
 <!-- NEARBY LOCATIONS -->
 <div>
-    <div>
+    <ion-scroll>
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-    </div>
+    </ion-scroll>
     <ion-list>
         <ion-list-header><ion-label color="light" style="font-size: 12pt;">Nearby Locations</ion-label>></ion-list-header>
         <ion-item slot="start" (click)="goLocation()"> 

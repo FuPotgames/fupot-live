@@ -18,7 +18,11 @@ export class SearchPage implements OnInit {
   }
 
 }
-
+@Component({
+  selector: 'refresher-example',
+  templateUrl: 'refresher-example.html',
+  styleUrls: ['./refresher-example.css'],
+})
 export class RefresherExample {
   constructor() {}
 

@@ -26,13 +26,11 @@
 
 <!-- NEARBY LOCATIONS -->
 <div>
-    <div>
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    </div>
     <ion-list>
         <ion-list-header><ion-label color="light" style="font-size: 12pt;">Nearby Locations</ion-label>></ion-list-header>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
         <ion-item slot="start" (click)="goLocation()"> 
             <ion-icon src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
             <ion-label style="font-size: large;">Chile's</ion-label>
