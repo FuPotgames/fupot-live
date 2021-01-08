@@ -19,6 +19,7 @@ export class VerificationPage implements OnInit {
 
   async ngOnInit() {
     this.email = await this.authDataService.get_email();
+    await this.isLoggedIn();
   }
 
   /* After registration or login, the user/owner would be presented with a page saying verify email address,
@@ -32,6 +33,16 @@ export class VerificationPage implements OnInit {
     });
   }
 
+  // Checking at the beginning of our app to see if user is loggedin with token
+  // if they are redirect them to our home page
+  async isLoggedIn(){
+    var user_type = await this.authDataService.get_user_type();
+    console.log(user_type)
+    if(user_type == 'asUser'){
+      this.navController.navigateRoot('/user-tabs');
+    }
+  }
+
   /*
   Gets the account properties and sets it to the authData service for later use
   */
@@ -41,14 +52,20 @@ export class VerificationPage implements OnInit {
     await this.authDataService.set_username(res.username);
     await this.authDataService.set_is_verified(res.is_verified);
 
-    if ((res.user_type == 'asUser') && (res.is_verified == true)){
-      // redirecting our user after the user is verified
-      this.navController.navigateRoot('/user-tabs');
+    if(res.is_verified == true){
+      if ((res.user_type == 'asUser')){
+        // redirecting our user after the user is verified
+        this.navController.navigateRoot('/user-tabs');
+      }
+      else if ((res.user_type == 'asOwner')){
+        // redirecting our user after the owner is verified
+        this.navController.navigateRoot('/group-creation');
+      }
     }
-    else if ((res.user_type == 'asOwner') && (res.is_verified == true)){
-      // redirecting our user after the owner is verified
-      this.navController.navigateRoot('/owner-signup');
+    else{
+      alert("Not verified yet")
     }
+    
 
 
   }, error => {

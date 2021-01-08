@@ -46,6 +46,7 @@ export class SigninPage implements OnInit {
           await this.authDataService.set_phone(response["phone_number"]);
           await this.authDataService.set_token(response["token"]);
           await this.authDataService.set_is_verified(response["verified"]);
+          await this.authDataService.set_user_type(response["user_type"]);
 
           if(response["verified"]){
             if(response["user_type"] == 'asOwner'){

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
 
-
 @Component({
   selector: 'app-user-location',
   templateUrl: './user-location.page.html',
@@ -11,7 +10,8 @@ export class UserLocationPage implements OnInit {
   
   showMe: boolean;
 
-  constructor( private navController: NavController) { }
+  constructor(
+    private navController: NavController) { }
 
   ngOnInit() {
   }
