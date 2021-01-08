@@ -14,7 +14,7 @@
 
 <!-- SEARCHBAR -->  
 <div style="margin-top:2%">
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar animated (ionInput)="filterList($event)"></ion-searchbar>
 </div>
 
 <!-- MAP PLACEHOLDER -->
@@ -28,14 +28,17 @@
 <div>
     <ion-list>
         <ion-list-header><ion-label color="light" style="font-size: 12pt;">Nearby Locations</ion-label>></ion-list-header>
-        <ion-item slot="start" (click)="goLocation()"> 
-            <ion-icon src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
-            <ion-label style="font-size: large;">Chile's</ion-label>
-            <ion-item lines="none"><ion-label>3.7mi</ion-label></ion-item>
+        <ion-item [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="goLocation()"> 
+            <ion-icon *ngIf="establishment.establishment_type == 'restaurant'" src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
+            <ion-icon *ngIf="establishment.establishment_type == 'shopping'" src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
+            <ion-icon *ngIf="establishment.establishment_type == 'dining'" src="../../assets/location-sharp.svg" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
+            <ion-icon *ngIf="establishment.establishment_type == 'bar'" src="../../assets/location-sharp.svg" color="fupot_purple" style="padding-right: 5%;"></ion-icon>
+            <ion-label style="font-size: large;">{{establishment.name}}</ion-label>
+            <ion-item lines="none"><ion-label>{{establishment.mile | number : '1.2-2'}} mi</ion-label></ion-item>
             <ion-icon src="../../assets/chevron-forward.svg"></ion-icon>
         </ion-item>
 
-        <ion-item slot="start"> 
+        <!-- <ion-item slot="start"> 
             <ion-icon src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
             <ion-label style="font-size: large;">Target</ion-label>
             <ion-item lines="none"><ion-label>4.2mi</ion-label></ion-item>
@@ -61,7 +64,7 @@
             <ion-label style="font-size: large;">Pete's Bar</ion-label>
             <ion-item lines="none"><ion-label>7.2mi</ion-label></ion-item>
             <ion-icon src="../../assets/chevron-forward.svg"></ion-icon>
-        </ion-item>
+        </ion-item> -->
 
     </ion-list>
 </div>
