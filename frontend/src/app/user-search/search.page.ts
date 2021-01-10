@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { UserGroupService } from '../services/user-services/user-group.service';
 
@@ -21,7 +21,7 @@ import {trigger, transition, style, animate, query, stagger, animateChild} from 
       ])
     ])]
     })
-  
+    
 export class SearchPage implements OnInit {
   latitude: string;
   longitude: string;
@@ -33,7 +33,7 @@ export class SearchPage implements OnInit {
 
   async ngOnInit() {
     await this.searchGroups('');
-    console.log(this.latitude)
+    
   }
 
   goLocation() {
@@ -44,10 +44,49 @@ export class SearchPage implements OnInit {
   async searchGroups(search_phrases) {
     await this.getLocation();
     this.userGroupService.searchGroups(this.latitude,this.longitude,search_phrases).subscribe(async res => {
-    
     this.establishments=res.results
-    
-    console.log(this.establishments);
+
+    for(var i=0; i<this.establishments.length;i++){
+        if(this.establishments[i].establishment_type == 'restaurant'){
+          this.establishments[i]['icon'] = {
+            url: '../../assets/location-icon-blue.svg',
+            scaledSize: {
+              width: 20,
+              height: 20
+            }
+          };
+        }
+        if(this.establishments[i].establishment_type == 'shopping'){
+          this.establishments[i]['icon'] = {
+            url: '../../assets/location-marker-pink.svg',
+            scaledSize: {
+              width: 20,
+              height: 20
+            }
+          };
+        }
+
+        if(this.establishments[i].establishment_type == 'dining'){
+          this.establishments[i]['icon'] = {
+            url: '../../assets/location-icon-teal.svg',
+            scaledSize: {
+              width: 20,
+              height: 20
+            }
+          };
+        }
+
+        if(this.establishments[i].establishment_type == 'bar'){
+          this.establishments[i]['icon'] = {
+            url: '../../assets/location-icon-purple.svg',
+            scaledSize: {
+              width: 30,
+              height: 30
+            }
+          };
+        }
+      
+    }
     
     
 
@@ -64,7 +103,10 @@ export class SearchPage implements OnInit {
 
   async filterList(evt) {
     const searchTerm = evt.srcElement.value;
+    //TODO: need to work on loops on paginated search
+    
     await this.searchGroups(searchTerm);
+    
 
     var filtered_establishments = this.establishments;
   
@@ -84,12 +126,6 @@ export class SearchPage implements OnInit {
     });
   }
 
-
-}
-
-export class RefresherExample {
-  constructor() {}
-
   doRefresh(event) {
     console.log('Begin async operation');
 
@@ -98,4 +134,7 @@ export class RefresherExample {
       event.target.complete();
     }, 2000);
   }
+
+
 }
+

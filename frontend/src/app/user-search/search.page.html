@@ -18,11 +18,15 @@
 </div>
 
 <!-- MAP PLACEHOLDER -->
-<ion-card>
-    <ion-card-content>
-        <img src="../../assets/location_map.jpg">
-    </ion-card-content>
-</ion-card> 
+<agm-map id="map"
+[zoom]="12"  [latitude]="38.595372799831935" [longitude]="-77.32554689143346">
+    <agm-marker *ngFor="let establishment of establishments"
+[latitude]="establishment['latitude']" 
+[longitude]="establishment['longitude']" 
+[iconUrl]="$any(establishment['icon'])">
+</agm-marker>
+
+</agm-map>
 
 <!-- NEARBY LOCATIONS -->
 <div>

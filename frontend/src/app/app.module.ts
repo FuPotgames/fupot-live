@@ -7,7 +7,7 @@ import { TokenInterceptorService } from './services/general-services/token-inter
 import { GroupService } from './services/owner-services/group.service';
 import { NotificationService} from './services/general-services/notification.service';
 import { AuthDataService } from './services/auth-services/auth-data.service';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -27,14 +27,18 @@ import { IonicStorageModule } from '@ionic/storage';
 import { QuestionDataService } from './services/owner-services/question-data.service';
 import { StatisticsDataService } from './services/owner-services/statistics-data.service';
 import { UserStatisticsDataService } from './services/user-services/user-statistics-data.service';
+import { AgmCoreModule, AgmMap } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
+  schemas:  [ CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, BrowserAnimationsModule, IonicModule.forRoot({swipeBackEnabled: false}), AppRoutingModule,
     HttpClientModule,
     HttpClientXsrfModule,
-    FormsModule,IonicStorageModule.forRoot()],
+    FormsModule,IonicStorageModule.forRoot(),
+    AgmCoreModule.forRoot({apiKey: environment.GOOGLE_MAP_API_KEY, libraries: ['places']}),],
   providers: [
     StatusBar,
     SplashScreen,

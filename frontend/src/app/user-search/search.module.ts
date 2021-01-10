@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    AgmCoreModule,
     CommonModule,
     FormsModule,
     IonicModule,
