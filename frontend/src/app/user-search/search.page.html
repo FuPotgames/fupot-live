@@ -18,12 +18,23 @@
 </div>
 
 <!-- MAP PLACEHOLDER -->
-<agm-map id="map"
-[zoom]="12"  [latitude]="38.595372799831935" [longitude]="-77.32554689143346">
-    <agm-marker *ngFor="let establishment of establishments"
+<agm-map 
+[usePanning]="panning"
+[fitBounds]="fitBounds"
+id="map"
+[zoom]="zoom"
+[latitude]="latitude"
+[longitude]="longitude" 
+[mapDraggable]="false"
+[disableDefaultUI]="true">
+
+<agm-marker *ngFor="let establishment of establishments" (markerClick)="test(establishment)"
+[agmFitBounds]="agmFitBounds"
+[animation]="'DROP'"
 [latitude]="establishment['latitude']" 
 [longitude]="establishment['longitude']" 
-[iconUrl]="$any(establishment['icon'])">
+[iconUrl]="$any(establishment['icon'])"
+[label]="{color: 'black', text: establishment['name']}">
 </agm-marker>
 
 </agm-map>

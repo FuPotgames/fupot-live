@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { GeoLocationService } from './../services/general-services/geo-location.service';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { UserGroupService } from '../services/user-services/user-group.service';
 
-import { Plugins } from '@capacitor/core';
-const { Geolocation } = Plugins;
 import {trigger, transition, style, animate, query, stagger, animateChild} from '@angular/animations';
 
 
@@ -25,10 +24,15 @@ import {trigger, transition, style, animate, query, stagger, animateChild} from 
 export class SearchPage implements OnInit {
   latitude: string;
   longitude: string;
+  zoom=9;
+  agmFitBounds=true;
+  fitBounds=true;
+  panning=false;
   establishments = new Array();  // for storing list of dictionaies of establishments
 
   constructor(private navController: NavController,
-    private userGroupService:UserGroupService
+    private userGroupService:UserGroupService,
+    private geoLocationService:GeoLocationService
     ) { }
 
   async ngOnInit() {
@@ -51,8 +55,8 @@ export class SearchPage implements OnInit {
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-blue.svg',
             scaledSize: {
-              width: 20,
-              height: 20
+              width: 22,
+              height: 22
             }
           };
         }
@@ -60,8 +64,8 @@ export class SearchPage implements OnInit {
           this.establishments[i]['icon'] = {
             url: '../../assets/location-marker-pink.svg',
             scaledSize: {
-              width: 20,
-              height: 20
+              width: 22,
+              height: 22
             }
           };
         }
@@ -70,8 +74,8 @@ export class SearchPage implements OnInit {
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-teal.svg',
             scaledSize: {
-              width: 20,
-              height: 20
+              width: 22,
+              height: 22
             }
           };
         }
@@ -80,8 +84,8 @@ export class SearchPage implements OnInit {
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-purple.svg',
             scaledSize: {
-              width: 30,
-              height: 30
+              width: 22,
+              height: 22
             }
           };
         }
@@ -96,9 +100,9 @@ export class SearchPage implements OnInit {
   }
 
   async getLocation() {
-    const position = await Geolocation.getCurrentPosition();
-    this.latitude = String(position.coords.latitude)
-    this.longitude = String(position.coords.longitude)
+    var coordinates = await this.geoLocationService.getLocation();
+    this.latitude = coordinates[0]
+    this.longitude = coordinates[1]
   }
 
   async filterList(evt) {
@@ -111,20 +115,46 @@ export class SearchPage implements OnInit {
     var filtered_establishments = this.establishments;
   
     if (!searchTerm) {
+      this.panning = false
+      this.fitBounds=true
+      this.agmFitBounds=true
+      await this.getLocation();
       return;
     }
     filtered_establishments = filtered_establishments.filter(establishment => {
       if (establishment.name && searchTerm) {
+        this.latitude = establishment['latitude']
+        this.longitude = establishment['longitude']
+        this.panning = true
+        this.fitBounds=false
+        this.agmFitBounds=false
+        
         return (establishment.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
       else if (establishment.address && searchTerm) {
+        this.latitude = establishment['latitude']
+        this.longitude = establishment['longitude']
+        this.fitBounds=false
+        this.agmFitBounds=false
+        this.panning = true
         return (establishment.address.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
       else if (establishment.establishment_type && searchTerm) {
+        this.latitude = establishment['latitude']
+        this.longitude = establishment['longitude']
+        this.fitBounds=false
+        this.agmFitBounds=false
+        this.panning = true
         return (establishment.establishment_type.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
     });
   }
+
+  test(x){
+    console.log(x);
+  }
+
+
 
   doRefresh(event) {
     console.log('Begin async operation');

@@ -1,3 +1,4 @@
+import { GeoLocationService } from './services/general-services/geo-location.service';
 import { UserStatisticsService } from './services/user-services/user-statistics.service';
 import { UserQuestionService } from './services/user-services/user-question.service';
 import { UserGroupService } from './services/user-services/user-group.service';
@@ -27,11 +28,11 @@ import { IonicStorageModule } from '@ionic/storage';
 import { QuestionDataService } from './services/owner-services/question-data.service';
 import { StatisticsDataService } from './services/owner-services/statistics-data.service';
 import { UserStatisticsDataService } from './services/user-services/user-statistics-data.service';
-import { AgmCoreModule, AgmMap } from '@agm/core';
+import { AgmCoreModule, AgmMap, ɵb } from '@agm/core';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
-  schemas:  [ CUSTOM_ELEMENTS_SCHEMA],
+  schemas:  [ CUSTOM_ELEMENTS_SCHEMA,ɵb],
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, BrowserAnimationsModule, IonicModule.forRoot({swipeBackEnabled: false}), AppRoutingModule,
@@ -56,6 +57,8 @@ import { environment } from 'src/environments/environment';
     UserQuestionService,
     UserStatisticsService,
     UserStatisticsDataService,
+
+    GeoLocationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -1,3 +1,4 @@
+import { GeoLocationService } from './../services/general-services/geo-location.service';
 import { NavController, Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/general-services/notification.service';
@@ -13,7 +14,12 @@ export class HomePage implements OnInit {
 
   subscribe: any;
 
-  constructor(private notificationService: NotificationService, private platform: Platform, private navController: NavController) {
+  constructor(
+    private notificationService: NotificationService,
+    private platform: Platform,
+    private navController: NavController,
+    private geoLocationService:GeoLocationService
+    ) {
     this.backButtonHandle();
   }
   findLocations() {
@@ -36,8 +42,10 @@ export class HomePage implements OnInit {
   /*
     Initializes everthing related to this ts file when the owner loads into their homepage
   */
- ngOnInit() {
+ async ngOnInit() {
   this.notificationService.setupNotification();
+  await this.geoLocationService.setLocation();
+
 }
 
 /*
