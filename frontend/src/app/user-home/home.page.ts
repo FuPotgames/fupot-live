@@ -3,7 +3,6 @@ import { NavController, Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/general-services/notification.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -18,7 +17,7 @@ export class HomePage implements OnInit {
     private notificationService: NotificationService,
     private platform: Platform,
     private navController: NavController,
-    private geoLocationService:GeoLocationService
+    private geoLocationService:GeoLocationService,
     ) {
     this.backButtonHandle();
   }

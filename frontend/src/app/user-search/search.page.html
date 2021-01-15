@@ -19,22 +19,29 @@
 
 <!-- MAP PLACEHOLDER -->
 <agm-map 
-[usePanning]="panning"
+[usePanning]="usePanning"
 [fitBounds]="fitBounds"
 id="map"
 [zoom]="zoom"
 [latitude]="latitude"
 [longitude]="longitude" 
-[mapDraggable]="false"
+[mapDraggable]="true"
 [disableDefaultUI]="true">
 
-<agm-marker *ngFor="let establishment of establishments" (markerClick)="test(establishment)"
+<agm-marker *ngFor="let establishment of establishments"
 [agmFitBounds]="agmFitBounds"
 [animation]="'DROP'"
 [latitude]="establishment['latitude']" 
 [longitude]="establishment['longitude']" 
 [iconUrl]="$any(establishment['icon'])"
-[label]="{color: 'black', text: establishment['name']}">
+>
+<agm-polyline>
+  </agm-polyline>
+  <agm-info-window [disableAutoPan]="true" #infoWindow [isOpen]="true">
+      <small>{{establishment.icon.label.text}}</small> <br>
+
+   
+  </agm-info-window>>
 </agm-marker>
 
 </agm-map>
@@ -48,13 +55,13 @@ id="map"
     </div>
     <ion-list>
         <ion-list-header><ion-label color="light" style="font-size: 12pt;">Nearby Locations</ion-label>></ion-list-header>
-        <ion-item [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="goLocation()"> 
+        <ion-item [@fade] *ngFor="let establishment of only_establishments"  slot="start" (click)="goLocation()"> 
             <ion-icon *ngIf="establishment.establishment_type == 'restaurant'" src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
             <ion-icon *ngIf="establishment.establishment_type == 'shopping'" src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
             <ion-icon *ngIf="establishment.establishment_type == 'dining'" src="../../assets/location-sharp.svg" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
             <ion-icon *ngIf="establishment.establishment_type == 'bar'" src="../../assets/location-sharp.svg" color="fupot_purple" style="padding-right: 5%;"></ion-icon>
             <ion-label style="font-size: large;">{{establishment.name}}</ion-label>
-            <ion-item lines="none"><ion-label>{{establishment.mile | number : '1.2-2'}} mi</ion-label></ion-item>
+            <ion-item  lines="none"><ion-label >{{establishment.mile | number : '1.2-2'}} mi</ion-label></ion-item>
             <ion-icon src="../../assets/chevron-forward.svg"></ion-icon>
         </ion-item>
 
