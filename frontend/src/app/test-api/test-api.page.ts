@@ -579,7 +579,7 @@ export class TestApiPage implements OnInit {
 
   // gets paginated [5] nearby based on user's current location
   async searchGroups(lat,long,search_phrases?) {
-    this.userGroupService.searchGroups(lat,long,search_phrases).subscribe(async res => {
+    this.userGroupService.searchGroups(lat,long,search_phrases,'').subscribe(async res => {
       console.log(res.results);
 
     }, error => {

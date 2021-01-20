@@ -11,5 +11,6 @@ export class UserGrouplistPage implements OnInit {
 
   ngOnInit() {
   }
+  
 
 }

@@ -41,6 +41,7 @@ export class SigninPage implements OnInit {
           await this.authDataService.clear_token();
 
           // stores the userdata in localstorage
+          await this.authDataService.set_user_id(response["id"]);
           await this.authDataService.set_username(response["username"]);
           await this.authDataService.set_email(response["email"]);
           await this.authDataService.set_phone(response["phone_number"]);

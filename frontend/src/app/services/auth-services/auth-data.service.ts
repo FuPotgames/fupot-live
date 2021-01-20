@@ -17,6 +17,10 @@ export class AuthDataService {
     var username = this.storage.get('username');
     return username;
   }
+  async get_user_id(){
+    var id = this.storage.get('id');
+    return id;
+  }
   async get_email(){
     var email = this.storage.get('email');
     return email;
@@ -40,6 +44,9 @@ export class AuthDataService {
 
   async set_username(username){
     await this.storage.set('username',username);
+  }
+  async set_user_id(id){
+    await this.storage.set('id',id);
   }
   async set_email(email){
     await this.storage.set('email',email);

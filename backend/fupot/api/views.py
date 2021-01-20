@@ -106,6 +106,7 @@ class ListSearchGroups(ListAPIView):
             point = Point(longitude, latitude)
             groups = Group.objects.filter(location__distance_lte=(point, D(m=1.609e+6))).annotate(distance=Distance('location', point)).order_by('distance')
 
+
             # And use it as you wish in the filtering below:
 
             return groups

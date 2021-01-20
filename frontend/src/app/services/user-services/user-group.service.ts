@@ -11,9 +11,14 @@ export class UserGroupService {
   constructor(private http: HttpClient) { }
 
   // sends a get request depending on what kind of arguments pass, it will search nearby groups
-  searchGroups(lat,long,search_phrases): Observable<any> {
-    if ((search_phrases != undefined) || (search_phrases != '')){
-      return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups?search='+search_phrases+'&lat='+lat+'&long='+long);
+  searchGroups(lat,long,search_phrases,paginated_index,establishment_type?): Observable<any> {
+    if((paginated_index != null)){
+      return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups'+'?lat='+lat+'&long='+long+'&search='+establishment_type+'&page='+paginated_index);
+    }
+    else if ((search_phrases != undefined) || (search_phrases != '')){
+        console.log('num 2')
+        return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups?lat='+lat+'&long='+long);
+      
     }
     else{
       return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups'+'?lat='+lat+'&long='+long);

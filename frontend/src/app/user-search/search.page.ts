@@ -34,8 +34,6 @@ export class SearchPage implements OnInit {
   fitBounds=true
   agmFitBounds=true
   
-  @ViewChild(IonSearchbar,{static:false}) myInput: IonSearchbar;
-
   constructor(private navController: NavController,
     private userGroupService:UserGroupService,
     private geoLocationService:GeoLocationService
@@ -46,15 +44,16 @@ export class SearchPage implements OnInit {
     
   }
 
-  goLocation() {
-    this.navController.navigateRoot('/user-location');
+  goLocation(establishment) {
+    this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name}});
   }
 
   // gets paginated [5] nearby based on user's current location
   async searchGroups(search_phrases) {
     await this.getLocation();
-    this.userGroupService.searchGroups(this.latitude,this.longitude,search_phrases).subscribe(async res => {
+    this.userGroupService.searchGroups(this.latitude,this.longitude,search_phrases,null).subscribe(async res => {
     this.establishments=res.results
+
 
     this.establishments.push({
       establishment_type:'',
@@ -108,7 +107,7 @@ export class SearchPage implements OnInit {
           };
         }
 
-        if(this.establishments[i].establishment_type == 'dining'){
+        if(this.establishments[i].establishment_type == 'entertainment'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-teal.svg',
             scaledSize: {
@@ -123,7 +122,7 @@ export class SearchPage implements OnInit {
           };
         }
 
-        if(this.establishments[i].establishment_type == 'bar'){
+        if(this.establishments[i].establishment_type == 'social'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-purple.svg',
             scaledSize: {
@@ -184,8 +183,6 @@ export class SearchPage implements OnInit {
     }
     filtered_establishments = filtered_establishments.filter(establishment => {
       if (establishment.name && this.search_term) {
-        this.latitude = establishment['latitude']
-        this.longitude = establishment['longitude']
         this.agmFitBounds = false
         this.fitBounds = false
         this.panControl = false
@@ -199,8 +196,6 @@ export class SearchPage implements OnInit {
         return (establishment.name.toLowerCase().indexOf(this.search_term.toLowerCase()) > -1);
       }
       if (establishment.address && this.search_term) {
-        this.latitude = establishment['latitude']
-        this.longitude = establishment['longitude']
         this.agmFitBounds = false
         this.fitBounds = false
         this.panControl = false
@@ -214,8 +209,6 @@ export class SearchPage implements OnInit {
         return (establishment.address.toLowerCase().indexOf(this.search_term.toLowerCase()) > -1);
       }
       if (establishment.establishment_type && this.search_term) {
-        this.latitude = establishment['latitude']
-        this.longitude = establishment['longitude']
         this.agmFitBounds = false
         this.fitBounds = false
         this.panControl = false
@@ -228,8 +221,16 @@ export class SearchPage implements OnInit {
         this.zoom=8
         return (establishment.establishment_type.toLowerCase().indexOf(this.search_term.toLowerCase()) > -1);
       }
-      this.zoom=13.5
+      
     });
+    if (filtered_establishments[0]['latitude'] != undefined){
+      setTimeout(()=>{
+        this.latitude = filtered_establishments[0]['latitude']
+        this.longitude = filtered_establishments[0]['longitude']
+        console.log(filtered_establishments[0])
+      },500)
+    }
+    
   }
 
 

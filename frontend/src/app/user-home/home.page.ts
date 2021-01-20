@@ -25,10 +25,6 @@ export class HomePage implements OnInit {
     this.navController.navigateRoot(['/user-tabs/user-tabs/user-tab2']);
   }
 
-  diningSearch(){
-    this.navController.navigateRoot(['/search']);
-  }
-
   allGroups() {
     this.navController.navigateRoot(['/user-grouplist']);
   }
@@ -57,6 +53,21 @@ backButtonHandle() {
     }
 
   });
+}
+
+entertainment_page() {
+  this.navController.navigateRoot(['/entertainment-locations']);
+}
+
+social_page() {
+  this.navController.navigateRoot(['/social-locations']);
+}
+
+shopping_page() {
+  this.navController.navigateRoot(['/shopping-locations']);
+}
+dining_page() {
+  this.navController.navigateRoot(['/restaurant-locations']);
 }
 
 

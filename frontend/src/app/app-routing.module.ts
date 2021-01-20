@@ -37,6 +37,10 @@ const routes: Routes = [
   { path: 'user-settings', loadChildren: './user-settings/user-settings.module#UserSettingsPageModule' },
   { path: 'owner-settings', loadChildren: './owner-settings/owner-settings.module#OwnerSettingsPageModule' },
   { path: 'verification', loadChildren: './verification/verification.module#VerificationPageModule' },
+  { path: 'restaurant-locations', loadChildren: './restaurant-locations/restaurant-locations.module#RestaurantLocationsPageModule' },
+  { path: 'entertainment-locations', loadChildren: './entertainment-locations/entertainment-locations.module#EntertainmentLocationsPageModule' },
+  { path: 'shopping-locations', loadChildren: './shopping-locations/shopping-locations.module#ShoppingLocationsPageModule' },
+  { path: 'social-locations', loadChildren: './social-locations/social-locations.module#SocialLocationsPageModule' },
 
 ];
 
