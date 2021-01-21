@@ -41,6 +41,7 @@ const routes: Routes = [
   { path: 'entertainment-locations', loadChildren: './entertainment-locations/entertainment-locations.module#EntertainmentLocationsPageModule' },
   { path: 'shopping-locations', loadChildren: './shopping-locations/shopping-locations.module#ShoppingLocationsPageModule' },
   { path: 'social-locations', loadChildren: './social-locations/social-locations.module#SocialLocationsPageModule' },
+  { path: 'congrats', loadChildren: './congrats/congrats.module#CongratsPageModule' },
 
 ];
 
