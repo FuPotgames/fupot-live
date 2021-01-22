@@ -17,6 +17,4 @@ export class UserAnswerPage implements OnInit {
     this.navController.navigateRoot(['/user-submit']);
   }
 
-  
-
 }
