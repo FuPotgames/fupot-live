@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { UserGroupService } from './../services/user-services/user-group.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {NavController} from '@ionic/angular';
-import { resolve } from 'path';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({

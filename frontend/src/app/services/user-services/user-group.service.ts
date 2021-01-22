@@ -16,8 +16,8 @@ export class UserGroupService {
       return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups'+'?lat='+lat+'&long='+long+'&search='+establishment_type+'&page='+paginated_index);
     }
     else if ((search_phrases != undefined) || (search_phrases != '')){
-        console.log('num 2')
-        return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups?lat='+lat+'&long='+long);
+      console.log("search")
+        return this.http.get(environment.BASE_API_URL + '/api/fupot/search-groups?lat='+lat+'&long='+long+'&search='+search_phrases);
       
     }
     else{

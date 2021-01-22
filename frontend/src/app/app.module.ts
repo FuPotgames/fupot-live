@@ -31,12 +31,15 @@ import { UserStatisticsDataService } from './services/user-services/user-statist
 import { AgmCoreModule, AgmMap, ɵb } from '@agm/core';
 import { environment } from 'src/environments/environment';
 
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 @NgModule({
   schemas:  [ CUSTOM_ELEMENTS_SCHEMA,ɵb],
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, BrowserAnimationsModule, IonicModule.forRoot({swipeBackEnabled: false}), AppRoutingModule,
     HttpClientModule,
+    Ng2SearchPipeModule,
     HttpClientXsrfModule,
     FormsModule,IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({apiKey: environment.GOOGLE_MAP_API_KEY, libraries: ['places']}),],

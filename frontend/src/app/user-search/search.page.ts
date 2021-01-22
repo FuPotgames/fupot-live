@@ -53,7 +53,7 @@ export class SearchPage implements OnInit {
     await this.getLocation();
     this.userGroupService.searchGroups(this.latitude,this.longitude,search_phrases,null).subscribe(async res => {
     this.establishments=res.results
-
+    console.log(res)
 
     this.establishments.push({
       establishment_type:'',
