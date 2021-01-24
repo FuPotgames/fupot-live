@@ -1,23 +1,47 @@
+import { Storage } from '@ionic/storage';
+import { UserGroupService } from './../services/user-services/user-group.service';
+import { AuthDataService } from './../services/auth-services/auth-data.service';
 import { GeoLocationService } from './../services/general-services/geo-location.service';
 import { NavController, Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/general-services/notification.service';
-import { Router } from '@angular/router';
+import { trigger, transition, style, animate, query, stagger, animateChild } from '@angular/animations';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  styleUrls: ['home.page.scss'],
+  animations: [
+    trigger('fade', [
+      transition(':enter', [style({opacity: 0}), animate('.6s ease')])
+    ]),
+    trigger('stagger', [
+      transition(':enter', [
+        query(':enter', stagger('30s', [animateChild()]))
+      ])
+    ])]
 
 })
 export class HomePage implements OnInit {
 
   subscribe: any;
+  user_id;
+  latitude;
+  longitude;
+  coordinates;
+  establishments=[];
+  cache_establishments;
+
+  group_joined_msg = null;
 
   constructor(
     private notificationService: NotificationService,
     private platform: Platform,
     private navController: NavController,
     private geoLocationService:GeoLocationService,
+    private authDataService:AuthDataService,
+    private userGroupService:UserGroupService,
+    private storage:Storage
     ) {
     this.backButtonHandle();
   }
@@ -38,8 +62,18 @@ export class HomePage implements OnInit {
     Initializes everthing related to this ts file when the owner loads into their homepage
   */
  async ngOnInit() {
+  this.cache_establishments = await this.storage.get('establishments')
+  if(this.cache_establishments != null){
+    this.establishments = this.cache_establishments
+  }
   this.notificationService.setupNotification();
   await this.geoLocationService.setLocation();
+
+  this.coordinates = await this.geoLocationService.getLocation()
+  this.latitude = this.coordinates[0]
+  this.longitude = this.coordinates[1]
+
+  await this.get_joined_groups()
 
 }
 
@@ -70,6 +104,20 @@ dining_page() {
   this.navController.navigateRoot(['/restaurant-locations']);
 }
 
+async get_joined_groups(){
+  this.user_id = await this.authDataService.get_user_id()
+  this.userGroupService.getJoinedGroups(this.latitude,this.longitude).subscribe(res =>{
+    if(this.establishments.length == 0){
+      this.group_joined_msg = "You haven't joined any groups yet"
+    }
+    this.establishments = res;
+    this.storage.set('establishments', this.establishments);
+    
+  });
+}
 
+go_to_establishment(establishment){
+  this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'is_joined':true}});
+}
 }
 

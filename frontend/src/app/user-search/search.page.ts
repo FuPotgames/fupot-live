@@ -1,10 +1,10 @@
+import { AuthDataService } from './../services/auth-services/auth-data.service';
 import { GeoLocationService } from './../services/general-services/geo-location.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, IonSearchbar } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { UserGroupService } from '../services/user-services/user-group.service';
 
 import {trigger, transition, style, animate, query, stagger, animateChild} from '@angular/animations';
-
 
 @Component({
   selector: 'app-search',
@@ -22,6 +22,7 @@ import {trigger, transition, style, animate, query, stagger, animateChild} from 
     })
     
 export class SearchPage implements OnInit {
+  user_id:string;
   latitude: string;
   longitude: string;
   zoom=13.5;
@@ -36,16 +37,44 @@ export class SearchPage implements OnInit {
   
   constructor(private navController: NavController,
     private userGroupService:UserGroupService,
-    private geoLocationService:GeoLocationService
-    ) { }
+    private geoLocationService:GeoLocationService,
+    private authDataService:AuthDataService
+    ) { this.zoom = 13.6;}
 
   async ngOnInit() {
+  }
+  async ionViewWillEnter(){
     await this.searchGroups('');
-    
   }
 
-  goLocation(establishment) {
-    this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name}});
+  async get_joined_groups(establishment){
+    this.user_id = await this.authDataService.get_user_id()
+    this.userGroupService.getJoinedGroups(this.latitude,this.longitude).subscribe(res =>{
+    
+      // TODO: have to implement search function in the backend for get joined groups to fix group join issue
+
+    var matched =false
+    console.log(res)
+      for(var x in res){
+        for(var y in res[x].user){
+          console.log((this.user_id+" "+ String(res[x].user[y]+" "+ String(establishment.name) +" "+ String(res[x].name))))
+          if((String(this.user_id) == String(res[x].user[y])) &&  String(res[x].name) == (String(establishment.name))){
+            matched = true;
+            break;
+          }
+        }
+      }
+      if(matched){
+        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'is_joined':matched}});
+      }
+      else {
+        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'is_joined':matched}});
+      }
+    });
+  }
+
+  async goLocation(establishment) {
+    await this.get_joined_groups(establishment);
   }
 
   // gets paginated [5] nearby based on user's current location
@@ -53,7 +82,6 @@ export class SearchPage implements OnInit {
     await this.getLocation();
     this.userGroupService.searchGroups(this.latitude,this.longitude,search_phrases,null).subscribe(async res => {
     this.establishments=res.results
-    console.log(res)
 
     this.establishments.push({
       establishment_type:'',
@@ -144,9 +172,6 @@ export class SearchPage implements OnInit {
       this.only_establishments.push(this.establishments[i]);
     }
 
-    
-    
-
     }, error => {
       console.log(error);
     });
@@ -160,7 +185,6 @@ export class SearchPage implements OnInit {
 
   async filterList(evt) {
     this.search_term = evt.srcElement.value;
-    //TODO: need to work on loops on paginated search
     
     await this.searchGroups(this.search_term);
     
@@ -182,7 +206,7 @@ export class SearchPage implements OnInit {
       return;
     }
     filtered_establishments = filtered_establishments.filter(establishment => {
-      if (establishment.name && this.search_term) {
+      if (String(this.search_term).search(String(establishment.name))) {
         this.agmFitBounds = false
         this.fitBounds = false
         this.panControl = false
@@ -195,7 +219,7 @@ export class SearchPage implements OnInit {
         this.zoom=8
         return (establishment.name.toLowerCase().indexOf(this.search_term.toLowerCase()) > -1);
       }
-      if (establishment.address && this.search_term) {
+      if (String(this.search_term).search(String(establishment.address))) {
         this.agmFitBounds = false
         this.fitBounds = false
         this.panControl = false
@@ -223,13 +247,18 @@ export class SearchPage implements OnInit {
       }
       
     });
-    if (filtered_establishments[0]['latitude'] != undefined){
+    try{
+      if (filtered_establishments[0]['latitude'] != undefined){
       setTimeout(()=>{
         this.latitude = filtered_establishments[0]['latitude']
         this.longitude = filtered_establishments[0]['longitude']
-        console.log(filtered_establishments[0])
       },500)
+      }
     }
+    catch{
+      
+    }
+    
     
   }
 
@@ -246,10 +275,5 @@ export class SearchPage implements OnInit {
       event.target.complete();
     }, 2000);
   }
-
-
-
-
-
 }
 
