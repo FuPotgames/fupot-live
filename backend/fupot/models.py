@@ -23,6 +23,7 @@ class Group(models.Model):
    longitude = gis_models.FloatField(null=True,blank=True)
    
    location = gis_models.PointField(geography=True, srid=4326,null=True,blank=True)
+   group_img = models.ImageField(upload_to='fupot/owner/img/',blank=True,null=True)
 
    user = gis_models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
    owner = gis_models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="+",blank=True)

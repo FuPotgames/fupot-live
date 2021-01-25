@@ -110,14 +110,14 @@ async get_joined_groups(){
     if(this.establishments.length == 0){
       this.group_joined_msg = "You haven't joined any groups yet"
     }
-    this.establishments = res;
+    this.establishments = res.results.slice(0,4);
     this.storage.set('establishments', this.establishments);
     
   });
 }
 
 go_to_establishment(establishment){
-  this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'is_joined':true}});
+  this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'address':establishment.address,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':true}});
 }
 }
 

@@ -51,14 +51,10 @@ export class SearchPage implements OnInit {
     this.user_id = await this.authDataService.get_user_id()
     this.userGroupService.getJoinedGroups(this.latitude,this.longitude).subscribe(res =>{
     
-      // TODO: have to implement search function in the backend for get joined groups to fix group join issue
-
     var matched =false
-    console.log(res)
-      for(var x in res){
-        for(var y in res[x].user){
-          console.log((this.user_id+" "+ String(res[x].user[y]+" "+ String(establishment.name) +" "+ String(res[x].name))))
-          if((String(this.user_id) == String(res[x].user[y])) &&  String(res[x].name) == (String(establishment.name))){
+      for(var x in res.results){
+        for(var y in res.results[x].user){
+          if((String(this.user_id) == String(res.results[x].user[y])) &&  String(res.results[x].name) == (String(establishment.name))){
             matched = true;
             break;
           }

@@ -63,29 +63,29 @@ class JoinGroup(generics.CreateAPIView):
         submission.save()
         return Response(status=201, data=GroupSerializer(submission).data)
 
-class GetJoinedGroups(generics.CreateAPIView):
+class GetJoinedGroups(ListAPIView):
     """
     Responsible for retreving all joined groups
     """
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = GroupSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('name','address','establishment_type','owner__username')
 
     # Gets all groups that are joined by this user
-    def get(self, request):
-        paginator = PageNumberPagination()
-        paginator.page_size = 4
+    def get_queryset(self):
+        try:
+            latitude = float(self.request.GET['lat'])
+            longitude = float(self.request.GET['long'])
 
-        latitude = float(self.request.GET['lat'])
-        longitude = float(self.request.GET['long'])
+            point = Point(longitude, latitude)
+            
+            groups = Group.objects.filter(user=self.request.user,location__distance_lte=(point, D(m=1.609e+6))).annotate(distance=Distance('location', point)).order_by('distance')
 
-        # Here you can do the following thing:
-        point = Point(longitude, latitude)
-        groups = Group.objects.filter(user=self.request.user,location__distance_lte=(point, D(m=1.609e+6))).annotate(distance=Distance('location', point)).order_by('distance')
-
-        result_page = paginator.paginate_queryset(groups, request)
-
-        serializer = GroupSerializer(result_page, many=True)
-        return Response(serializer.data)
+            return groups
+        except:
+            return []
 
 class ListSearchGroups(ListAPIView):
     """

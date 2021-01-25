@@ -19,15 +19,15 @@
  <div style="margin-top: 12%;">
   <ion-card color="fupot_grey"> 
     <div class="img-wrapper" style="margin-bottom: 10%;">
-      <img src="../../assets/people.svg"/>
+      <img [src]="image_url"/>
       <ion-button color="light">
         <ion-icon slot="icon-only" src="../../assets/camera-outline.svg" color="medium">
         </ion-icon>
       </ion-button>
     </div>
     <ion-card-content class="ion-text-center">
-     <div style="margin-top: 8%; padding-bottom: 8%;"> <ion-label id="label2" style="font-size: 18pt; font-weight: bold;">Establishment Name</ion-label> 
-    <ion-text style="font-size: small; font-weight: light;"><br>123 Street Address • Phone </ion-text></div>
+     <div style="margin-top: 8%; padding-bottom: 8%;"> <ion-label id="label2" style="font-size: 18pt; font-weight: bold;">{{group_name}}</ion-label> 
+    <ion-text style="font-size: small; font-weight: light;"><br>{{group_address}}<br> {{group_phone}} </ion-text></div>
     </ion-card-content>
   </ion-card></div>
 
