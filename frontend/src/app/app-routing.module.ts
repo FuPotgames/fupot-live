@@ -42,6 +42,7 @@ const routes: Routes = [
   { path: 'shopping-locations', loadChildren: './shopping-locations/shopping-locations.module#ShoppingLocationsPageModule' },
   { path: 'social-locations', loadChildren: './social-locations/social-locations.module#SocialLocationsPageModule' },
   { path: 'congrats', loadChildren: './congrats/congrats.module#CongratsPageModule' },
+  { path: 'loser', loadChildren: './loser/loser.module#LoserPageModule' },
 
 ];
 
