@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="none">
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="45%" style="padding-bottom: 1%;padding-top: 8%;">
+      </div >
+      <div style="text-align: center; font-size: 10pt; margin-bottom: 3%;">
+        Answer Question
+      </div>
+  </ion-toolbar>
+  </ion-header>
+
+  <ion-content >
+    
+    <div id="questionBg">
+      <ion-grid>
+        <ion-row>
+        <ion-col><ion-label>Quesiton #</ion-label></ion-col>
+        <ion-col><ion-label style="align-items: right;">05m 3s</ion-label></ion-col>
+      </ion-row>
+      </ion-grid>
+  </div>
+
+  <div class="ion-text-center" style="margin-top: 10%;">
+    <ion-label style="font-weight: 500; font-size: 18pt;"> Which answer listed below is correct? </ion-label>
+  </div>
+
+  
+
+  <div style="margin-top: 10%;">
+
+  <div><ion-button id="buttonBlue" (click)="answer()" color="fupot_blue" expand="block" style="margin-left: 6%;margin-right: 6%; margin-top: 5%;" size="large">
+    <ion-label id="label" style="font-weight: bold; font-size: large;" color="light">Option 1</ion-label></ion-button></div>
+  
+    <div><ion-button id="buttonPink" (click)="answer()" color="fupot_pink" expand="block" style="margin-left: 6%;margin-right: 6%;margin-top: 5%;" size="large">
+      <ion-label id="label" style="font-weight: bold; font-size: large;" color="light">Option 2</ion-label></ion-button></div>
+  
+    <div><ion-button id="buttonTeal" (click)="answer()" color="fupot_teal" expand="block" style="margin-left: 6%;margin-right: 6%;margin-top: 5%;" size="large">
+      <ion-label id="label" style="font-weight: bold; font-size: large;" color="light">Option 3</ion-label></ion-button></div>
+
+    <div><ion-button id="buttonPurple" (click)="answer()" color="fupot_purple" expand="block" style="margin-left: 6%;margin-right: 6%;margin-top: 5%;" size="large">
+      <ion-label id="label" style="font-weight: bold; font-size: large;" color="light">Option 4</ion-label></ion-button></div>
+  
+    </div>
+
+
+  </ion-content>

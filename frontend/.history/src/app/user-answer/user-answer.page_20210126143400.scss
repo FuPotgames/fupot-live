@@ -1,0 +1,61 @@
+ion-content {
+    
+    --background: url(../../assets/bg_mid .png) no-repeat center/cover fixed;
+  
+  }
+
+  ion-toolbar {
+    background: rgb(77,158,215);
+    background: linear-gradient(90deg, rgba(77,158,215,0.6) 10%, rgba(128,93,167,0.6) 30%, rgba(239,81,157,0.6) 70%, rgba(97,200,207,0.6) 90%);
+  }
+
+  #buttonPink {
+    background: rgba(255,255, 255, 0.4);
+    box-shadow: 3px 3px 3px #b7b7b7;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 15px;
+    border: 3px solid #AC3E72;
+  
+  }
+
+  #buttonBlue {
+    background: rgba(255,255, 255, 0.4);
+    box-shadow: 3px 3px 3px #b7b7b7;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 15px;
+    border: 3px solid #2D719F;
+  }
+
+  #buttonTeal {
+    background: rgba(255,255, 255, 0.4);
+    box-shadow: 3px 3px 3px #b7b7b7;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 15px;
+    border: 3px solid #49949A;
+  
+  }
+
+  #buttonPurple {
+    background: rgba(255,255, 255, 0.4);
+    box-shadow: 3px 3px 3px #b7b7b7;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 15px;
+    border: 3px solid #5C4579;
+  }
+
+  #label {
+    text-shadow: 1px 1px 1px #404040;
+  }
+
+  #questionBg {
+  background-color: #303030;  
+  height: 50px;
+  padding: 20px;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+}
