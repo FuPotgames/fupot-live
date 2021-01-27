@@ -9,15 +9,19 @@
         </div>
   </ion-toolbar>
   </ion-header>
+
+  
   
 <ion-content >
 
-<!-- SEARCHBAR -->  
-<div style="margin-top:2%">
-  <ion-searchbar  debounce="500" (ionChange)="filterList($event)"></ion-searchbar>
-</div>
+
+    <!-- SEARCHBAR -->  
+  <div style="margin-top:2%;">
+    <ion-searchbar  debounce="500" (ionChange)="filterList($event)"></ion-searchbar>
+  </div>
 
 <!-- MAP PLACEHOLDER -->
+
 <agm-map 
 [usePanning]="usePanning"
 [fitBounds]="fitBounds"
@@ -26,7 +30,7 @@ id="map"
 [latitude]="latitude"
 [longitude]="longitude" 
 [mapDraggable]="true"
-[disableDefaultUI]="true">
+[disableDefaultUI]="true"><div>
 
 <agm-marker *ngFor="let establishment of establishments"
 [agmFitBounds]="true"
@@ -43,15 +47,11 @@ id="map"
    
   </agm-info-window>>
 </agm-marker>
-
+</div>
 </agm-map>
 
 <!-- NEARBY LOCATIONS -->
-<div>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  </div>
+
 <div>
     <ion-list>
         <ion-list-header><ion-label color="light" style="font-size: 12pt;">Nearby Locations</ion-label>></ion-list-header>
@@ -97,6 +97,10 @@ id="map"
     </ion-list>
 
 </div>
+
+<ion-refresher  slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
 
 </ion-content>
 

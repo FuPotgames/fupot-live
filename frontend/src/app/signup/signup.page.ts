@@ -38,19 +38,24 @@ export class SignupPage implements OnInit {
   }
   // Checking at the beginning of our app to see if user is loggedin with token
   // if they are redirect them to our home page
+
   async isLoggedIn(){
-    var token = await this.authDataService.get_token();
     var user_type = await this.authDataService.get_user_type();
-    if(token !== null){
-      console.log(token);
-      if(user_type == 'asOwner'){
-        this.navController.navigateRoot('/group-creation');
+    var is_verified = await this.authDataService.get_is_verified();
+    var token = await this.authDataService.get_token();
+    console.log(user_type)
+    if(is_verified){
+      if((user_type == 'asUser')){
+        this.navController.navigateRoot('/user-tabs');
       }
-      else{
-        this.navController.navigateRoot('/verification');
+      else if((user_type == 'asOwner')){
+        this.navController.navigateRoot('/owner-tabs');
       }
-      
     }
+    else if(!is_verified && (token != null || token != undefined)){
+      this.navController.navigateRoot('/verification');
+    }
+    
   }
   // Register a New User through our User Service
   async registerNewUser() {

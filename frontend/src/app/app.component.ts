@@ -51,7 +51,8 @@ export class AppComponent {
     await this.authDataService.set_token(null);
     await this.authDataService.clear_token();
     await this.menuController.toggle();
-    this.router.navigateByUrl('/signin');
+    //this.router.navigateByUrl('/signin', { replaceUrl: true });
+    this.navController.navigateRoot('/signin');
   }
   /*
     Handles back button specially hardware back button

@@ -32,8 +32,6 @@ export class VerificationPage implements OnInit {
     });
   }
 
-
-
   /*
   Gets the account properties and sets it to the authData service for later use
   */
@@ -57,6 +55,8 @@ export class VerificationPage implements OnInit {
       alert("Not verified yet")
     }
     
+
+
   }, error => {
     console.log(error);
   });

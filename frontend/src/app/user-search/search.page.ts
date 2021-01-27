@@ -42,6 +42,7 @@ export class SearchPage implements OnInit {
     ) { this.zoom = 13.6;}
 
   async ngOnInit() {
+    
   }
   async ionViewWillEnter(){
     await this.searchGroups('');
@@ -269,6 +270,14 @@ export class SearchPage implements OnInit {
     setTimeout(() => {
       console.log('Async operation has ended');
       event.target.complete();
+    }, 2000);
+  }
+
+  completeRefresh(event) {
+    event.target.disabled = true;
+    event.target.complete();
+    setTimeout(() => {
+      event.target.disabled = false;
     }, 2000);
   }
 }
