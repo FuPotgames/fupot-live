@@ -44,7 +44,7 @@ import { environment } from 'src/environments/environment';
   providers: [
     StatusBar,
     SplashScreen,
-    
+    GeoLocationService,
     AuthDataService,
     NotificationService,
     
@@ -58,8 +58,6 @@ import { environment } from 'src/environments/environment';
     UserQuestionService,
     UserStatisticsService,
     UserStatisticsDataService,
-
-    GeoLocationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

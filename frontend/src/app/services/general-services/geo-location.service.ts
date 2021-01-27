@@ -1,9 +1,8 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 
-import { Plugins,PermissionType } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
 const { Geolocation } = Plugins;
-const { Permissions } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +13,7 @@ export class GeoLocationService {
 
   async setLocation() {
     const position = await Geolocation.getCurrentPosition();
+    
     await this.storage.set('lat', position.coords.latitude);
     await this.storage.set('lon', position.coords.longitude); 
     }
