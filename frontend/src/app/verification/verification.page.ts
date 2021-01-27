@@ -19,7 +19,6 @@ export class VerificationPage implements OnInit {
 
   async ngOnInit() {
     this.email = await this.authDataService.get_email();
-    await this.isLoggedIn();
   }
 
   /* After registration or login, the user/owner would be presented with a page saying verify email address,
@@ -33,15 +32,7 @@ export class VerificationPage implements OnInit {
     });
   }
 
-  // Checking at the beginning of our app to see if user is loggedin with token
-  // if they are redirect them to our home page
-  async isLoggedIn(){
-    var user_type = await this.authDataService.get_user_type();
-    console.log(user_type)
-    if(user_type == 'asUser'){
-      this.navController.navigateRoot('/user-tabs');
-    }
-  }
+
 
   /*
   Gets the account properties and sets it to the authData service for later use
@@ -66,8 +57,6 @@ export class VerificationPage implements OnInit {
       alert("Not verified yet")
     }
     
-
-
   }, error => {
     console.log(error);
   });

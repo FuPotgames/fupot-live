@@ -28,6 +28,7 @@
             </ion-card-header>
             
             <ion-list>
+              <div *ngIf="establishments.length == 0" style="padding-top: 10px;"></div>
               <ion-item lines="none" [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="go_to_establishment(establishment)"> 
                   <ion-icon *ngIf="establishment.establishment_type == 'restaurant'" src="../../assets/person-circle-outline.svg" size="large" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
                   <ion-icon *ngIf="establishment.establishment_type == 'shopping'" src="../../assets/person-circle-outline.svg" size="large" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
@@ -40,7 +41,7 @@
               </ion-list>
 
               <!-- Dots -->
-              <div class="ion-text-center"><ion-spinner *ngIf="group_joined_msg == null && establishments.length < 1" name="dots"></ion-spinner></div>
+              <div class="ion-text-center"><ion-spinner *ngIf="group_joined_msg == null && establishments.length == 0" name="dots"></ion-spinner></div>
               
               <div *ngIf="establishments.length == 0" class="ion-text-center" style="padding-bottom: 10px;"> <ion-text style="font-size: 13pt;" >{{group_joined_msg}}</ion-text></div>
           
