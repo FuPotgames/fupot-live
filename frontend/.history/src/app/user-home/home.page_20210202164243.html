@@ -1,0 +1,103 @@
+<ion-header>
+   
+  <ion-toolbar color="none">
+     
+  <div class="ion-text-center" id="logo" style="margin-top: 7%;">
+    <ion-buttons id="menu">
+      <ion-menu-button menu="main-menu">
+        <ion-icon src="../../assets/menu.svg" color="fupot_grey"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+      
+    <img src="../../assets/main_logo.png" width="45%">
+  </div>
+
+      <div style="text-align: center; font-size: 10pt; padding-bottom: 3%;">Home</div>
+</ion-toolbar>
+</ion-header> 
+
+<ion-content>
+
+<!-- LIST OF USER GROUPS -->   
+          <div>    
+            <ion-list-header color="fupot_grey"><ion-label style="font-size: 12pt;">Nearby Locations</ion-label></ion-list-header>
+
+            <ion-card id="groupsList">
+            <!--   <ion-card-header color="fupot_grey" id="listHeader">
+              <ion-card-subtitle class ="ion-text-center" style="font-size: 13pt;">My Groups</ion-card-subtitle>
+            </ion-card-header> -->
+            
+            <ion-list>
+              <div *ngIf="establishments.length == 0" style="padding-top: 10px;"></div>
+              <ion-item lines="none" [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="go_to_establishment(establishment)"> 
+                  <ion-icon *ngIf="establishment.establishment_type == 'restaurant'" src="../../assets/person-circle-outline.svg" size="large" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
+                  <ion-icon *ngIf="establishment.establishment_type == 'shopping'" src="../../assets/person-circle-outline.svg" size="large" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
+                  <ion-icon *ngIf="establishment.establishment_type == 'entertainment'" src="../../assets/person-circle-outline.svg" size="large" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
+                  <ion-icon *ngIf="establishment.establishment_type == 'social'" src="../../assets/person-circle-outline.svg" size="large" color="fupot_purple" style="padding-right: 5%;"></ion-icon>
+                  <ion-label style="font-size: large;">{{establishment.name}}</ion-label>
+                  <ion-item  lines="none"><ion-label >{{establishment.mile | number : '1.2-2'}} mi</ion-label></ion-item>
+                  <ion-icon src="../../assets/chevron-forward.svg" size="small"></ion-icon>
+              </ion-item>
+              </ion-list>
+
+              <!-- Dots -->
+              <div class="ion-text-center"><ion-spinner *ngIf="group_joined_msg == null && establishments.length == 0" name="dots"></ion-spinner></div>
+              
+              <div *ngIf="establishments.length == 0" class="ion-text-center" style="padding-bottom: 10px;"> <ion-text style="font-size: 13pt;" >{{group_joined_msg}}</ion-text></div>
+          
+          </ion-card>
+          </div>
+
+<!-- ALL MY GROUPS --> 
+           <div style="text-align: center; font-size: 10; text-decoration-line: underline;">
+           <ion-button id="allGroups" (click)="allGroups()" class="ion-text-center" color="fupot_grey" fill="clear" size="small">ALL MY GROUPS
+           <ion-icon src="../../assets/chevron-forward.svg" color = "fupot_grey" size="small"></ion-icon></ion-button>
+          </div>
+
+
+<!-- FIND LOCATIONS BUTTON (finished)  -->          
+            <div style="padding-top: 4%; padding-bottom: 6%;">
+            <ion-button id="findLocations" (click)="findLocations()" size="default" expand="block" color="fupot_blue" style="margin-left: 4%; margin-right: 4%;"> 
+            <ion-label id="labelLocations" color="light" style="font-weight: bold; font-size: large;">FIND LOCATIONS</ion-label></ion-button></div>
+        
+<!-- LOCATION CATEGORY CIRCLES -->
+
+<div >
+  <ion-grid> 
+    
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col class="ion-text-center">
+        <div><ion-img (click)="dining_page()" class="diningIcon" src="../../assets/dining_icon.png"></ion-img></div>
+      </ion-col>
+
+
+      <ion-col class="ion-text-center">
+        <div><ion-img (click)="shopping_page()" class="shoppingIcon" src="../../assets/shopping_icon.png"></ion-img> </div>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row style="padding-top: 0%; ">
+      <ion-col></ion-col>
+      <ion-col class="ion-text-center">
+        <div class="ion-text-center">
+          <ion-img (click)="entertainment_page()" class="entertainmentIcon" src="../../assets/entertainment_icon.png"></ion-img>
+        </div>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <div>
+          <ion-img (click)="social_page()" class="socialIcon" src="../../assets/socialize_icon.png" ></ion-img>
+        </div>
+
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>   
+</div>       
+
+      
+</ion-content>
+
+
+

@@ -1,0 +1,30 @@
+ion-content {
+    
+  --background: url(../../assets/bg_mid .png) no-repeat center/cover fixed;
+
+}
+
+ion-toolbar {
+  background: rgb(77,158,215);
+  background: linear-gradient(90deg, rgba(77,158,215,0.6) 10%, rgba(128,93,167,0.6) 30%, rgba(239,81,157,0.6) 70%, rgba(97,200,207,0.6) 90%);
+}
+
+#buttonPurple {
+  background: rgba(255,255, 255, 0.4);
+  box-shadow: 3px 3px 3px #b7b7b7;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 15px;
+  border: 3px solid #5C4579;
+}
+
+
+#labelLocations {
+  text-shadow: 0 1px 1px #666666;
+
+}
+
+#options {
+  height: 25px;
+}
+
