@@ -71,7 +71,6 @@ export class HomePage implements OnInit {
   await this.geoLocationService.setLocation();
 
   this.coordinates = await this.geoLocationService.getLocation()
-  console.log(this.coordinates)
   this.latitude = this.coordinates[0]
   this.longitude = this.coordinates[1]
 
@@ -107,12 +106,10 @@ dining_page() {
 }
 
 async get_joined_groups(){
-  console.log(this.group_joined_msg)
   this.user_id = await this.authDataService.get_user_id()
   this.userGroupService.getJoinedGroups(this.latitude,this.longitude).subscribe(res =>{
     if(this.establishments.length == 0){
       this.group_joined_msg = "Click find locations to get started"
-      console.log(this.group_joined_msg)
     }
     this.establishments = res.results.slice(0,4);
     this.storage.set('establishments', this.establishments);

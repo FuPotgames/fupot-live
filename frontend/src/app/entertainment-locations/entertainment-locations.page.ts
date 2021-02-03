@@ -33,8 +33,6 @@ export class EntertainmentLocationsPage implements OnInit {
     this.coordinates = await this.geoLocationService.getLocation()
     this.latitude = this.coordinates[0]
     this.longitude = this.coordinates[1]
-    console.log(this.latitude)
-    console.log(this.longitude)
 
     await this.searchGroups();
   }
@@ -62,14 +60,12 @@ export class EntertainmentLocationsPage implements OnInit {
           this.establishments.push(res['results'][x])
       }
       if(event){
-        console.log('wokiong')
         if((res.next === null)){
           this.reload = false;
           event.target.complete();
           event.target.disabled = true
         }
       }
-      console.log(res)  
   },error =>{
     if(error){
       this.reload = false;
@@ -77,6 +73,11 @@ export class EntertainmentLocationsPage implements OnInit {
       event.target.disabled = true
     }
   });
+  }
+
+  // Takes them to a specific group page with navigation query params
+  go_to_establishment(establishment){
+    this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'address':establishment.address,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':true}});
   }
 
 }

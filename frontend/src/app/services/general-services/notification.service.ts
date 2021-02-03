@@ -65,7 +65,7 @@ export class NotificationService {
   */
   async setupNotification() {
     this.deviceInfo = await Device.getInfo().then(value => {
-      console.log(value);
+      //console.log(value);
       if (value.platform !== 'web') {
         console.log('Initializing Notification');
 

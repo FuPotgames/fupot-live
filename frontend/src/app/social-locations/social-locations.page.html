@@ -12,11 +12,11 @@
 <ion-content>
   <ion-list>
     <ion-list-header color="fupot_grey"><ion-label style="font-size: 12pt;">Nearby Locations</ion-label></ion-list-header>
-    <ion-item [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="goLocation()"> 
-        <ion-icon *ngIf="establishment.establishment_type == 'restaurant'" src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
-        <ion-icon *ngIf="establishment.establishment_type == 'shopping'" src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
-        <ion-icon *ngIf="establishment.establishment_type == 'entertainment'" src="../../assets/location-sharp.svg" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
-        <ion-icon *ngIf="establishment.establishment_type == 'social'" src="../../assets/location-sharp.svg" color="fupot_purple" style="padding-right: 5%;"></ion-icon>
+    <ion-item [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="go_to_establishment(establishment)"> 
+        <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'restaurant'" src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
+        <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'shopping'" src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
+        <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'entertainment'" src="../../assets/location-sharp.svg" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
+        <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'social'" src="../../assets/location-sharp.svg" color="fupot_purple" style="padding-right: 5%;"></ion-icon>
         <ion-label style="font-size: large;">{{establishment.name}}</ion-label>
         <ion-item  lines="none"><ion-label >{{establishment.mile | number : '1.2-2'}} mi</ion-label></ion-item>
         <ion-icon src="../../assets/chevron-forward.svg"></ion-icon>

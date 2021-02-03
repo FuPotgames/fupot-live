@@ -99,7 +99,7 @@ export class GroupCreation implements OnInit {
   }
   onChange($event){
     this.establishment_type =  event['detail'].value;
-    this.groupData['establishment_type'] = this.establishment_type
+    this.groupData['establishment_type'] = this.establishment_type.toLowerCase();
   }
 
 

@@ -83,6 +83,7 @@ export class UserLocationPage implements OnInit {
   }
   set_group_properties(){
     this.activatedRoute.queryParams.subscribe((res)=>{
+      console.log(res)
       this.group_id = res.group_id
       this.group_name = res.name
       this.group_phone = res.phone

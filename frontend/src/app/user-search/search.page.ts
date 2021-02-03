@@ -62,16 +62,12 @@ export class SearchPage implements OnInit {
         }
       }
       if(matched){
-        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'is_joined':matched}});
+        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
       }
       else {
-        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'name':establishment.name,'is_joined':matched}});
+        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
       }
     });
-  }
-
-  async goLocation(establishment) {
-    await this.get_joined_groups(establishment);
   }
 
   // gets paginated [5] nearby based on user's current location
@@ -89,7 +85,7 @@ export class SearchPage implements OnInit {
     });
 
     for(var i=0; i<this.establishments.length;i++){
-        if(this.establishments[i].establishment_type == 'restaurant'){
+        if(String(this.establishments[i].establishment_type).toLowerCase() == 'restaurant'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-blue.svg',
             scaledSize: {
@@ -103,7 +99,7 @@ export class SearchPage implements OnInit {
             }
           };
         }
-        if(this.establishments[i].name == 'my location'){
+        if(String(this.establishments[i].name).toLowerCase() == 'my location'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-teal.svg',
             scaledSize: {
@@ -117,7 +113,7 @@ export class SearchPage implements OnInit {
             }
           };
         }
-        if(this.establishments[i].establishment_type == 'shopping'){
+        if(String(this.establishments[i].establishment_type).toLowerCase() == 'shopping'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-marker-pink.svg',
             scaledSize: {
@@ -132,7 +128,7 @@ export class SearchPage implements OnInit {
           };
         }
 
-        if(this.establishments[i].establishment_type == 'entertainment'){
+        if(String(this.establishments[i].establishment_type).toLowerCase() == 'entertainment'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-teal.svg',
             scaledSize: {
@@ -147,7 +143,7 @@ export class SearchPage implements OnInit {
           };
         }
 
-        if(this.establishments[i].establishment_type == 'social'){
+        if(String(this.establishments[i].establishment_type).toLowerCase() == 'social'){
           this.establishments[i]['icon'] = {
             url: '../../assets/location-icon-purple.svg',
             scaledSize: {
@@ -280,5 +276,12 @@ export class SearchPage implements OnInit {
       event.target.disabled = false;
     }, 2000);
   }
+  
+  // Takes them to a specific group page with navigation query params
+  async goLocation(establishment) {
+    await this.get_joined_groups(establishment);
+  }
+
+  
 }
 
