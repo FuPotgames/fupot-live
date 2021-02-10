@@ -2,8 +2,10 @@ import { AuthDataService } from './../services/auth-services/auth-data.service';
 import { GeoLocationService } from './../services/general-services/geo-location.service';
 import { NavController } from '@ionic/angular';
 import { UserGroupService } from './../services/user-services/user-group.service';
-import { Component, OnInit } from '@angular/core';
-import { trigger, transition, style, animate, query, stagger, animateChild } from '@angular/animations';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { trigger, transition, style, animate, query, stagger, animateChild, state } from '@angular/animations';
+import { IonInfiniteScroll } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-user-grouplist',
@@ -20,8 +22,10 @@ import { trigger, transition, style, animate, query, stagger, animateChild } fro
     ])]
 })
 export class UserGrouplistPage implements OnInit {
+  @ViewChild(IonInfiniteScroll,{static:false}) infiniteScroll: IonInfiniteScroll;
 
-  page=1;
+
+  page:string=null;
   latitude:string;
   longitude:string;
   coordinates;
@@ -46,15 +50,14 @@ export class UserGrouplistPage implements OnInit {
     this.latitude = this.coordinates[0]
     this.longitude = this.coordinates[1]
 
-    this.get_joined_groups()
+    await this.get_joined_groups();
   }
   
   // Infinite list for group messages
-  async loadMore(event) {
-    if(this.reload != false){
+  async loadMore(infiniteScrollEvent) {
       this.page += 1;
-      this.get_joined_groups(event);
-    }
+      console.log('loadmore')
+      await this.get_joined_groups(infiniteScrollEvent);
     
   }
 
@@ -65,32 +68,44 @@ export class UserGrouplistPage implements OnInit {
   
 
   // gets paginated [5] nearby based on user's current location
-  async get_joined_groups(event?){
+  async get_joined_groups(infiniteScrollEvent?){
     this.user_id = await this.authDataService.get_user_id()
-    this.userGroupService.getJoinedGroups(this.latitude,this.longitude).subscribe(res =>{
-      for(var x in res.results){
-        this.establishments.push(res.results[x]);
+    setTimeout(() => {
+      this.userGroupService.getJoinedGroups(this.latitude,this.longitude,this.page).subscribe(async res =>{
+        for(var x in res['results']){
+          this.establishments.push(res['results'][x])
+          this.establishments.push(res['results'][x])
+      }
+      if(infiniteScrollEvent){
+        infiniteScrollEvent.target.complete()
       }
       
-
-      if(event){
-        if((res.next === null)){
-          this.reload = false;
-          event.target.complete();
-          event.target.disabled = true
-        }
-      }
-      //this.storage.set('establishments', this.establishments);
+      this.infiniteScroll.complete()
       
-    },error =>{
-      if(error){
-        this.reload = false;
-        event.target.complete();
-        event.target.disabled = true
-      }
+      
+  },error =>{
+    if(event){
+      this.reload = false;
+      infiniteScrollEvent.target.complete();
+      infiniteScrollEvent.target.disabled = true
     }
-    );
+    console.log(error)
+  });
+    },500);
+      
   }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    console.log(this.infiniteScroll.disabled)
+  }
+
+  onScroll(event: any) {
+    // visible height + pixel scrolled >= total height 
+    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+      console.log("End");
+    }
+}
 
   // Takes them to a specific group page with navigation query params
   go_to_establishment(establishment){

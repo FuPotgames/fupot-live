@@ -1,3 +1,4 @@
+import { NotificationService } from './../services/general-services/notification.service';
 import { AuthService } from './../services/auth-services/auth.service';
 import { GeoLocationService } from './../services/general-services/geo-location.service';
 import { AuthDataService } from './../services/auth-services/auth-data.service';
@@ -5,9 +6,12 @@ import { ActivatedRoute } from '@angular/router';
 import { UserGroupService } from './../services/user-services/user-group.service';
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, state, style, transition, animate, query, stagger, animateChild } from '@angular/animations';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import * as moment from 'moment';
+import 'moment-timezone';
 
 @Component({
   selector: 'app-user-location',
@@ -18,10 +22,22 @@ import { DomSanitizer } from '@angular/platform-browser';
       state('shown', style({ opacity: 1 })),
       state('hidden', style({ opacity: 0 })),
       transition('* => *', animate('500ms'))
-    ])
-  ]
+    ]),
+    trigger('fade', [
+      transition(':enter', [style({opacity: 0}), animate('.6s ease')])
+    ]),
+    trigger('stagger', [
+      transition(':enter', [
+        query(':enter', stagger('30s', [animateChild()]))
+      ])
+  ])]
 })
 export class UserLocationPage implements OnInit {
+
+  page=1;
+  reload:boolean = true;
+
+  messages = new Array();
   image_url:any;
 
   has_group:boolean = false
@@ -49,7 +65,8 @@ export class UserLocationPage implements OnInit {
     private authDataService:AuthDataService,
     private geoLocationService:GeoLocationService,
     private authService:AuthService,
-    private domSanitizer:DomSanitizer
+    private domSanitizer:DomSanitizer,
+    private notificationService:NotificationService
     ) { }
 
   async ngOnInit() {
@@ -65,6 +82,9 @@ export class UserLocationPage implements OnInit {
     else{
       await this.set_image();
     }
+
+    
+    console.log(this.messages)
     
 
   }
@@ -82,7 +102,7 @@ export class UserLocationPage implements OnInit {
     
   }
   set_group_properties(){
-    this.activatedRoute.queryParams.subscribe((res)=>{
+    this.activatedRoute.queryParams.subscribe(async (res)=>{
       console.log(res)
       this.group_id = res.group_id
       this.group_name = res.name
@@ -95,6 +115,7 @@ export class UserLocationPage implements OnInit {
       this.has_group = res.is_joined
       if(this.has_group){
         this.showMe = true;
+        await this.getGroupMessages();
       }
       else{
         this.showMe = false;
@@ -131,6 +152,41 @@ convertToDataURLviaCanvas(url, outputFormat){
   };
   img.src = url;
 });
+}
+
+// Gets the group messages
+async getGroupMessages(infiniteScroll?) {
+  this.notificationService.getGroupMessages(this.group_id,this.page).subscribe(async res => {
+
+      for(var x in res){
+        var zone_name =  moment.tz.guess();
+        var utcDate = res[x].created_at;  // ISO-8601 formatted date returned from server
+        var localDate = new Date(utcDate);
+        res[x].created_at = localDate.toLocaleString('en-US', { timeZone: zone_name })
+        this.messages.push(res[x]);
+      }
+      if (infiniteScroll) {
+        infiniteScroll.target.complete();
+        //infiniteScroll.target.disabled = true;
+      }
+    
+  }, error => {
+      if(error){
+      this.reload = false;
+      infiniteScroll.target.complete();
+      //infiniteScroll.target.disabled = true
+    }
+  });
+}
+
+// Infinite list for group messages
+async loadMore(event) {
+  if(this.reload != false){
+    this.page += 1;
+    this.getGroupMessages(event);
+    console.log(this.messages)
+  }
+  
 }
 
 

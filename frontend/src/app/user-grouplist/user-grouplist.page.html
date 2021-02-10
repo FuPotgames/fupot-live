@@ -60,7 +60,6 @@
 
 
   </ion-list> -->
-
   <ion-list>
     <ion-list-header color="fupot_grey"><ion-label style="font-size: 12pt;">My Groups</ion-label></ion-list-header>
     <ion-item [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="go_to_establishment(establishment)"> 
@@ -74,7 +73,7 @@
     </ion-item>
 </ion-list>
 
-<ion-infinite-scroll  threshold="20px" (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+<ion-infinite-scroll infiniteScroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
   <ion-infinite-scroll-content class="main_front"></ion-infinite-scroll-content>
 </ion-infinite-scroll> 
 

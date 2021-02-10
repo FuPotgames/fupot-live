@@ -44,6 +44,7 @@
     "cordova-res": "^0.15.2",
     "core-js": "^2.6.12",
     "g": "^2.0.1",
+    "ionic": "^5.4.16",
     "ionicons": "^2.0.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",

@@ -18,3 +18,7 @@ ion-toolbar {
 ion-list-header{
   justify-content: center;
 }
+
+ion-row {
+  overflow-y: scroll;
+}

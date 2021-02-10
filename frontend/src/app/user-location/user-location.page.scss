@@ -140,3 +140,27 @@ ion-card {
   text-shadow: 2px 2px 2px rgb(0, 0, 0);
 
 }
+
+ion-list{
+  display: block;
+  margin: auto;
+  //padding: 10px;
+  overflow: hidden;
+}
+ion-list-header{
+  justify-content: center;
+}
+
+.video-container {
+  position: relative;
+  height: 245px;
+  overflow: auto;
+
+  .options-list {
+      position: absolute;
+      width: 100%;
+      margin: 0;
+      bottom: 0; // <---
+  }
+}
+
