@@ -39,14 +39,12 @@
 
 
 <div *ngIf="showMe"> 
-<div style="margin-top: 5%; margin-bottom: 2%; margin-left: 3%;">
+<div style="margin-top: 5%; margin-bottom: 5%; margin-left: 3%;">
 <ion-label id="label3" style="font-weight: bolder; font-size: large; " color="medium"> Updates: </ion-label></div>
-
-<div class="ion-text-center"><ion-label color="medium" id=timestamp>Fri, Feb 12 2:35am</ion-label></div>
-
 
 <!-- CHAT BUBBLES -->
 <div *ngIf="messages.length != 0" class="video-container">
+  <ion-label>Received 10:24pm</ion-label>
 <ion-list lines="none" >
     <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;">
       <ion-row >

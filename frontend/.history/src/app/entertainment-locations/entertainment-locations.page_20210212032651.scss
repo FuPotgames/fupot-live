@@ -13,17 +13,7 @@ ion-toolbar {
     background: linear-gradient(90deg, rgba(77,158,215,0.6) 10%, rgba(128,93,167,0.6) 30%, rgba(239,81,157,0.6) 70%, rgba(97,200,207,0.6) 90%);
   }
 
-
-ion-content {
-    --background: url(../../assets/bg_mid .png) no-repeat center/cover fixed;
-}
-
-#back {
-    position: fixed;
-    height: 35px;
-}
-
-#nearbyLocations {
-    letter-spacing: 2.5px;
-    font-weight: 500;
+  #back {
+  position: fixed;
+  height: 35px;
 }

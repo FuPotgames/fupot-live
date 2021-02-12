@@ -1,18 +1,18 @@
 <ion-header>
   <ion-toolbar color="none">
+       
+    <div><ion-buttons slot="start"><ion-back-button defaultHref="user-tabs" text="" icon="../../assets/chevron-back.svg" color="fupot_grey" style="padding-top= 10% "></ion-back-button></ion-buttons></div>
+    <div class="ion-text-center" id="logo" style="padding-top: 5%;"><img src="../../assets/main_logo.png" width="45%"></div>
+        
+    <div style="text-align: center; font-size: 10pt; padding-bottom: 3%;">Entertainment Locations</div>
   
-    <div class="ion-text-center" id="logo" style="margin-top: 7%;">
-      <ion-buttons id="back"><ion-back-button defaultHref="user-tabs" text="" icon="../../assets/chevron-back.svg" color="fupot_grey"></ion-back-button></ion-buttons>
-      <img src="../../assets/main_logo.png" width="45%"></div>
-    <div class="ion-text-center" style="font-size: 10pt; padding-top: 1%; padding-bottom: 3%;">Entertainment Locations</div>
   
   </ion-toolbar>
   </ion-header> 
   
-
   <ion-content>
       <ion-list>
-        <ion-item color="fupot_grey"><ion-label id="nearbyLocations" class="ion-text-center" style="font-size: 12pt;">NEARBY LOCATIONS</ion-label></ion-item>
+        <ion-list-header color="fupot_grey"><ion-label style="font-size: 12pt;">Nearby Locations</ion-label></ion-list-header>
         <ion-item [@fade] *ngFor="let establishment of establishments"  slot="start" (click)="go_to_establishment(establishment)"> 
             <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'restaurant'" src="../../assets/location-sharp.svg" color="fupot_blue" style="padding-right: 5%;"></ion-icon>
             <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'shopping'" src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
