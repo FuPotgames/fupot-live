@@ -14,63 +14,52 @@ ion-card-content {
  
     color: #303030;
     text-align: center;
-    font-size: large;
-    font-weight: 500;
 }
 
 ion-icon {
-   font-size: 18pt;
-   padding-top: 5%;
-   padding-left: 5%;
-   color: black;
+   font-size: 16pt;
 }
 
 ion-card-header {
-  height: 55px;
-  padding: 0 !important;
-
-}
-
-ion-button {
-  margin: 0% !important;
-
+  height: 50px;
 }
 
 #blueCard {
-  background-color: #d8eaf6;
-  border: 4px solid #4d9ed7;
-  border-top: none;
+  /* background: rgb(255,255,255);
+background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(216,234,246,1) 0%, rgba(77,158,215,1) 85%); */  
+background-color: #d8eaf6;
+border: 5px solid #4d9ed7;
+border-top: none;
 }
 
 #pinkCard {
-  background-color: #fbd6e8;
-  border: 4px solid #EF519D;
-  border-top: none;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(253,231,241,1) 0%, rgba(239,81,157,1) 87%);
+  background-color: white;
+  border: 1px solid #AC3E72;
+
 }
 
 #tealCard {
-  background-color: #d2eff1;
-  border: 4px solid #61C8CF;
-  border-top: none;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(227,245,246,1) 0%, rgba(97,200,207,1) 85%);
+  background-color: white;
+  border: 1px solid #49949A;
 }
 
 #purpleCard {
-  background-color: #e1d9ea;
-  border: 4px solid #805DA7;
-  border-top: none;
+  background: rgb(255,255,255);
+background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(205,192,221,1) 0%, rgba(128,93,167,1) 82%);
+  background-color: white;
+  border: 1px solid #5C4579;
+
 }
 
 ion-label {
-  font-size: 13pt;
+  font-size: 12pt;
   font-weight: 500;
-  padding-top: 0%;
-  color: #303030;
 }
 
-#back {
-  position: fixed;
-  height: 35px;
-}
 
 
 

@@ -22,7 +22,6 @@ ion-icon {
    font-size: 18pt;
    padding-top: 5%;
    padding-left: 5%;
-   color: black;
 }
 
 ion-card-header {
@@ -64,13 +63,9 @@ ion-label {
   font-size: 13pt;
   font-weight: 500;
   padding-top: 0%;
-  color: #303030;
+  text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15), 2px 2px 2px rgba(239,81,157,0);
 }
 
-#back {
-  position: fixed;
-  height: 35px;
-}
 
 
 
