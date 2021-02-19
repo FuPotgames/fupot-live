@@ -67,7 +67,7 @@
         <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'shopping'" src="../../assets/location-sharp.svg" color="fupot_pink" style="padding-right: 5%;"></ion-icon>
         <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'social'" src="../../assets/location-sharp.svg" color="fupot_teal" style="padding-right: 5%;"></ion-icon>
         <ion-icon *ngIf="establishment.establishment_type.toLowerCase() == 'bar'" src="../../assets/location-sharp.svg" color="fupot_purple" style="padding-right: 5%;"></ion-icon>
-        <ion-label style="font-size: large;">{{establishment.name}}</ion-label>
+        <ion-label style="font-size: large;">{{establishment.name}} </ion-label>
         <ion-item  lines="none"><ion-label >{{establishment.mile | number : '1.2-2'}} mi</ion-label></ion-item>
         <ion-icon src="../../assets/chevron-forward.svg"></ion-icon>
     </ion-item>

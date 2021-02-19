@@ -50,23 +50,48 @@ export class SearchPage implements OnInit {
 
   async get_joined_groups(establishment){
     this.user_id = await this.authDataService.get_user_id()
-    this.userGroupService.getJoinedGroups(this.latitude,this.longitude).subscribe(res =>{
+    this.userGroupService.getJoinedGroups(this.latitude,this.longitude,null,establishment.name).subscribe(res =>{
     
-    var matched =false
-      for(var x in res.results){
-        for(var y in res.results[x].user){
-          if((String(this.user_id) == String(res.results[x].user[y])) &&  String(res.results[x].name) == (String(establishment.name))){
+      var matched;
+      if(res.results.length == 0){
+        console.log("not joined")
+        matched = false;
+        this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
+      }
+      
+        if(res.results.length > 1){
+          console.log("similar grouo joined multile")
+          var name = res.results[0].name
+          if(String(establishment.name) === String(name)){
+            matched = true;
+            this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
+          }
+        }
+        
+        if(res.results.length == 1){
+          console.log("joined")
+          if(String(establishment.name) === String(res.results[0].name)){
+            matched = true;
+            this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
+          }
+        }
+          
+      
+        
+        /* for(var y in res.results[x].user){
+          if((String(this.user_id) == String(res.results[x].user[y]))){
             matched = true;
             break;
           }
-        }
-      }
-      if(matched){
+        } */
+      
+      /* if(matched){
+        console.log(matched)
         this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
       }
       else {
         this.navController.navigateRoot('/user-location',{'queryParams': {'group_id':establishment.id,'address':establishment.address,'name':establishment.name,'phone':establishment.phone_number,'image':establishment.group_img,'is_joined':matched}});
-      }
+      } */
     });
   }
 

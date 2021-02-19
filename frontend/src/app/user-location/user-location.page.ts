@@ -4,8 +4,8 @@ import { GeoLocationService } from './../services/general-services/geo-location.
 import { AuthDataService } from './../services/auth-services/auth-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserGroupService } from './../services/user-services/user-group.service';
-import { Component, OnInit } from '@angular/core';
-import {NavController} from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {NavController, IonInfiniteScroll} from '@ionic/angular';
 import { trigger, state, style, transition, animate, query, stagger, animateChild } from '@angular/animations';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -33,6 +33,8 @@ import 'moment-timezone';
   ])]
 })
 export class UserLocationPage implements OnInit {
+
+  @ViewChild(IonInfiniteScroll,{static:false}) infiniteScroll: IonInfiniteScroll;
 
   page=1;
   reload:boolean = true;
@@ -84,7 +86,6 @@ export class UserLocationPage implements OnInit {
     }
 
     
-    console.log(this.messages)
     
 
   }
@@ -101,9 +102,8 @@ export class UserLocationPage implements OnInit {
     });
     
   }
-  set_group_properties(){
+  async set_group_properties(){
     this.activatedRoute.queryParams.subscribe(async (res)=>{
-      console.log(res)
       this.group_id = res.group_id
       this.group_name = res.name
       this.group_phone = res.phone
@@ -150,41 +150,42 @@ convertToDataURLviaCanvas(url, outputFormat){
     resolve(dataURL);
     canvas = null;
   };
-  img.src = url;
+  img.src = String(this.domSanitizer.bypassSecurityTrustUrl(url));
 });
 }
 
 // Gets the group messages
-async getGroupMessages(infiniteScroll?) {
+async getGroupMessages(infiniteScroll?) {setTimeout(() => {
   this.notificationService.getGroupMessages(this.group_id,this.page).subscribe(async res => {
-
-      for(var x in res){
+    
+      res.slice().reverse().forEach(y => {
         var zone_name =  moment.tz.guess();
-        var utcDate = res[x].created_at;  // ISO-8601 formatted date returned from server
+        var utcDate = y.created_at;  // ISO-8601 formatted date returned from server
         var localDate = new Date(utcDate);
-        res[x].created_at = localDate.toLocaleString('en-US', { timeZone: zone_name })
-        this.messages.push(res[x]);
-      }
+        y.created_at = localDate.toLocaleString('en-US', { timeZone: zone_name })
+        this.messages.push(y);
+      })
+
+      
       if (infiniteScroll) {
         infiniteScroll.target.complete();
-        //infiniteScroll.target.disabled = true;
       }
+
     
   }, error => {
-      if(error){
+      if(infiniteScroll){
       this.reload = false;
       infiniteScroll.target.complete();
-      //infiniteScroll.target.disabled = true
+      infiniteScroll.target.disabled = true
     }
-  });
+  })},500);
 }
 
 // Infinite list for group messages
-async loadMore(event) {
-  if(this.reload != false){
+async loadMore(infiniteScrollEvent) {
+  if(this.reload == true){
     this.page += 1;
-    this.getGroupMessages(event);
-    console.log(this.messages)
+    await this.getGroupMessages(infiniteScrollEvent);
   }
   
 }

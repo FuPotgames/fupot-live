@@ -42,22 +42,23 @@
 <div style="margin-top: 5%; margin-bottom: 2%; margin-left: 3%;">
 <ion-label id="label3" style="font-weight: bolder; font-size: large; " color="medium"> Updates: </ion-label></div>
 
-<div class="ion-text-center"><ion-label color="medium" id=timestamp>Fri, Feb 12 2:35am</ion-label></div>
+<!-- <div class="ion-text-center"><ion-label color="medium" id=timestamp>Fri, Feb 12 2:35am</ion-label></div> -->
 
 
 <!-- CHAT BUBBLES -->
-<div *ngIf="messages.length != 0" class="video-container">
+<ion-content *ngIf="messages.length != 0" class="video-container">
 <ion-list lines="none" >
-    <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;">
+    <ion-item [@fade] *ngFor="let msg of messages; let i = index" style="padding-bottom: 5px;">
       <ion-row >
+        <div class="ion-text-center" style="margin:auto;"><ion-label color="medium" id=timestamp>{{msg.created_at}} {{i}}</ion-label></div>
         <div class="chatBubble chatBubbleCorner" color="fupot_blue">
           
             <ion-text>{{msg.message}}</ion-text>
           
         </div>
-            <div style="margin:auto;">
+            <!-- <div style="margin:auto;">
               <ion-label style="font-size: 12px;" class="ion-text-right">{{msg.created_at}}</ion-label>
-            </div>
+            </div> -->
         </ion-row>
         
         
@@ -65,25 +66,24 @@
       
     </ion-item>
   </ion-list>
-</div>
+  <ion-infinite-scroll infiniteScroll  (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+    <ion-infinite-scroll-content class="main_front" style="min-height: 5px;"></ion-infinite-scroll-content>
+    </ion-infinite-scroll> 
+</ion-content>
 
-  <div style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
-    <ion-label *ngIf="messages.length == 0">The Owner hasn't published any messages yet</ion-label>
+  <div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
+    <ion-label>The Owner hasn't published any messages yet</ion-label>
   </div>
-  
-  
-
-  <ion-infinite-scroll  threshold="20px" (ionInfinite)="loadMore($event)" loadingSpinner="undefined" loadingText="Loading Users...">
-  <ion-infinite-scroll-content ></ion-infinite-scroll-content>
-  </ion-infinite-scroll> 
 
 
 
 <!-- Answer Questions -->
 
- <div class="ion-text-center" style="margin-top: 0%; margin-left: 6%;margin-right: 6%;">
+<div class="ion-text-center" style="margin-top: 5%; margin-left: 6%;margin-right: 6%;">
   <ion-button id="option" (click)="goAnswer()" expand="block" size="large" color="fupot_blue"><ion-label id="label" style="font-size: 15pt; font-weight: bold;" color="light">Answer Questions</ion-label></ion-button>
 </div>
+
+ 
 
 </div>
 

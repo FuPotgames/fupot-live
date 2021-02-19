@@ -75,6 +75,7 @@ export class UserGrouplistPage implements OnInit {
         for(var x in res['results']){
           this.establishments.push(res['results'][x])
           this.establishments.push(res['results'][x])
+          this.establishments.push(res['results'][x])
       }
       if(infiniteScrollEvent){
         infiniteScrollEvent.target.complete()
@@ -94,18 +95,6 @@ export class UserGrouplistPage implements OnInit {
     },500);
       
   }
-
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-    console.log(this.infiniteScroll.disabled)
-  }
-
-  onScroll(event: any) {
-    // visible height + pixel scrolled >= total height 
-    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
-      console.log("End");
-    }
-}
 
   // Takes them to a specific group page with navigation query params
   go_to_establishment(establishment){

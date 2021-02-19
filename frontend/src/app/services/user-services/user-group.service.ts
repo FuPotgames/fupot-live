@@ -30,12 +30,18 @@ export class UserGroupService {
   }
 
   // sends a get request to get all the joined groups
-  getJoinedGroups(lat,long,page?): Observable<any> {
+  getJoinedGroups(lat,long,page?,search?): Observable<any> {
     if((page != null)){
       return this.http.get(environment.BASE_API_URL + '/api/fupot/get-joined-groups?lat='+lat+'&long='+long+'&page='+page);
     }
     else{
-      return this.http.get(environment.BASE_API_URL + '/api/fupot/get-joined-groups?lat='+lat+'&long='+long);
+      if(search != null){
+        return this.http.get(environment.BASE_API_URL + '/api/fupot/get-joined-groups?lat='+lat+'&long='+long+'&search='+search);
+      }
+      else{
+        return this.http.get(environment.BASE_API_URL + '/api/fupot/get-joined-groups?lat='+lat+'&long='+long);
+      }
+      
     }
   }
 
