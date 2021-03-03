@@ -48,9 +48,9 @@
 <!-- CHAT BUBBLES -->
 <ion-content *ngIf="messages.length != 0" class="video-container">
 <ion-list lines="none" >
-    <ion-item [@fade] *ngFor="let msg of messages; let i = index" style="padding-bottom: 5px;">
+    <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;">
       <ion-row >
-        <div class="ion-text-center" style="margin:auto;"><ion-label color="medium" id=timestamp>{{msg.created_at}} {{i}}</ion-label></div>
+        <div class="ion-text-center" style="margin:auto;"><ion-label color="medium" id=timestamp>{{msg.created_at}}</ion-label></div>
         <div class="chatBubble chatBubbleCorner" color="fupot_blue">
           
             <ion-text>{{msg.message}}</ion-text>
