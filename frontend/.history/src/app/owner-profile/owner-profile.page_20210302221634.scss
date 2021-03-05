@@ -1,0 +1,52 @@
+ion-content {
+    
+  --background: url(../../assets/bg_mid .png) no-repeat center/cover fixed;
+  background: rgb(255,255,255);
+	background: linear-gradient(180deg, rgba(255,255,255,0.3) 13%, rgba(97,200,207,0.3) 50%, rgba(77,158,215,0.3) 88%);
+
+}
+ion-toolbar {
+  background: rgb(77,158,215);
+  background: linear-gradient(90deg, rgba(77,158,215,0.6) 10%, rgba(128,93,167,0.6) 30%, rgba(239,81,157,0.6) 70%, rgba(97,200,207,0.6) 90%);
+}
+
+ion-card-content {
+  height: 125px;
+}
+
+ion-card-header {
+  height: 30px;
+}
+/* ion-card {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  overflow: visible;
+  position: relative;
+  
+} */
+
+.option {
+-webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      border-radius: 6px;
+}
+
+#detailsButton {
+  color: #303030;
+  background-color: rgba(255, 255, 255, 0.642);
+}
+
+
+
+#detailsBg {
+  background-color: rgba(255, 255, 255, 0.642);
+}
+
+
+.statCircles {
+  background: transparent;
+  }
+
+  #num {
+      position: absolute;
+      left: 17px;
+    }
