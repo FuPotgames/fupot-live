@@ -13,12 +13,25 @@
   </ion-toolbar>
   </ion-header>
 
-<ion-content>
+<ion-content #content  [scrollEvents]="true" scrollDownOnLoad="true">
+  <!-- <div class="chatBubble chatBubbleCorner">Come join us tonight between 5-9pm! Answer questions for a chance to win a free app every hour!</div> -->
 
-  <div class="chatBubble chatBubbleCorner">Owner will send notifications to users when they are having FuPot Live quesitons</div>
-  <div class="chatBubble chatBubbleCorner">Come join us tonight between 5-9pm! Answer questions for a chance to win a free app every hour!</div>
+  <!-- CHAT BUBBLES -->
+  <ion-button (click)="ScrollToBottom()"></ion-button>
+<ion-content #content [scrollEvents]="true" scrollDownOnLoad="true" *ngIf="messages.length != 0" class="video-container">
+  <ion-list class="chat-list" lines="none" >
+     <div class="chatBubble chatBubbleCorner" *ngFor="let msg of messages">{{msg.message}}</div>
+    </ion-list>
+    <ion-infinite-scroll infiniteScroll  (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+      <ion-infinite-scroll-content class="main_front" style="min-height: 5px;"></ion-infinite-scroll-content>
+      </ion-infinite-scroll> 
+  </ion-content>
+  
+    <!-- <div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
+      <ion-label>The Owner hasn't published any messages yet</ion-label>
+    </div> -->
 
-  <ion-item><ion-input></ion-input><ion-button shape="round" color="fupot_blue"><ion-label color="light">Send</ion-label></ion-button></ion-item>
+  <ion-item><ion-input [(ngModel)]="msg" [(ngModel)]="scrollTo"></ion-input><ion-button (click)="onSubmit()" shape="round" color="fupot_blue"><ion-label color="light">Send</ion-label></ion-button></ion-item>
 
 
 </ion-content>
