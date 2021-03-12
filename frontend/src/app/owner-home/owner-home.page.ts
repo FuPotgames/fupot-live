@@ -1,3 +1,5 @@
+import { GroupService } from './../services/owner-services/group.service';
+import { GroupDataService } from './../services/owner-services/group-data.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
@@ -9,11 +11,22 @@ import { NavController, MenuController } from '@ionic/angular';
 })
 export class OwnerHomePage implements OnInit {
 
-  constructor(private navController: NavController,private router:Router,private menuController:MenuController) { 
+  location_name:string = '';
+
+  constructor(
+    private navController: NavController,
+    private router:Router,
+    private menuController:MenuController,
+    private groupDataService: GroupDataService,
+    ) { 
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.location_name = await this.groupDataService.get_name();
+    while(this.location_name == null){
+      this.location_name = await this.groupDataService.get_name();
+    }
     this.menuController.swipeGesture(true);
   }
 
