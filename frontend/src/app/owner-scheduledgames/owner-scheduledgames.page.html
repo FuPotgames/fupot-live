@@ -11,17 +11,17 @@
 
 <ion-content>
 
-<ion-card>
+<!-- <ion-card>
   <ion-card-header color="fupot_blue">
     <ion-icon src="../../assets/time-outline.svg"></ion-icon>
     <ion-label style="padding-bottom: 5%; padding-left: 4%;">7:30pm</ion-label>
   </ion-card-header>
   <ion-card-content id="blueCard">
-    <ion-label>((The Question that is scheduled will be displayed here))</ion-label>
+    <ion-label>((The Question that is scheduled will be displayed here))</ion-label> -->
     <!-- <ion-button color="clear" style="padding-left: 65%; padding-top: 4%;">
       <ion-label color="fupot_blue" style="font-size: 11pt;">See Winner</ion-label>
       <ion-icon color="fupot_blue" src="../../assets/chevron-forward.svg"></ion-icon></ion-button> -->
-  </ion-card-content>
+<!--   </ion-card-content>
 </ion-card>
 
 <ion-card>
@@ -43,14 +43,14 @@
     <ion-label style="padding-bottom: 7%; padding-left: 4%;">7:40pm</ion-label>
   </ion-card-header>
   <ion-card-content id="pinkCard">
-    <ion-label>((The Question that is scheduled will be displayed here))</ion-label>
+    <ion-label>((The Question that is scheduled will be displayed here))</ion-label> -->
     <!-- <ion-button color="clear" style="padding-left: 65%; padding-top: 4%;">
       <ion-label color="fupot_pink" style="font-size: 11pt;">See Winner</ion-label>
       <ion-icon color="fupot_pink" src="../../assets/chevron-forward.svg"></ion-icon></ion-button> -->
-  </ion-card-content>
-</ion-card>
+<!--   </ion-card-content>
+</ion-card> -->
 
-<ion-card>
+<!-- <ion-card>
   <ion-card-header color="fupot_teal">
     <ion-icon src="../../assets/gift-outline.svg"></ion-icon>
     <ion-label style="padding-bottom: 2%; padding-left: 4%;">7:45pm</ion-label>
@@ -61,7 +61,22 @@
       <ion-label color="fupot_teal" style="font-size: 11pt;">See Winner</ion-label>
       <ion-icon color="fupot_teal" src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
   </ion-card-content>
-</ion-card>
+</ion-card> -->
+
+<ion-list *ngFor="let question of questions">
+  <ion-card>
+    <ion-card-header color={{question.color}}>
+      <ion-icon src="../../assets/gift-outline.svg"></ion-icon>
+      <ion-label style="padding-bottom: 2%; padding-left: 4%;">{{question.ends_at}}</ion-label>
+    </ion-card-header>
+    <ion-card-content id="tealCard"> 
+      <ion-label>{{question.prompt}}</ion-label>
+      <ion-button *ngIf="question.has_winner" color="clear" style="padding-left: 65%; padding-top: 4%;">
+        <ion-label color={{question.color}} style="font-size: 11pt;">See Winner</ion-label>
+        <ion-icon color={{question.color}} src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-list>
 
 
 

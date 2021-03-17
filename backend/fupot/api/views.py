@@ -40,6 +40,8 @@ from django.contrib.gis.db.models.functions import Distance
 
 from django.contrib.gis.geos import GEOSGeometry
 
+import datetime
+
 #================================================ Users APIs ==============================================================
 
 class JoinGroup(generics.CreateAPIView):
@@ -257,7 +259,16 @@ class GetOwnerQuestions(generics.CreateAPIView):
 
     # Gets all groups that are joined by this user
     def get(self, request):
-        questions = Question.objects.filter(owner=self.request.user)
+        questions = Question.objects.filter(owner=self.request.user).order_by('ends_at')
+        for q in questions:
+            starts_at = q.starts_at
+            starts_at = starts_at.strftime("%I:%M %p")
+            setattr(q, 'starts_at', starts_at)
+            #q['starts_at'] = starts_at
+            ends_at = q.ends_at
+            ends_at = ends_at.strftime("%I:%M %p")
+            setattr(q, 'ends_at', ends_at)
+            #q['ends_at'] = ends_at
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
 

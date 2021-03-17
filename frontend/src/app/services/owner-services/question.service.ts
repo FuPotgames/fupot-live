@@ -20,7 +20,8 @@ export class QuestionService {
 
    // Send a get request to the latest questions from the database
    getQuestions(): Observable<any> {
-    return interval(1000).pipe(flatMap( () => this.http.get(environment.BASE_API_URL + '/api/fupot/get-owner-questions')));
+    //return interval(1000).pipe(flatMap( () => this.http.get(environment.BASE_API_URL + '/api/fupot/get-owner-questions')));
+    return this.http.get(environment.BASE_API_URL + '/api/fupot/get-owner-questions');
   }
 
    // Send a patch request to edit the question in the database

@@ -57,14 +57,17 @@ FCM_DJANGO_SETTINGS = {
         'FCM_SERVER_KEY': 'AAAAjLspzSo:APA91bEj3DcKthnTI7SqkJxVqbRAkU2fYlmWPP9hG6TRyCYdibqsL8uK3jdbat4HJmFQPT7zDYwrWKxAKAPGZyTlWVxmTjIs1CBtX41pI1snHWvktrZ0WNRgZmYirmKj5k4BHNCMQx1m'
 }
 
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE':5,
-    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%dT%H:%M:%S.%fZ'],
+    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%dT%I:%M:%S.%fZ']
+    
 }
+
 
 
 AUTH_USER_MODEL = 'account.Account'

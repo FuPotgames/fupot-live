@@ -17,9 +17,6 @@ export class OwnerQuestionsPage implements OnInit {
   checked_3:boolean = false;
   checked_4:boolean = false;
 
-
-  
-
   questionData = {}; // for creating question purposes
   group_id:string; // for retrieving the id from the groupData service
 
@@ -65,6 +62,13 @@ export class OwnerQuestionsPage implements OnInit {
     console.log(this.group_id)
   }
 
+  ionViewDidEnter(){
+    //this.resetFieldsOnly();
+  }
+  ionViewWillEnter(){
+    this.resetFieldsOnly();
+  }
+
 
   // Listening for segment tab changes
     segmentChanged(event:any){
@@ -105,12 +109,10 @@ export class OwnerQuestionsPage implements OnInit {
   async createQuestion() {
     if(this.current_tab_name == 'openEnded'){
       if(this.prompt != '' && this.starts_at != '' 
-                         && this.ends_at != '' && this.winner_title != '' 
-                                          && this.winner_body != '' && this.loser_title && this.loser_body != ''
-                                          && this.correct_answer != ''){
+                         && this.ends_at != ''){
                                             
                                           
-                                            if(this.checked_1){
+                                            /* if(this.checked_1){
                                               this.correct_answer = this.answers_1;
                                             }
                                             else if(this.checked_2){
@@ -121,37 +123,83 @@ export class OwnerQuestionsPage implements OnInit {
                                             }
                                             else if(this.checked_4){
                                               this.correct_answer = this.answers_4;
+                                            } */
+                                            if(this.has_winner === true){
+                                              if(this.winner_title == '' 
+                                              || this.winner_body == '' || this.loser_title == '' || this.loser_body == ''){
+                                                alert("Please fill out all fields")
+                                              }
+                                              if(this.winner_title != '' 
+                                              && this.winner_body != '' && this.loser_title != '' && this.loser_body != ''){
+                                                this.questionData = {
+                                                  title: this.title,
+                                                  prompt: this.prompt,
+                                                  starts_at: String(moment(this.starts_at).format('hh:mm:A')),
+                                                  ends_at: String(moment(this.ends_at).format('hh:mm:A')),
+                                                  sent:true,
+                                                  has_winner: this.has_winner,
+                                            
+                                                  winner_title: this.winner_title,
+                                                  loser_title: this.loser_title,
+                                                  winner_body: this.winner_body,
+                                                  loser_body: this.loser_body,
+                                                  extra_data: '',
+                                            
+                                                  answers_1: this.answers_1,
+                                                  answers_2: this.answers_2,
+                                                  answers_3: this.answers_3,
+                                                  answers_4: this.answers_4,
+                                                  correct_answer: this.correct_answer,
+                                                  location: -88888
+                                              }
+                                                this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
+                                                  //console.log(res);
+                                                  var temp = res;
+                                                  temp['color'] = 'fupot_purple';
+                                                  this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
+                                            
+                                                }, error => {
+                                                  console.log(error);
+                                                });
+                                              }
+                                              
+                                            }
+                                            else{
+                                              this.questionData = {
+                                                title: this.title,
+                                                prompt: this.prompt,
+                                                starts_at: String(moment(this.starts_at).format('hh:mm:A')),
+                                                ends_at: String(moment(this.ends_at).format('hh:mm:A')),
+                                                sent:true,
+                                                has_winner: this.has_winner,
+                                          
+                                                winner_title: this.winner_title,
+                                                loser_title: this.loser_title,
+                                                winner_body: this.winner_body,
+                                                loser_body: this.loser_body,
+                                                extra_data: '',
+                                          
+                                                answers_1: this.answers_1,
+                                                answers_2: this.answers_2,
+                                                answers_3: this.answers_3,
+                                                answers_4: this.answers_4,
+                                                correct_answer: this.correct_answer,
+                                                location: -88888
+                                            }
+                                              this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
+                                                //console.log(res);
+                                                var temp = res;
+                                                temp['color'] = 'fupot_purple';
+                                                this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
+                                          
+                                              }, error => {
+                                                console.log(error);
+                                              });
                                             }
                                             
-                                            this.questionData = {
-                                              title: this.title,
-                                              prompt: this.prompt,
-                                              starts_at: String(moment(this.starts_at).format('hh:mm:A')),
-                                              ends_at: String(moment(this.ends_at).format('hh:mm:A')),
-                                              sent:true,
-                                              has_winner: this.has_winner,
+                                            
                                         
-                                              winner_title: this.winner_title,
-                                              loser_title: this.loser_title,
-                                              winner_body: this.winner_body,
-                                              loser_body: this.loser_body,
-                                              extra_data: '',
-                                        
-                                              answers_1: this.answers_1,
-                                              answers_2: this.answers_2,
-                                              answers_3: this.answers_3,
-                                              answers_4: this.answers_4,
-                                              correct_answer: this.correct_answer,
-                                              location: -88888
-                                          }
-                                            this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                              console.log(res);
-                                        
-                                            }, error => {
-                                              console.log(error);
-                                            });
-                                        
-                                            this.navController.navigateForward('/owner-scheduledgames')
+                                            
                                           }
                                           else{
                                             alert("Please fill out all fields")
@@ -161,8 +209,7 @@ export class OwnerQuestionsPage implements OnInit {
 
     if(this.current_tab_name == 'multChoice'){
       if(this.prompt != '' && this.starts_at != '' 
-        && this.ends_at != '' && this.winner_title != '' 
-                         && this.winner_body != '' && this.loser_title && this.loser_body != ''
+        && this.ends_at != ''
                          && this.answers_1 != '' 
                          && this.answers_2 != '' 
                          && this.answers_3 != ''
@@ -181,40 +228,82 @@ export class OwnerQuestionsPage implements OnInit {
                             this.correct_answer = this.answers_4;
                           }
 
-                          if(this.correct_answer != ''){
-                            this.questionData = {
-                              title: this.title,
-                              prompt: this.prompt,
-                              starts_at: String(moment(this.starts_at).format('hh:mm:A')),
-                              ends_at: String(moment(this.ends_at).format('hh:mm:A')),
-                              sent:true,
-                              has_winner: this.has_winner,
-                        
-                              winner_title: this.winner_title,
-                              loser_title: this.loser_title,
-                              winner_body: this.winner_body,
-                              loser_body: this.loser_body,
-                              extra_data: '',
-                        
-                              answers_1: this.answers_1,
-                              answers_2: this.answers_2,
-                              answers_3: this.answers_3,
-                              answers_4: this.answers_4,
-                              correct_answer: this.correct_answer,
-                              location: -88888
-                          }
-                            this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                              console.log(res);
-                        
-                            }, error => {
-                              console.log(error);
-                            });
-                        
-                            this.navController.navigateForward('/owner-scheduledgames')
+                          if(this.has_winner === true){
+                            if(this.winner_title == '' 
+                            || this.winner_body == '' || this.loser_title == '' || this.loser_body == ''){
+                              alert("Please fill out all fields")
+                            }
+                            else if(this.correct_answer != ''){
+                              this.questionData = {
+                                title: this.title,
+                                prompt: this.prompt,
+                                starts_at: String(moment(this.starts_at).format('hh:mm:A')),
+                                ends_at: String(moment(this.ends_at).format('hh:mm:A')),
+                                sent:true,
+                                has_winner: this.has_winner,
+                          
+                                winner_title: this.winner_title,
+                                loser_title: this.loser_title,
+                                winner_body: this.winner_body,
+                                loser_body: this.loser_body,
+                                extra_data: '',
+                          
+                                answers_1: this.answers_1,
+                                answers_2: this.answers_2,
+                                answers_3: this.answers_3,
+                                answers_4: this.answers_4,
+                                correct_answer: this.correct_answer,
+                                location: -88888
+                            }
+                              this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                                var temp = res;
+                                temp['color'] = 'fupot_purple';
+                                this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
+                          
+                              }, error => {
+                                console.log(error);
+                              });
+                             }
+                            else{
+                              alert("Please choose a correct answer")
+                            }
                           }
                           else{
-                            alert("Please choose a correct answer")
+                            if(this.correct_answer != ''){
+                              this.questionData = {
+                                title: this.title,
+                                prompt: this.prompt,
+                                starts_at: String(moment(this.starts_at).format('hh:mm:A')),
+                                ends_at: String(moment(this.ends_at).format('hh:mm:A')),
+                                sent:true,
+                                has_winner: this.has_winner,
+                          
+                                winner_title: this.winner_title,
+                                loser_title: this.loser_title,
+                                winner_body: this.winner_body,
+                                loser_body: this.loser_body,
+                                extra_data: '',
+                          
+                                answers_1: this.answers_1,
+                                answers_2: this.answers_2,
+                                answers_3: this.answers_3,
+                                answers_4: this.answers_4,
+                                correct_answer: this.correct_answer,
+                                location: -88888
+                            }
+                              this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                                var temp = res;
+                                temp['color'] = 'fupot_purple';
+                                this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
+                          
+                              }, error => {
+                                console.log(error);
+                              });
+                             }
+                            else{
+                              alert("Please choose a correct answer")
+                            }
                           }
+
+                          
                           
                           
                          }
