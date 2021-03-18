@@ -42,6 +42,8 @@ const routes: Routes = [
   { path: 'shopping-locations', loadChildren: './shopping-locations/shopping-locations.module#ShoppingLocationsPageModule' },
   { path: 'social-locations', loadChildren: './social-locations/social-locations.module#SocialLocationsPageModule' },
   { path: 'congrats', loadChildren: './congrats/congrats.module#CongratsPageModule' },
+  { path: 'owner-openended', loadChildren: './owner-openended/owner-openended.module#OwnerOpenendedPageModule' },
+  { path: 'user-openended', loadChildren: './user-openended/user-openended.module#UserOpenendedPageModule' },
 
 ];
 
