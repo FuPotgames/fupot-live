@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'profile', loadChildren: './user-profile/profile.module#ProfilePageModule' },
   { path: 'search', loadChildren: './user-search/search.module#SearchPageModule' },
-  { path: 'owner-home', loadChildren: './owner-home/owner-home.module#OwnerHomePageModule' }, 
   { path: 'notifications', loadChildren: './user-notifications/notifications.module#NotificationsPageModule' },
   { path: 'games', loadChildren: './owner-games/games.module#GamesPageModule' },
   { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
@@ -31,7 +30,19 @@ const routes: Routes = [
   { path: 'owner-tab2', loadChildren: './owner-tab2/owner-tab2.module#OwnerTab2PageModule' },
   { path: 'owner-tab3', loadChildren: './owner-tab3/owner-tab3.module#OwnerTab3PageModule' },
   { path: 'owner-tabs', loadChildren: './owner-tabs/owner-tabs.module#OwnerTabsPageModule' },
+  { path: 'owner-guidelines', loadChildren: './owner-guidelines/owner-guidelines.module#OwnerGuidelinesPageModule' },
   { path: 'user-grouplist', loadChildren: './user-grouplist/user-grouplist.module#UserGrouplistPageModule' },
+  { path: 'group-creation', loadChildren: './group-creation/group-creation.module#GroupCreationPageModule' },
+  { path: 'user-signup', loadChildren: './user-signup/user-signup.module#UserSignupPageModule' },
+  { path: 'user-settings', loadChildren: './user-settings/user-settings.module#UserSettingsPageModule' },
+  { path: 'owner-settings', loadChildren: './owner-settings/owner-settings.module#OwnerSettingsPageModule' },
+  { path: 'verification', loadChildren: './verification/verification.module#VerificationPageModule' },
+  { path: 'restaurant-locations', loadChildren: './restaurant-locations/restaurant-locations.module#RestaurantLocationsPageModule' },
+  { path: 'entertainment-locations', loadChildren: './entertainment-locations/entertainment-locations.module#EntertainmentLocationsPageModule' },
+  { path: 'shopping-locations', loadChildren: './shopping-locations/shopping-locations.module#ShoppingLocationsPageModule' },
+  { path: 'social-locations', loadChildren: './social-locations/social-locations.module#SocialLocationsPageModule' },
+  { path: 'congrats', loadChildren: './congrats/congrats.module#CongratsPageModule' },
+  { path: 'user-openended', loadChildren: './user-openended/user-openended.module#UserOpenendedPageModule' },
 
 ];
 
