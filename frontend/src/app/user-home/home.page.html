@@ -41,7 +41,7 @@
               <!-- Dots -->
               <div class="ion-text-center"><ion-spinner *ngIf="group_joined_msg == null && establishments.length == 0" name="dots"></ion-spinner></div>
               
-              <div *ngIf="establishments.length == 0" class="ion-text-center" style="padding-bottom: 10px;"> <ion-text style="font-size: 13pt;" >{{group_joined_msg}}</ion-text></div>
+              <div *ngIf="establishments.length == 0" class="ion-text-center" style="padding-bottom: 8px;"> <ion-text style="font-size: 13pt;" >{{group_joined_msg}}</ion-text></div>
           
           </ion-card>
           </div>
@@ -54,7 +54,7 @@
 
 
 <!-- FIND LOCATIONS BUTTON (finished)  -->          
-            <div style="padding-top: 4%; padding-bottom: 6%;">
+            <div style="padding-top: 4%; padding-bottom: 3%;">
             <ion-button id="findLocations" (click)="findLocations()" size="default" expand="block" color="fupot_blue" style="margin-left: 4%; margin-right: 4%;"> 
             <ion-label id="labelLocations" color="light" style="font-weight: bold; font-size: large;">FIND LOCATIONS</ion-label></ion-button></div>
         
