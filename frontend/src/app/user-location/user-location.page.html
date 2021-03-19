@@ -1,29 +1,22 @@
 <ion-header>
   <ion-toolbar color="none">
-    <div class="ion-text-center">
-      <img src="../../assets/main_logo.png" width="45%" style="padding-bottom: 1%;padding-top: 7%;">
-      </div >
-      <div style="text-align: center; font-size: 10pt; padding-bottom: 3%;">Location Page</div>
 
+    <div class="ion-text-center" id="logo" style="margin-top: 7%;">
+      <ion-buttons id="back">
+      <ion-back-button defaultHref="user-tabs" text="" icon="../../assets/chevron-back.svg" color="fupot_grey"></ion-back-button>
+      </ion-buttons>
 
+      <img src="../../assets/main_logo.png" width="45%"></div>
 
-<!-- BACK BUTTON -->
-<ion-buttons slot="start">
-  <ion-back-button defaultHref="user-tabs" text="" icon="../../assets/chevron-back.svg" color="fupot_grey"></ion-back-button>
-  </ion-buttons>
+    <div style="text-align: center; font-size: 10pt; padding-top: 1%; padding-bottom: 3%;">Home</div>
   </ion-toolbar>
-  </ion-header>
+</ion-header> 
+
+
 <ion-content>
 
- <div style="margin-top: 12%;">
+ <div>
   <ion-card color="fupot_grey"> 
-    <div class="img-wrapper" style="margin-bottom: 10%;">
-      <img [src]="image_url"/>
-      <ion-button color="light">
-        <ion-icon slot="icon-only" src="../../assets/camera-outline.svg" color="medium">
-        </ion-icon>
-      </ion-button>
-    </div>
     <ion-card-content class="ion-text-center">
      <div style="margin-top: 8%; padding-bottom: 8%;"> <ion-label id="label2" style="font-size: 18pt; font-weight: bold;">{{group_name}}</ion-label> 
     <ion-text style="font-size: small; font-weight: light;"><br>{{group_address}}<br> {{group_phone}} </ion-text></div>
@@ -46,9 +39,9 @@
 
 
 <!-- CHAT BUBBLES -->
-<ion-content *ngIf="messages.length != 0" class="video-container">
-<ion-list lines="none" >
-    <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;">
+<div *ngIf="messages.length != 0" class="video-container">
+<ion-list lines="none" id="transparent">
+    <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;" color="transparent">
       <ion-row >
         <div class="ion-text-center" style="margin:auto;"><ion-label color="medium" id=timestamp>{{msg.created_at}}</ion-label></div>
         <div class="chatBubble chatBubbleCorner" color="fupot_blue">
@@ -61,15 +54,12 @@
             </div> -->
         </ion-row>
         
-        
-      
-      
     </ion-item>
   </ion-list>
   <ion-infinite-scroll infiniteScroll  (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
     <ion-infinite-scroll-content class="main_front" style="min-height: 5px;"></ion-infinite-scroll-content>
     </ion-infinite-scroll> 
-</ion-content>
+  </div>
 
   <div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
     <ion-label>The Owner hasn't published any messages yet</ion-label>
