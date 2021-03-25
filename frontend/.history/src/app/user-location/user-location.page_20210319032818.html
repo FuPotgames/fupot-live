@@ -39,7 +39,6 @@
 
 
 <!-- CHAT BUBBLES -->
-<div id="messages">
 <div *ngIf="messages.length != 0" class="video-container">
 <ion-list lines="none">
     <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;" color="transparent">
@@ -63,7 +62,6 @@
   <div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
     <ion-label>The Owner hasn't published any messages yet</ion-label>
   </div>
-</div>
 
 
 

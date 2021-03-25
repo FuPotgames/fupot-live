@@ -116,15 +116,14 @@ ion-list-header{
   justify-content: center;
 }
 
-.video-container {
+#video-container {
   height: 240px;
   padding: 0px; 
 }
 
-#messages {
-  height: 240px;
+#transparent {
+  background-color: transparent;
 }
-
 
 #back {
   position: fixed;

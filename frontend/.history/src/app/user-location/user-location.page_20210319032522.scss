@@ -122,9 +122,12 @@ ion-list-header{
 }
 
 #messages {
-  height: 240px;
+  height: 300px;
 }
 
+#transparent {
+  background-color: transparent;
+}
 
 #back {
   position: fixed;

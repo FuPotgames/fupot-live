@@ -15,7 +15,7 @@
 
 <ion-content>
 
- <div >
+ <div>
   <ion-card color="fupot_grey"> 
     <ion-card-content class="ion-text-center">
      <div style="margin-top: 8%; padding-bottom: 8%;"> <ion-label id="label2" style="font-size: 18pt; font-weight: bold;">{{group_name}}</ion-label> 
@@ -39,14 +39,15 @@
 
 
 <!-- CHAT BUBBLES -->
-<div id="messages">
 <div *ngIf="messages.length != 0" class="video-container">
-<ion-list lines="none">
+<ion-list lines="none" id="transparent">
     <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;" color="transparent">
       <ion-row >
         <div class="ion-text-center" style="margin:auto;"><ion-label color="medium" id=timestamp>{{msg.created_at}}</ion-label></div>
         <div class="chatBubble chatBubbleCorner" color="fupot_blue">
+          
             <ion-text>{{msg.message}}</ion-text>
+          
         </div>
             <!-- <div style="margin:auto;">
               <ion-label style="font-size: 12px;" class="ion-text-right">{{msg.created_at}}</ion-label>
@@ -63,7 +64,6 @@
   <div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
     <ion-label>The Owner hasn't published any messages yet</ion-label>
   </div>
-</div>
 
 
 
