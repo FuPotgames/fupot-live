@@ -51,6 +51,8 @@ class Question(models.Model):
     title = models.CharField(max_length=255, unique=False)
     prompt = models.TextField(max_length=1027, unique=False, blank=True, null=True)
     starts_at = models.TimeField()
+    starts_at_original = models.TextField(max_length=1027,blank=True, null=True)
+    ends_at_original = models.TextField(max_length=1027,blank=True, null=True)
     ends_at = models.TimeField()
 
     winner_title = models.CharField(max_length=255, unique=False, blank=True, null=True)

@@ -1,0 +1,165 @@
+<ion-header style="margin-bottom: 3%;">
+  <ion-toolbar color="none">
+       
+    <div class="ion-text-center" id="logo" style="padding-top: 5%;"><img src="../../assets/main_logo.png" width="45%"></div>
+        
+    <div style="text-align: center; font-size: 10pt; padding-bottom: 3%;">Edit Question</div>
+  
+    <ion-buttons slot="start"><ion-back-button defaultHref="owner-tabs" text="" icon="../../assets/chevron-back.svg" color="fupot_grey"></ion-back-button></ion-buttons>
+  </ion-toolbar>
+  </ion-header> 
+
+<ion-content>
+<ion-label style="margin-left: 4%; margin-bottom: 3%; margin-top: 3%;">Question Type</ion-label>
+<ion-toolbar (ionChange)="segmentChanged($event)" mode="ios" size="large" style="margin-top: 3%;">
+  <ion-segment [value]="current_tab_name">
+  <ion-segment-button [disabled]="isOpenEnded_page_disabled" value="openEnded" id="segment-button">
+    <ion-label> Open Ended </ion-label>
+  </ion-segment-button>
+
+  <ion-segment-button [disabled]="ismultChoice_page_disabled" value="multChoice">
+    <ion-label> Multiple Choice </ion-label>
+  </ion-segment-button>
+</ion-segment> 
+</ion-toolbar>
+
+
+<!-- OPEN ENDED QUESTIONS -->
+<div *ngIf="selectedSegment == 'openEnded'">
+  <ion-list >
+  <div>
+  <ion-item>
+    <ion-label position="stacked">Question</ion-label>
+    <ion-input [(ngModel)]="prompt" placeholder="Type Question"></ion-input>
+  </ion-item>
+  </div>  
+
+<div>
+  <ion-item style="margin-bottom: 5%;">
+    <ion-label position="stacked">Answer</ion-label>
+    <ion-input [(ngModel)]="correct_answer" placeholder="Type Answer"></ion-input>
+  </ion-item>
+</div>
+
+<div>
+<ion-item style="margin-bottom: 5%;">
+  <ion-icon src="../../assets/gift-outline.svg" size="sm" ></ion-icon>
+<ion-label style="justify-content: left; margin-left: 3%;"> Winner? </ion-label>
+<ion-checkbox [checked]="clicked" (click)="show()"></ion-checkbox>
+</ion-item>
+
+<div *ngIf="showMe">
+  
+<ion-item lines="none"><ion-label>Winner Title:</ion-label><ion-input [(ngModel)]="winner_title" placeholder="Winner Title"></ion-input ></ion-item>
+<ion-item lines="none"><ion-label>Winner Body: </ion-label><ion-input [(ngModel)]="winner_body" placeholder="Winner Body"></ion-input></ion-item>
+<ion-item lines="none"><ion-label>Loser Title:</ion-label><ion-input [(ngModel)]="loser_title" placeholder="Loser Title"></ion-input></ion-item>
+<ion-item><ion-label>Loser Body:</ion-label><ion-input [(ngModel)]="loser_body" placeholder="Loser Body"></ion-input></ion-item></div>
+</div>
+
+<!-- <div>
+  <ion-item>
+   <ion-label>Question Date</ion-label>
+  <ion-datetime displayFormat="D MMM YYYY" placeholder="Select Date"></ion-datetime>
+</ion-item>
+  </div> -->
+  <div>
+    <ion-item>
+    <ion-label> Start Time </ion-label>
+    <ion-datetime [(ngModel)]="starts_at" displayFormat="hh:mm:A" placeholder="Select Start Time"></ion-datetime>
+  </ion-item>
+  </div>
+  <div>
+    <ion-item>
+    <ion-label> End Time </ion-label>
+    <ion-datetime displayFormat="hh/hh/A" [(ngModel)]="ends_at" displayFormat="hh:mm:A" placeholder="Select End Time"></ion-datetime>
+  </ion-item>
+  </div>
+
+</ion-list>
+
+<div class="ion-text-center" style="padding-left: 10%; padding-right: 10%;">
+  <ion-button (click)="createQuestion()" id="buttonPurple" color="light" expand="block"><ion-label color="fupot_purple">SAVE</ion-label></ion-button>
+  <div><ion-button (click)="resetAll()" id="buttonBlue" color="light" expand="block"><ion-label color="fupot_blue">NEW QUESTION</ion-label></ion-button></div>
+
+  
+
+</div>
+</div>
+
+<!-- MULTIPLE CHOICE QUESTIONS -->
+<div *ngIf="selectedSegment == 'multChoice'" >
+<ion-list >
+    <div>
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label position="stacked">Question</ion-label>
+      <ion-input [(ngModel)]="prompt" placeholder="Type Question"></ion-input>
+    </ion-item>
+    </div>  
+
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label>Option 1</ion-label>
+    <ion-input [(ngModel)]="answers_1" placeholder=" Type Answer"></ion-input>
+    <ion-toggle [(ngModel)]="checked_1" ></ion-toggle>
+    </ion-item>
+
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label>Option 2</ion-label>
+    <ion-input [(ngModel)]="answers_2" placeholder="Type Answer"></ion-input>
+    <ion-toggle [(ngModel)]="checked_2"></ion-toggle>
+    </ion-item>
+
+    <ion-item style="margin-bottom: 5%;">
+      <ion-label >Option 3</ion-label>
+    <ion-input [(ngModel)]="answers_3" placeholder="Type Answer"></ion-input>
+    <ion-toggle [(ngModel)]="checked_3"></ion-toggle>
+    </ion-item>
+
+    <ion-item >
+      <ion-label >Option 4</ion-label>
+    <ion-input [(ngModel)]="answers_4" placeholder="Type Answer"></ion-input>
+    <ion-toggle [(ngModel)]="checked_4"></ion-toggle>
+    </ion-item>
+
+    <div>
+      <ion-item style="margin-bottom: 5%;">
+        <ion-icon src="../../assets/gift-outline.svg" size="sm" ></ion-icon>
+      <ion-label style="justify-content: left; margin-left: 3%;"> Winner? </ion-label>
+      <ion-checkbox [checked]="clicked" (click)="show()"></ion-checkbox>
+      </ion-item>
+      <div *ngIf="showMe">
+      <ion-item lines="none"><ion-label>Winner Title:</ion-label><ion-input [(ngModel)]="winner_title" placeholder="Winner Title"></ion-input></ion-item>
+      <ion-item lines="none"><ion-label>Winner Body: </ion-label><ion-input [(ngModel)]="winner_body" placeholder="Winner Body"></ion-input></ion-item>
+      <ion-item lines="none"><ion-label>Loser Title:</ion-label><ion-input [(ngModel)]="loser_title" placeholder="Loser Title"></ion-input></ion-item>
+      <ion-item lines="none"><ion-label>Loser Body:</ion-label><ion-input [(ngModel)]="loser_body" placeholder="Loser Body"></ion-input></ion-item></div>
+      </div>
+      
+      <!-- <div>
+        <ion-item>
+         <ion-label>Question Date</ion-label>
+        <ion-datetime displayFormat="D MMM YYYY" placeholder="Select Date"></ion-datetime>
+      </ion-item>
+        </div> -->
+        <div>
+          <ion-item>
+          <ion-label> Start Time </ion-label>
+          <ion-datetime [(ngModel)]="starts_at" displayFormat="hh:mm:A" picker-format="hh:mm:A" placeholder="Select Start Time" ></ion-datetime>
+        </ion-item>
+        </div>
+        <div>
+          <ion-item>
+          <ion-label> End Time </ion-label>
+          <ion-datetime [(ngModel)]="ends_at" displayFormat="hh:mm:A" placeholder="Select End Time"></ion-datetime>
+        </ion-item>
+        </div>
+
+</ion-list>
+
+
+  <div class="ion-text-center" style="padding-left: 10%; padding-right: 10%;">
+  <ion-button (click)="createQuestion()" id="buttonPurple" color="light" expand="block"><ion-label color="fupot_purple">SAVE</ion-label></ion-button>
+  <div><ion-button (click)="resetAll()" id="buttonBlue" color="light" expand="block"><ion-label color="fupot_blue">NEW QUESTION</ion-label></ion-button></div>
+  </div>
+
+</div>
+
+</ion-content>

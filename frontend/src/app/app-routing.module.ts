@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: 'social-locations', loadChildren: './social-locations/social-locations.module#SocialLocationsPageModule' },
   { path: 'congrats', loadChildren: './congrats/congrats.module#CongratsPageModule' },
   { path: 'user-openended', loadChildren: './user-openended/user-openended.module#UserOpenendedPageModule' },
+  { path: 'edit-owner-scheduledgames', loadChildren: './edit-owner-scheduledgames/edit-owner-scheduledgames.module#EditOwnerScheduledgamesPageModule' },
 
 ];
 

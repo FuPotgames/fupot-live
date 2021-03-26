@@ -11,65 +11,15 @@
 
 <ion-content>
 
-<!-- <ion-card>
-  <ion-card-header color="fupot_blue">
-    <ion-icon src="../../assets/time-outline.svg"></ion-icon>
-    <ion-label style="padding-bottom: 5%; padding-left: 4%;">7:30pm</ion-label>
-  </ion-card-header>
-  <ion-card-content id="blueCard">
-    <ion-label>((The Question that is scheduled will be displayed here))</ion-label> -->
-    <!-- <ion-button color="clear" style="padding-left: 65%; padding-top: 4%;">
-      <ion-label color="fupot_blue" style="font-size: 11pt;">See Winner</ion-label>
-      <ion-icon color="fupot_blue" src="../../assets/chevron-forward.svg"></ion-icon></ion-button> -->
-<!--   </ion-card-content>
-</ion-card>
-
-<ion-card>
-  <ion-card-header color="fupot_purple">
-    <ion-icon src="../../assets/gift-outline.svg"></ion-icon>
-    <ion-label style="padding-bottom: 5%; padding-left: 4%;">7:35pm</ion-label>
-  </ion-card-header>
-  <ion-card-content id="purpleCard">
-    <ion-label>((The Question that is scheduled will be displayed here))</ion-label>
-    <ion-button color="clear" style="padding-left: 65%; padding-top: 4%;">      
-      <ion-label color="fupot_purple" style="font-size: 11pt;">See Winner</ion-label>
-      <ion-icon color="fupot_purple" src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
-    </ion-card-content>
-</ion-card>
-
-<ion-card>
-  <ion-card-header color="fupot_pink">
-    <ion-icon src="../../assets/time-outline.svg"></ion-icon>
-    <ion-label style="padding-bottom: 7%; padding-left: 4%;">7:40pm</ion-label>
-  </ion-card-header>
-  <ion-card-content id="pinkCard">
-    <ion-label>((The Question that is scheduled will be displayed here))</ion-label> -->
-    <!-- <ion-button color="clear" style="padding-left: 65%; padding-top: 4%;">
-      <ion-label color="fupot_pink" style="font-size: 11pt;">See Winner</ion-label>
-      <ion-icon color="fupot_pink" src="../../assets/chevron-forward.svg"></ion-icon></ion-button> -->
-<!--   </ion-card-content>
-</ion-card> -->
-
-<!-- <ion-card>
-  <ion-card-header color="fupot_teal">
-    <ion-icon src="../../assets/gift-outline.svg"></ion-icon>
-    <ion-label style="padding-bottom: 2%; padding-left: 4%;">7:45pm</ion-label>
-  </ion-card-header>
-  <ion-card-content id="tealCard"> 
-    <ion-label>((The Question that is scheduled will be displayed here))</ion-label>
-    <ion-button color="clear" style="padding-left: 65%; padding-top: 4%;">
-      <ion-label color="fupot_teal" style="font-size: 11pt;">See Winner</ion-label>
-      <ion-icon color="fupot_teal" src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
-  </ion-card-content>
-</ion-card> -->
-
-<ion-list *ngFor="let question of questions">
+<ion-list *ngFor="let question of questions;let i = index">
   <ion-card>
     <ion-card-header color={{question.color}}>
-      <ion-icon src="../../assets/gift-outline.svg"></ion-icon>
-      <ion-label style="padding-bottom: 2%; padding-left: 4%;">{{question.ends_at}}</ion-label>
+        <ion-icon src="../../assets/gift-outline.svg">
+        </ion-icon><ion-label style="padding-bottom: 2%; padding-left: 4%;">{{question.ends_at}}</ion-label>
+        <ion-button (click)="go_to_edit_page(i)" style="float:right;padding-top: 5%; padding-right: 5%;">Edit</ion-button>
+      
     </ion-card-header>
-    <ion-card-content id="tealCard"> 
+    <ion-card-content id={{question.card_color}}> 
       <ion-label>{{question.prompt}}</ion-label>
       <ion-button *ngIf="question.has_winner" color="clear" style="padding-left: 65%; padding-top: 4%;">
         <ion-label color={{question.color}} style="font-size: 11pt;">See Winner</ion-label>
@@ -78,58 +28,7 @@
   </ion-card>
 </ion-list>
 
-
-
-
 </ion-content>
-
-  <!-- <ion-grid>
-    <ion-row style="align-items: center;">
-      <ion-col size="sm" style="align-items: center;">
-        <ion-icon size="large" src="../../assets/time-outline.svg"></ion-icon>
-        <ion-row style="align-items: center;"><ion-label style="font-size: 10pt;">7:30pm</ion-label></ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-button id="savedBlue" expand="block" color="fupot_blue" size="large" style="margin: 5%;"> 
-          <ion-label id="label" color="light" style="font-weight: bold;">Saved Question</ion-label></ion-button>
-      </ion-col>
-    </ion-row>    
-    
-    <ion-row style="align-items: center;">
-      <ion-col size="sm" style="align-items: center;">
-        <ion-icon size="large" src="../../assets/time-outline.svg"></ion-icon>
-        <ion-row style="align-items: center;"><ion-label style="font-size: 10pt;">7:45pm</ion-label></ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-button id="savedPink" expand="block"  color="fupot_pink" size="large" style="margin: 5%;"> 
-          <ion-label id="label" color="light" style="font-weight: bold;">Saved Question</ion-label></ion-button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row style="align-items: center;">
-      <ion-col size="sm" style="align-items: center;">
-        <ion-icon size="large" src="../../assets/time-outline.svg"></ion-icon>
-        <ion-row style="align-items: center;"><ion-label style="font-size: 10pt;">7:45pm</ion-label></ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-button id="savedTeal" expand="block"  color="fupot_teal" size="large" style="margin: 5%;"> 
-          <ion-label id="label" color="light" style="font-weight: bold;">Saved Question</ion-label></ion-button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row style="align-items: center;">
-      <ion-col size="sm" style="align-items: center;">
-        <ion-icon size="large" src="../../assets/gift-outline.svg" class="ion-text-center"></ion-icon>
-        <ion-row style="align-items: center; text-align: center;">
-          <ion-label style="font-size: 10pt; ">See<br>Winner</ion-label>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-button id="savedPurple" expand="block"color="fupot_purple" size="large" style="margin: 5%;"> 
-        <ion-label id="label" color="light" style="font-weight: bold;">Saved Question</ion-label></ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
 
 
 

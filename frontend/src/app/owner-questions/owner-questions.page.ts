@@ -134,6 +134,8 @@ export class OwnerQuestionsPage implements OnInit {
                                                 this.questionData = {
                                                   title: this.title,
                                                   prompt: this.prompt,
+                                                  starts_at_original: String(this.starts_at),
+                                                  ends_at_original: String(this.ends_at),
                                                   starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                                   ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                                   sent:true,
@@ -153,7 +155,7 @@ export class OwnerQuestionsPage implements OnInit {
                                                   location: -88888
                                               }
                                                 this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                                  //console.log(res);
+                                                  console.log(res);
                                                   var temp = res;
                                                   temp['color'] = 'fupot_purple';
                                                   this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
@@ -165,9 +167,16 @@ export class OwnerQuestionsPage implements OnInit {
                                               
                                             }
                                             else{
+                                              console.log("Using Moment: ")
+                                              console.log(String(moment(this.starts_at).toISOString()))
+
+                                              console.log("Using new Date: ")
+                                              console.log(new Date(this.starts_at).toISOString())
                                               this.questionData = {
                                                 title: this.title,
                                                 prompt: this.prompt,
+                                                starts_at_original: new Date(this.starts_at).toISOString(),
+                                                ends_at_original: new Date(this.ends_at).toISOString(),
                                                 starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                                 ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                                 sent:true,
@@ -187,7 +196,7 @@ export class OwnerQuestionsPage implements OnInit {
                                                 location: -88888
                                             }
                                               this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                                //console.log(res);
+                                                console.log(res);
                                                 var temp = res;
                                                 temp['color'] = 'fupot_purple';
                                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
@@ -237,6 +246,8 @@ export class OwnerQuestionsPage implements OnInit {
                               this.questionData = {
                                 title: this.title,
                                 prompt: this.prompt,
+                                starts_at_original: new Date(this.starts_at).toISOString(),
+                                ends_at_original: new Date(this.ends_at).toISOString(),
                                 starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                 ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                 sent:true,

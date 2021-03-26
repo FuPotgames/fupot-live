@@ -6,7 +6,7 @@ from fupot.api.views import CreateGetNotificationView,\
          JoinGroup, GetJoinedGroups, CreateGroup, EditGroup, CreateQuestionView, GetOwnerQuestions, GetUserQuestions,\
              EditQuestion, CreateSubmissionView, NotifyResults,SendNotificationToGroup,GetGroupMessages,ResultStatus,\
              RemoveStatus, CreateOwnerStatistics, CreateUserStatistics, UpdateOwnerStatistics, UpdateUserStatistics,\
-             GetOwnerStatistics, GetUserStatistics,ListSearchGroups, GetGroupMembers, GetUserSubmissions
+             GetOwnerStatistics, GetUserStatistics,ListSearchGroups, GetGroupMembers, GetUserSubmissions, DeleteQuestion
 app_name = 'fupot'
 
 
@@ -17,6 +17,7 @@ urlpatterns = [
     path('get-group-messages', GetGroupMessages.as_view(), name="get-group-messages"),
 
     path('remove-status/<int:pk>', RemoveStatus.as_view(), name="remove-status"),
+    path('delete-question/<int:pk>', DeleteQuestion.as_view(), name="delete-question"),
     path('get-result-status', ResultStatus.as_view(), name="get-result-status"),
     
 

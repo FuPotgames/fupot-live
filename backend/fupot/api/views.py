@@ -228,7 +228,9 @@ class CreateQuestionView(generics.CreateAPIView):
                                                                                     loser_title = data.get('loser_title'),\
                                                                                         winner_body = data.get('winner_body'),\
                                                                                             loser_body = data.get('loser_body'),\
-                                                                                                extra_data = data.get('extra_data'))
+                                                                                                extra_data = data.get('extra_data'),
+                                                                                                    starts_at_original = data.get('starts_at_original'),\
+                                                                                                        ends_at_original = data.get('ends_at_original'))
                 return Response(status=201, data=QuestionSerializer(submission).data)
             except:
                 return Response({'reponse':"title, prompt, starts_at, ends_at,answers_1, answers_2,answers_3, answers_4, correct_answer, location are required  "})
@@ -261,14 +263,24 @@ class GetOwnerQuestions(generics.CreateAPIView):
     def get(self, request):
         questions = Question.objects.filter(owner=self.request.user).order_by('ends_at')
         for q in questions:
+            original_starts_at = q.starts_at_original
+            print(original_starts_at)
+
+            #original_starts_at = original_starts_at.isoformat()
             starts_at = q.starts_at
             starts_at = starts_at.strftime("%I:%M %p")
+            
+            #setattr(q,'starts_at_original', original_starts_at)
             setattr(q, 'starts_at', starts_at)
-            #q['starts_at'] = starts_at
+            
+            original_ends_at = q.ends_at_original
+            print(original_ends_at)
+            #original_ends_at = original_ends_at.iso_format()
             ends_at = q.ends_at
             ends_at = ends_at.strftime("%I:%M %p")
+            #setattr(q, 'ends_at_original', original_ends_at)
             setattr(q, 'ends_at', ends_at)
-            #q['ends_at'] = ends_at
+            
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
 
@@ -625,6 +637,22 @@ class RemoveStatus(APIView):
         except Result.DoesNotExist:
             return Response({'reponse':"No results were found with that specific user"})
 
+class DeleteQuestion(APIView):
+    """
+    Responsible for removing status notification
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    def delete(self, request, pk):
+        try:
+            question = Question.objects.get(owner=request.user,id=pk)
+            user = request.user
+            if question.owner != user:
+                return Response({'response':"You don't have permission to check the answers"})
+            else:
+                question.delete()
+                return Response({'response':"Question removed!"})
+        except Question.DoesNotExist:
+            return Response({'reponse':"No results were found with that specific user or question"})
 class UpdateOwnerStatistics(APIView):
     """
     Responsible for updating group properties by id
