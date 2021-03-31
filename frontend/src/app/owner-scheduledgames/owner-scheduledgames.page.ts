@@ -1,3 +1,4 @@
+import { QuestionDataService } from './../services/owner-services/question-data.service';
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../services/owner-services/question.service';
@@ -11,14 +12,34 @@ export class OwnerScheduledgamesPage implements OnInit{
   questions = new Array();
   colors = ['fupot_blue','fupot_purple','fupot_pink','fupot_teal'];
   card_colors = ['blueCard','purpleCard','pinkCard','tealCard'];
+
+  question_index;
+  question_delete_status: any;
   constructor(
     private questionService :QuestionService,
-    private navController:NavController
+    private navController:NavController,
+    private questionDataService:QuestionDataService
+    
   ) { }
 
   
   async ngOnInit(){
     await this.getGroupQuestions();
+    
+    
+
+  }
+  ionViewWillEnter(){
+      this.question_index = this.questionDataService._question_index;
+      this.question_delete_status = this.questionDataService._question_delete_status;
+      if(this.question_delete_status == 0){
+          console.log(this.question_index);
+          this.questions.splice(this.question_index,1);
+          this.questionDataService._question_delete_status = -1;
+      }
+
+
+    
   }
 
   // gets the groups questions specified by the group_id
@@ -43,6 +64,7 @@ export class OwnerScheduledgamesPage implements OnInit{
   }
 
   go_to_edit_page(i){
+    this.questionDataService._question_index = i;
     var question = this.questions[i];
     var is_openEnded;
     for(var q in question){

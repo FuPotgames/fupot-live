@@ -23,8 +23,18 @@ export class QuestionDataService {
   _answers_4: '';
   _correct_answer: '';
   _location: '';
+
+  _question_index:any;
+  _question_delete_status;
+  
   constructor() { }
 
+  set question_delete_status(status){
+    this._question_delete_status = status;
+  }
+  set question_index(index){
+    this._question_index = index;
+  }
   set questions(questions){
     this._questions = questions;
   }
@@ -80,6 +90,13 @@ export class QuestionDataService {
     this._location = location;
   }
 
+
+  get question_delete_status(){
+    return this._question_delete_status;
+  }
+  get question_index(){
+    return this._question_index;
+  }
   get questions(){
     return this._questions;
   }

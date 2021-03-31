@@ -34,4 +34,9 @@ export class QuestionService {
   checkQuestion(group_id,question_id): Observable<any> {
     return this.http.delete(environment.BASE_API_URL + '/api/fupot/notify_results/'+group_id+'?question_id='+question_id);
   }
+
+  // Delete a question from the database
+  deleteQuestion(question_id){
+    return this.http.delete(environment.BASE_API_URL + '/api/fupot/delete-question/'+question_id);
+  }
 }

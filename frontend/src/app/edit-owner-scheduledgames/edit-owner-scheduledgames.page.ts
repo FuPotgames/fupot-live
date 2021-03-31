@@ -1,3 +1,4 @@
+import { QuestionDataService } from './../services/owner-services/question-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
@@ -18,6 +19,8 @@ checked_2:boolean = false;
 checked_3:boolean = false;
 checked_4:boolean = false;
 
+question:any;
+
 questionData = {}; // for creating question purposes
 group_id:string; // for retrieving the id from the groupData service
 
@@ -26,7 +29,7 @@ title:string = '';
 prompt:string = '';
 starts_at:any = '';
 ends_at:string = '';
-has_winner:boolean = false;
+has_winner:boolean;
 winner_title:string = '';
 loser_title:string = '';
 winner_body:string = '';
@@ -57,19 +60,17 @@ constructor(
   private navController: NavController,
   private questionService:QuestionService,
   private groupDataService:GroupDataService,
-  private activatedRoute:ActivatedRoute
+  private activatedRoute:ActivatedRoute,
+  private questionDataService:QuestionDataService
   ) {
       
    }
 
 async ngOnInit() {
-
-  
-  
   this.group_id = await this.groupDataService.get_id();
   
   this.activatedRoute.queryParams.subscribe((question) => {
-    console.log(question);
+    
     for(var q in question){
       if(((q === 'is_openEnded') && (question[q] === true))){
         this.current_tab_name = 'openEnded';
@@ -80,7 +81,10 @@ async ngOnInit() {
         this.ismultChoice_page_disabled = false;
       }
       
-    }    
+    }
+    this.question = question;
+    
+    
     this.title = 'none';
     this.prompt = question.prompt;
     this.starts_at = new Date(question.starts_at_original).toString();
@@ -97,37 +101,41 @@ async ngOnInit() {
     this.answers_4 = question.answers_4;
     this.correct_answer = question.correct_answer;
     
+    if(Boolean(question.has_winner) === true){
+      this.clicked = true;
+      this.show();
+    }
+
+    if(String(this.answers_1) === String(question.correct_answer)){
+      this.checked_1 = true;
+    }
+    if(String(this.answers_2) === String(question.correct_answer)){
+      this.checked_2 = true;
+    }
+    if(String(this.answers_3) === String(question.correct_answer)){
+      this.checked_3 = true;
+    }
+    if(String(this.answers_4) === String(question.correct_answer)){
+      this.checked_4 = true;
+    }
+
+    
+
     
   });
-}
-
-ionViewDidEnter(){
-  //this.resetFieldsOnly();
-  
-}
-ionViewWillEnter(){
-  this.resetFieldsOnly();
 }
 
 
 // Listening for segment tab changes
   segmentChanged(event:any){
-    console.log(event.target.value);
     this.selectedSegment=event.target.value
 
-    if(event.target.value != ''){
-       this.showMe = false;
-       this.clicked= null;
-    }
+    // if(event.target.value != ''){
+    //    this.showMe = false;
+    //    this.clicked= null;
+    // }
     this.current_tab_name = event.target.value;
     
-    
-    this.resetFieldsOnly();
-    
-                       
-    
-    
-
   }
 
   // Helper function showing and hiding the middle section
@@ -194,7 +202,6 @@ async createQuestion() {
                                                 location: -88888
                                             }
                                               this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                                //console.log(res);
                                                 var temp = res;
                                                 temp['color'] = 'fupot_purple';
                                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
@@ -228,7 +235,6 @@ async createQuestion() {
                                               location: -88888
                                           }
                                             this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                              //console.log(res);
                                               var temp = res;
                                               temp['color'] = 'fupot_purple';
                                               this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
@@ -358,45 +364,6 @@ async createQuestion() {
   
 }
 
-
-// Clears out everthings even the checkboxes
-resetAll(){
-    if(this.showMe == true || this.clicked == true){
-      this.showMe = false;
-      this.clicked = false;
-      
-    }
-    else{
-      this.showMe = true;
-      this.clicked = true;
-    }
-
-    this.checked_1 = false;
-    this.checked_2 = false;
-    this.checked_3 = false;
-    this.checked_4 = false;
-  
-  
-
-    this.title = '';
-    this.prompt = '';
-    this.starts_at = '';
-    this.ends_at = '';
-    this.has_winner = false;
-
-    this.winner_title = '';
-    this.loser_title = '';
-    this.winner_body = '';
-    this.loser_body = '';
-    this.extra_data = '';
-
-    this.answers_1 = '';
-    this.answers_2 = '';
-    this.answers_3 = '';
-    this.answers_4 = '';
-    this.correct_answer = '';
-}
-
 // Clears only the fields only
 resetFieldsOnly(){
     this.checked_1 = false;
@@ -421,6 +388,16 @@ resetFieldsOnly(){
     this.answers_3 = '';
     this.answers_4 = '';
     this.correct_answer = '';
+}
+
+deleteQuestion(){
+  this.questionService.deleteQuestion(this.question.id).subscribe((res)=>{
+    console.log(res);
+    this.questionDataService.question_delete_status = 0;
+    this.navController.navigateBack('/owner-scheduledgames',{'queryParams': this.question});
+  },error =>{
+    console.log(error);
+  });
 }
 
 

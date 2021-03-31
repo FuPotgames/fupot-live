@@ -59,14 +59,11 @@ export class OwnerQuestionsPage implements OnInit {
 
   async ngOnInit() {
     this.group_id = await this.groupDataService.get_id();
-    console.log(this.group_id)
   }
 
-  ionViewDidEnter(){
-    //this.resetFieldsOnly();
-  }
-  ionViewWillEnter(){
+  ionViewDidLeave(){
     this.resetFieldsOnly();
+    this.resetWhenLeave()
   }
 
 
@@ -83,10 +80,6 @@ export class OwnerQuestionsPage implements OnInit {
       
       this.resetFieldsOnly();
       
-                         
-      
-      
-
     }
 
     // Helper function showing and hiding the middle section
@@ -131,11 +124,12 @@ export class OwnerQuestionsPage implements OnInit {
                                               }
                                               if(this.winner_title != '' 
                                               && this.winner_body != '' && this.loser_title != '' && this.loser_body != ''){
+                                                
                                                 this.questionData = {
                                                   title: this.title,
                                                   prompt: this.prompt,
-                                                  starts_at_original: String(this.starts_at),
-                                                  ends_at_original: String(this.ends_at),
+                                                  starts_at_original: new Date(this.starts_at).toISOString(),
+                                                  ends_at_original: new Date(this.ends_at).toISOString(),
                                                   starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                                   ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                                   sent:true,
@@ -172,6 +166,9 @@ export class OwnerQuestionsPage implements OnInit {
 
                                               console.log("Using new Date: ")
                                               console.log(new Date(this.starts_at).toISOString())
+
+
+                                             
                                               this.questionData = {
                                                 title: this.title,
                                                 prompt: this.prompt,
@@ -199,6 +196,7 @@ export class OwnerQuestionsPage implements OnInit {
                                                 console.log(res);
                                                 var temp = res;
                                                 temp['color'] = 'fupot_purple';
+                                                console.log(temp)
                                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                                           
                                               }, error => {
@@ -242,6 +240,7 @@ export class OwnerQuestionsPage implements OnInit {
                             || this.winner_body == '' || this.loser_title == '' || this.loser_body == ''){
                               alert("Please fill out all fields")
                             }
+                            
                             else if(this.correct_answer != ''){
                               this.questionData = {
                                 title: this.title,
@@ -266,8 +265,14 @@ export class OwnerQuestionsPage implements OnInit {
                                 correct_answer: this.correct_answer,
                                 location: -88888
                             }
-                              this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                                var temp = res;
+                            console.log(this.questionData)
+                              this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                               
+                                var temp = res;
                                 temp['color'] = 'fupot_purple';
+                                
+                                
+                                console.log(temp)
+                                
                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                           
                               }, error => {
@@ -279,10 +284,13 @@ export class OwnerQuestionsPage implements OnInit {
                             }
                           }
                           else{
+                            
                             if(this.correct_answer != ''){
                               this.questionData = {
                                 title: this.title,
                                 prompt: this.prompt,
+                                starts_at_original: new Date(this.starts_at).toISOString(),
+                                ends_at_original: new Date(this.ends_at).toISOString(),
                                 starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                 ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                 sent:true,
@@ -345,7 +353,7 @@ export class OwnerQuestionsPage implements OnInit {
       this.checked_2 = false;
       this.checked_3 = false;
       this.checked_4 = false;
-    
+      
     
 
       this.title = '';
@@ -391,6 +399,24 @@ export class OwnerQuestionsPage implements OnInit {
       this.answers_3 = '';
       this.answers_4 = '';
       this.correct_answer = '';
+  }
+
+  resetWhenLeave(){
+    if(this.showMe == true || this.clicked == true){
+      this.showMe = false;
+      this.clicked = false;
+      
+    }
+    else{
+      this.showMe = true;
+      this.clicked = true;
+    }
+
+    this.checked_1 = false;
+    this.checked_2 = false;
+    this.checked_3 = false;
+    this.checked_4 = false;
+    this.has_winner = false;
   }
 
   

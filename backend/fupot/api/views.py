@@ -639,7 +639,7 @@ class RemoveStatus(APIView):
 
 class DeleteQuestion(APIView):
     """
-    Responsible for removing status notification
+    Responsible for removing a question
     """
     permission_classes = (permissions.IsAuthenticated,)
     def delete(self, request, pk):
