@@ -24,6 +24,7 @@ question:any;
 questionData = {}; // for creating question purposes
 group_id:string; // for retrieving the id from the groupData service
 
+
 // Question Data
 title:string = '';
 prompt:string = '';
@@ -61,7 +62,7 @@ constructor(
   private questionService:QuestionService,
   private groupDataService:GroupDataService,
   private activatedRoute:ActivatedRoute,
-  private questionDataService:QuestionDataService
+  private questionDataService:QuestionDataService,
   ) {
       
    }
@@ -123,6 +124,40 @@ async ngOnInit() {
 
     
   });
+
+  
+}
+
+// For Multiple Choice Question Validation
+async validate_then_edit_question(){
+  if(this.checked_1 == true && this.checked_2 == true && this.checked_3 ==true && this.checked_4 == true){
+    alert("Please select only one")
+  }
+  else if(this.checked_2 == true && this.checked_3 == true && this.checked_4){
+    alert("Please select only one")
+  }
+  else if(this.checked_2 == true && this.checked_4){
+    alert("Please select only one")
+  }
+  else if(this.checked_3 == true && this.checked_4){
+    alert("Please select only one")
+  }
+  else if(this.checked_1 == true && this.checked_3){
+    alert("Please select only one")
+  }
+  else if(this.checked_2 == true && this.checked_3){
+    alert("Please select only one")
+  }
+  else if(this.checked_1 == true && this.checked_2){
+    alert("Please select only one")
+  }
+  else if(this.checked_1 == true && this.checked_4){
+    alert("Please select only one")
+  }
+  else{
+    await this.editQuestion();
+  }
+   
 }
 
 
@@ -153,9 +188,9 @@ async ngOnInit() {
   
 
   /*
-Create a Question in the database
+Edit a Question in the database
 */
-async createQuestion() {
+async editQuestion() {
   if(this.current_tab_name == 'openEnded'){
     if(this.prompt != '' && this.starts_at != '' 
                        && this.ends_at != ''){
@@ -183,11 +218,13 @@ async createQuestion() {
                                               this.questionData = {
                                                 title: this.title,
                                                 prompt: this.prompt,
+                                                starts_at_original: new Date(this.starts_at).toISOString(),
+                                                ends_at_original: new Date(this.ends_at).toISOString(),
                                                 starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                                 ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                                 sent:true,
                                                 has_winner: this.has_winner,
-                                          
+                                                group: this.group_id,
                                                 winner_title: this.winner_title,
                                                 loser_title: this.loser_title,
                                                 winner_body: this.winner_body,
@@ -200,14 +237,29 @@ async createQuestion() {
                                                 answers_4: this.answers_4,
                                                 correct_answer: this.correct_answer,
                                                 location: -88888
-                                            }
-                                              this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
+                                            };
+                                              if(this.answers_1 == ''){
+                                                delete this.questionData['answers_1']
+                                              }
+                                              if(this.answers_2 == ''){
+                                                delete this.questionData['answers_2']
+                                              }
+                                              if(this.answers_3 == ''){
+                                                delete this.questionData['answers_3']
+                                              }
+                                              if(this.answers_4 == ''){
+                                                delete this.questionData['answers_4']
+                                              }
+
+                                            
+                                              this.questionService.editQuestion(this.question.id,this.questionData).subscribe(async res => {
                                                 var temp = res;
-                                                temp['color'] = 'fupot_purple';
+                                                temp['color'] = this.question.color;
+                                                temp['card_color'] = this.question.card_color
+                                                this.questionDataService.questions = temp;
                                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                                           
                                               }, error => {
-                                                console.log(error);
                                               });
                                             }
                                             
@@ -216,11 +268,13 @@ async createQuestion() {
                                             this.questionData = {
                                               title: this.title,
                                               prompt: this.prompt,
+                                              starts_at_original: new Date(this.starts_at).toISOString(),
+                                              ends_at_original: new Date(this.ends_at).toISOString(),
                                               starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                                               ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                                               sent:true,
                                               has_winner: this.has_winner,
-                                        
+                                              group: this.group_id,
                                               winner_title: this.winner_title,
                                               loser_title: this.loser_title,
                                               winner_body: this.winner_body,
@@ -234,13 +288,29 @@ async createQuestion() {
                                               correct_answer: this.correct_answer,
                                               location: -88888
                                           }
-                                            this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
+
+                                          if(this.answers_1 == ''){
+                                            delete this.questionData['answers_1']
+                                          }
+                                          if(this.answers_2 == ''){
+                                            delete this.questionData['answers_2']
+                                          }
+                                          if(this.answers_3 == ''){
+                                            delete this.questionData['answers_3']
+                                          }
+                                          if(this.answers_4 == ''){
+                                            delete this.questionData['answers_4']
+                                          }
+
+                                          
+                                            this.questionService.editQuestion(this.question.id,this.questionData).subscribe(async res => {
                                               var temp = res;
-                                              temp['color'] = 'fupot_purple';
+                                              temp['color'] = this.question.color;
+                                              temp['card_color'] = this.question.card_color
+                                              this.questionDataService.questions = temp;
                                               this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                                         
                                             }, error => {
-                                              console.log(error);
                                             });
                                           }
                                           
@@ -284,11 +354,13 @@ async createQuestion() {
                             this.questionData = {
                               title: this.title,
                               prompt: this.prompt,
+                              starts_at_original: new Date(this.starts_at).toISOString(),
+                              ends_at_original: new Date(this.ends_at).toISOString(),
                               starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                               ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                               sent:true,
                               has_winner: this.has_winner,
-                        
+                              group: this.group_id,
                               winner_title: this.winner_title,
                               loser_title: this.loser_title,
                               winner_body: this.winner_body,
@@ -302,12 +374,26 @@ async createQuestion() {
                               correct_answer: this.correct_answer,
                               location: -88888
                           }
-                            this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                                var temp = res;
-                              temp['color'] = 'fupot_purple';
+                          if(this.answers_1 == ''){
+                            delete this.questionData['answers_1']
+                          }
+                          if(this.answers_2 == ''){
+                            delete this.questionData['answers_2']
+                          }
+                          if(this.answers_3 == ''){
+                            delete this.questionData['answers_3']
+                          }
+                          if(this.answers_4 == ''){
+                            delete this.questionData['answers_4']
+                          }
+                            this.questionService.editQuestion(this.question.id,this.questionData).subscribe(async res => {
+                              var temp = res;
+                              temp['color'] = this.question.color;
+                              temp['card_color'] = this.question.card_color
+                              this.questionDataService.questions = temp;
                               this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                         
                             }, error => {
-                              console.log(error);
                             });
                            }
                           else{
@@ -319,11 +405,13 @@ async createQuestion() {
                             this.questionData = {
                               title: this.title,
                               prompt: this.prompt,
+                              starts_at_original: new Date(this.starts_at).toISOString(),
+                              ends_at_original: new Date(this.ends_at).toISOString(),
                               starts_at: String(moment(this.starts_at).format('hh:mm:A')),
                               ends_at: String(moment(this.ends_at).format('hh:mm:A')),
                               sent:true,
                               has_winner: this.has_winner,
-                        
+                              group: this.group_id,
                               winner_title: this.winner_title,
                               loser_title: this.loser_title,
                               winner_body: this.winner_body,
@@ -337,12 +425,27 @@ async createQuestion() {
                               correct_answer: this.correct_answer,
                               location: -88888
                           }
-                            this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                                var temp = res;
-                              temp['color'] = 'fupot_purple';
+
+                          if(this.answers_1 == ''){
+                            delete this.questionData['answers_1']
+                          }
+                          if(this.answers_2 == ''){
+                            delete this.questionData['answers_2']
+                          }
+                          if(this.answers_3 == ''){
+                            delete this.questionData['answers_3']
+                          }
+                          if(this.answers_4 == ''){
+                            delete this.questionData['answers_4']
+                          }
+                            this.questionService.editQuestion(this.question.id,this.questionData).subscribe(async res => {
+                              var temp = res;
+                              temp['color'] = this.question.color;
+                              temp['card_color'] = this.question.card_color
+                              this.questionDataService.questions = temp;
                               this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                         
                             }, error => {
-                              console.log(error);
                             });
                            }
                           else{
@@ -392,11 +495,9 @@ resetFieldsOnly(){
 
 deleteQuestion(){
   this.questionService.deleteQuestion(this.question.id).subscribe((res)=>{
-    console.log(res);
     this.questionDataService.question_delete_status = 0;
     this.navController.navigateBack('/owner-scheduledgames',{'queryParams': this.question});
   },error =>{
-    console.log(error);
   });
 }
 

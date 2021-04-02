@@ -69,18 +69,22 @@ class Question(models.Model):
     
     answers_1 = models.CharField(max_length=1000,
                                null=True,
+                               blank=True,
                                help_text="Enter the answer text that \
                                             you want displayed",)
     answers_2 = models.CharField(max_length=1000,
                                null=True,
+                               blank=True,
                                help_text="Enter the answer text that \
                                             you want displayed",)
     answers_3 = models.CharField(max_length=1000,
                                null=True,
+                               blank=True,
                                help_text="Enter the answer text that \
                                             you want displayed",)
     answers_4 = models.CharField(max_length=1000,
                                null=True,
+                               blank=True,
                                help_text="Enter the answer text that \
                                             you want displayed",)
 

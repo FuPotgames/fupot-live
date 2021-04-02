@@ -25,15 +25,23 @@ export class OwnerScheduledgamesPage implements OnInit{
   
   async ngOnInit(){
     await this.getGroupQuestions();
-    
-    
 
   }
+
   ionViewWillEnter(){
+    // Continue work on passing question from edit page to schedule page
+    var x = this.questionDataService._questions;
+    var updated_question = x;
+
+    try{
+      let itemIndex = this.questions.findIndex(item => item.id == updated_question.id);
+      this.questions[itemIndex] = updated_question;
+    }
+    catch(e){
+    }
       this.question_index = this.questionDataService._question_index;
       this.question_delete_status = this.questionDataService._question_delete_status;
       if(this.question_delete_status == 0){
-          console.log(this.question_index);
           this.questions.splice(this.question_index,1);
           this.questionDataService._question_delete_status = -1;
       }

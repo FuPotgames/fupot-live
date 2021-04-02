@@ -17,6 +17,8 @@ export class OwnerQuestionsPage implements OnInit {
   checked_3:boolean = false;
   checked_4:boolean = false;
 
+
+
   questionData = {}; // for creating question purposes
   group_id:string; // for retrieving the id from the groupData service
 
@@ -69,7 +71,6 @@ export class OwnerQuestionsPage implements OnInit {
 
   // Listening for segment tab changes
     segmentChanged(event:any){
-      console.log(event.target.value);
       this.selectedSegment=event.target.value
 
       if(event.target.value != ''){
@@ -94,7 +95,37 @@ export class OwnerQuestionsPage implements OnInit {
       }
     }
 
-    
+    // For Multiple Choice Question Validation
+    async validate_then_create_question(){
+      if(this.checked_1 == true && this.checked_2 == true && this.checked_3 ==true && this.checked_4 == true){
+        alert("Please select only one")
+      }
+      else if(this.checked_2 == true && this.checked_3 == true && this.checked_4){
+        alert("Please select only one")
+      }
+      else if(this.checked_2 == true && this.checked_4){
+        alert("Please select only one")
+      }
+      else if(this.checked_3 == true && this.checked_4){
+        alert("Please select only one")
+      }
+      else if(this.checked_1 == true && this.checked_3){
+        alert("Please select only one")
+      }
+      else if(this.checked_2 == true && this.checked_3){
+        alert("Please select only one")
+      }
+      else if(this.checked_1 == true && this.checked_2){
+        alert("Please select only one")
+      }
+      else if(this.checked_1 == true && this.checked_4){
+        alert("Please select only one")
+      }
+      else{
+        await this.createQuestion();
+      }
+       
+    }
 
     /*
   Create a Question in the database
@@ -149,26 +180,17 @@ export class OwnerQuestionsPage implements OnInit {
                                                   location: -88888
                                               }
                                                 this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                                  console.log(res);
                                                   var temp = res;
                                                   temp['color'] = 'fupot_purple';
                                                   this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                                             
                                                 }, error => {
-                                                  console.log(error);
+                                                  
                                                 });
                                               }
                                               
                                             }
                                             else{
-                                              console.log("Using Moment: ")
-                                              console.log(String(moment(this.starts_at).toISOString()))
-
-                                              console.log("Using new Date: ")
-                                              console.log(new Date(this.starts_at).toISOString())
-
-
-                                             
                                               this.questionData = {
                                                 title: this.title,
                                                 prompt: this.prompt,
@@ -193,14 +215,11 @@ export class OwnerQuestionsPage implements OnInit {
                                                 location: -88888
                                             }
                                               this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {
-                                                console.log(res);
                                                 var temp = res;
                                                 temp['color'] = 'fupot_purple';
-                                                console.log(temp)
                                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                                           
                                               }, error => {
-                                                console.log(error);
                                               });
                                             }
                                             
@@ -224,15 +243,19 @@ export class OwnerQuestionsPage implements OnInit {
                          ){
                           if(this.checked_1){
                             this.correct_answer = this.answers_1;
+                            
                           }
                           else if(this.checked_2){
                             this.correct_answer = this.answers_2;
+                            
                           }
                           else if(this.checked_3){
                             this.correct_answer = this.answers_3;
+                            
                           }
                           else if(this.checked_4){
                             this.correct_answer = this.answers_4;
+                            
                           }
 
                           if(this.has_winner === true){
@@ -265,18 +288,12 @@ export class OwnerQuestionsPage implements OnInit {
                                 correct_answer: this.correct_answer,
                                 location: -88888
                             }
-                            console.log(this.questionData)
                               this.questionService.createQuestion(this.group_id,this.questionData).subscribe(async res => {                               
                                 var temp = res;
                                 temp['color'] = 'fupot_purple';
-                                
-                                
-                                console.log(temp)
-                                
                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                           
                               }, error => {
-                                console.log(error);
                               });
                              }
                             else{
@@ -314,7 +331,6 @@ export class OwnerQuestionsPage implements OnInit {
                                 this.navController.navigateForward('/owner-scheduledgames',{'queryParams': temp});
                           
                               }, error => {
-                                console.log(error);
                               });
                              }
                             else{

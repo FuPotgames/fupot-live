@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class QuestionDataService {
-  _questions = [];
+  _questions:any;
   _id:'';
   _title:'';
   _prompt: '';
@@ -35,8 +35,8 @@ export class QuestionDataService {
   set question_index(index){
     this._question_index = index;
   }
-  set questions(questions){
-    this._questions = questions;
+  set questions(question){
+    this._questions = question;
   }
   set id(id){
     this._id = id;
