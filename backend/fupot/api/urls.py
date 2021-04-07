@@ -6,7 +6,8 @@ from fupot.api.views import CreateGetNotificationView,\
          JoinGroup, GetJoinedGroups, CreateGroup, EditGroup, CreateQuestionView, GetOwnerQuestions, GetUserQuestions,\
              EditQuestion, CreateSubmissionView, NotifyResults,SendNotificationToGroup,GetGroupMessages,ResultStatus,\
              RemoveStatus, CreateOwnerStatistics, CreateUserStatistics, UpdateOwnerStatistics, UpdateUserStatistics,\
-             GetOwnerStatistics, GetUserStatistics,ListSearchGroups, GetGroupMembers, GetUserSubmissions, DeleteQuestion
+             GetOwnerStatistics, GetUserStatistics,ListSearchGroups, GetGroupMembers, GetUserSubmissions, DeleteQuestion,\
+             GetCurrentTimeStamp
 app_name = 'fupot'
 
 
@@ -54,5 +55,6 @@ urlpatterns = [
     path('update-owner-statistics/<int:pk>', UpdateOwnerStatistics.as_view(), name="update-owner-statistics"),
 
     path('create-owner-statistics', CreateOwnerStatistics.as_view(), name="create-owner-statistics"),
-    path('get-owner-statistics', GetOwnerStatistics.as_view(), name="get-owner-statistics")
+    path('get-owner-statistics', GetOwnerStatistics.as_view(), name="get-owner-statistics"),
+    path('get-current-timestamp', GetCurrentTimeStamp.as_view(), name="get-current-timestamp")
 ]

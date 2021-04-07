@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="none">
+    <div class="ion-text-center">
+      <img src="../../assets/main_logo.png" width="45%" style="padding-bottom: 1%;padding-top: 7%;">
+      </div >
+      <div style="text-align: center; font-size: 10pt; margin-bottom: 3%;">
+        Available Questions
+      </div>
+  </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list *ngFor="let question of questions;let i = index">
+      <ion-card>
+        <ion-card-header color={{question.color}}>
+            <ion-icon src="../../assets/gift-outline.svg">
+              </ion-icon>
+            <ion-label style="padding-bottom: 2%; padding-left: 4%;">{{"Starts At: "}}{{question.starts_at_original | date: "hh:mm a"}}</ion-label>
+          
+        </ion-card-header>
+        <ion-card-content id={{question.card_color}}> 
+          <ion-label>{{question.prompt}}</ion-label>
+          <ion-button (click)="user_answer_page(i)" *ngIf="question.available" color="clear" style="align-content: center;">
+            <ion-label color={{question.color}} style="font-size: 11pt;">Answer Question</ion-label>
+            <ion-icon color={{question.color}} src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </ion-content>

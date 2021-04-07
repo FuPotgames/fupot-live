@@ -91,7 +91,8 @@ export class UserLocationPage implements OnInit {
   }
 
   goAnswer() {
-    this.navController.navigateRoot('/user-answer');
+    //this.navController.navigateRoot('/user-available-questions');
+    this.navController.navigateForward('/user-available-questions',{'queryParams': {group_id:this.group_id}});
   }
 
   async show() {

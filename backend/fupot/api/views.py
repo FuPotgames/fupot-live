@@ -41,6 +41,7 @@ from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
 
 import datetime
+import time
 
 #================================================ Users APIs ==============================================================
 
@@ -770,3 +771,15 @@ class GetUserStatistics(APIView):
         statistics = UserStatistics.objects.filter(user=self.request.user)
         serializer = UserStatisticsSerializer(statistics, many=True)
         return Response(serializer.data)
+
+
+class GetCurrentTimeStamp(APIView):
+    """
+    Responsible for retreving current timestamp
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    # Gets all groups that are joined by this user
+    def get(self, request):
+        ts = time.time()
+        return Response({'Current TimeStamp: '+str(ts)})

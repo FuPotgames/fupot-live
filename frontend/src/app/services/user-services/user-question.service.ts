@@ -35,4 +35,10 @@ export class UserQuestionService {
   deleteResultStatus(result_status_id): Observable<any> {
     return this.http.delete(environment.BASE_API_URL + '/api/fupot/remove-status/'+result_status_id);
   }
+
+  //sends a get request to retrive current timestamp in UTC
+  getTimestamp(): Observable<any> {
+    return this.http.get(environment.BASE_API_URL + '/api/fupot/get-current-timestamp');
+  }
+
 }

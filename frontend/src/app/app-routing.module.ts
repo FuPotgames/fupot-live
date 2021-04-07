@@ -44,6 +44,7 @@ const routes: Routes = [
   { path: 'congrats', loadChildren: './congrats/congrats.module#CongratsPageModule' },
   { path: 'user-openended', loadChildren: './user-openended/user-openended.module#UserOpenendedPageModule' },
   { path: 'edit-owner-scheduledgames', loadChildren: './edit-owner-scheduledgames/edit-owner-scheduledgames.module#EditOwnerScheduledgamesPageModule' },
+  { path: 'user-available-questions', loadChildren: './user-available-questions/user-available-questions.module#UserAvailableQuestionsPageModule' },
 
 ];
 
