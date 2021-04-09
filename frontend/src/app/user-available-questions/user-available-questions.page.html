@@ -14,12 +14,12 @@
         <ion-card-header color={{question.color}}>
             <ion-icon src="../../assets/gift-outline.svg">
               </ion-icon>
-            <ion-label style="padding-bottom: 2%; padding-left: 4%;">{{"Starts At: "}}{{question.starts_at_original | date: "hh:mm a"}}</ion-label>
+            <ion-label id={{i}} style="padding-bottom: 15%; padding-left: 4%;"></ion-label>
           
         </ion-card-header>
         <ion-card-content id={{question.card_color}}> 
-          <ion-label>{{question.prompt}}</ion-label>
-          <ion-button (click)="user_answer_page(i)" *ngIf="question.available" color="clear" style="align-content: center;">
+          <ion-label *ngIf="question.available == false">{{"Coming Soon"}}</ion-label>
+          <ion-button (click)="user_answer_page(i)" *ngIf="question.available == true" color="clear" style="align-content: center;">
             <ion-label color={{question.color}} style="font-size: 11pt;">Answer Question</ion-label>
             <ion-icon color={{question.color}} src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
         </ion-card-content>
