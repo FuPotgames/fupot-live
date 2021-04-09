@@ -17,7 +17,7 @@ ion-card {
   margin: 16px 2px 24px;
   position: relative;
   padding-top: 60px;
-  height: 175px;
+  height: 225px;
 
   .img-wrapper {
     position: absolute;
@@ -105,4 +105,9 @@ ion-button {
 
   #bar {
     height: 20px;
+    color: #EF519D;
+  }
+
+  ion-progress-bar {
+    background-color: #EF519D;
   }
