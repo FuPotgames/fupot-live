@@ -11,14 +11,13 @@
   <ion-content>
     <ion-list *ngFor="let question of questions;let i = index">
       <ion-card>
-        <ion-card-header color={{question.color}}>
-            <ion-icon src="../../assets/gift-outline.svg">
-              </ion-icon>
-            <ion-label id={{i}} style="padding-bottom: 15%; padding-left: 4%;"></ion-label>
-          
+        <ion-card-header style="display: flex;justify-content: center;align-items: center;" color={{question.color}}>
+            <ion-icon *ngIf="question.has_winner == true" src="../../assets/gift-outline.svg" style="margin-bottom: 4%;"></ion-icon>
+            <ion-card-title  id={{i}} style="color: white;margin-top: 5%;margin-left: 2%;margin-bottom: 4%;">{{"Coming Soon"}}</ion-card-title>
         </ion-card-header>
-        <ion-card-content id={{question.card_color}}> 
-          <ion-label *ngIf="question.available == false">{{"Coming Soon"}}</ion-label>
+
+        <ion-card-content style="padding-top: 2%;" id={{question.card_color}}> 
+          <ion-label *ngIf="question.available == false">{{"Starts At: "}}{{question.starts_at_original | date: "hh:mm a"}}</ion-label>
           <ion-button (click)="user_answer_page(i)" *ngIf="question.available == true" color="clear" style="align-content: center;">
             <ion-label color={{question.color}} style="font-size: 11pt;">Answer Question</ion-label>
             <ion-icon color={{question.color}} src="../../assets/chevron-forward.svg"></ion-icon></ion-button>

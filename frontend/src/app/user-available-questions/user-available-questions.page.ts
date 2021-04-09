@@ -10,19 +10,20 @@ import * as moment from 'moment';
   styleUrls: ['./user-available-questions.page.scss'],
 })
 export class UserAvailableQuestionsPage implements OnInit {
+
+  // Declared some variables for obtaining and modying style of the questions
   questions = new Array();
-  question_timers = new Array();
   colors = ['fupot_blue','fupot_purple','fupot_pink','fupot_teal'];
   card_colors = ['blueCard','purpleCard','pinkCard','tealCard'];
   group_id: any;
+
+  // For storing the current_timestamp from the serve
   current_timestamp: number;
 
-  interval:any;
-  question: any;
+  // For storing each interval ref id for destroying them later when the user leave this page
+  intervals = new Array();
 
-  timer = 'something';
   
-
   constructor(
     private userQuestionService:UserQuestionService,
     private activatedRoute:ActivatedRoute,
@@ -30,22 +31,23 @@ export class UserAvailableQuestionsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    
-    this.activatedRoute.queryParams.subscribe(async (res)=>{
-      this.group_id = res.group_id
-           
-      
-    });
-   this.current_timestamp = Number((await this.userQuestionService.getTimestamp().toPromise())[0].slice(19));
-    console.log(this.current_timestamp)
+    this.getGroupId();
+    await this.getCurrentTimeStamp();
     await this.getGroupQuestions();
-   
+  }
 
- 
-   
-    
-    
-    
+  // Clearing up intervals here
+  ngOnDestroy(){
+    for(var i=0;i<this.intervals.length;i++){
+      clearInterval(this.intervals[i]);
+    }
+  }
+
+  // Gets and sets the group_id from the other page
+  getGroupId(){
+    this.activatedRoute.queryParams.subscribe(async (res)=>{
+      this.group_id = res.group_id;
+    });
   }
 
   // gets the groups questions specified by the group_id
@@ -72,74 +74,66 @@ export class UserAvailableQuestionsPage implements OnInit {
         }
       }
       temp = null;
-      
-
   
 }
 
-isAvailable(start_date,end_date,current_timestamp) {
-  if(new Date(moment.unix(current_timestamp).toISOString()) > new Date(start_date) &&
-  (new Date(moment.unix(current_timestamp).toISOString()) < new Date(end_date))
-  ){
-    return true;
+  // Responsible for getting and setting the current_timestamp from the server
+  async getCurrentTimeStamp(){
+    this.current_timestamp = Number((await this.userQuestionService.getTimestamp().toPromise())[0].slice(19));
   }
-  else{
-    return false;
+
+  // Checks if the question is available or not
+  isAvailable(start_date,end_date,current_timestamp) {
+    if(new Date(moment.unix(current_timestamp).toISOString()) > new Date(start_date) &&
+    (new Date(moment.unix(current_timestamp).toISOString()) < new Date(end_date))
+    ){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
-}
 
+  // redirects the user to user-answer page
+  user_answer_page(i){
+    this.navController.navigateForward('/user-answer',{'queryParams': this.questions[i]});
+  }
 
-user_answer_page(i){
-  this.navController.navigateForward('/user-answer',{'queryParams': this.questions[i]});
-}
-
-ngOnDestroy(){
-    clearInterval(this.interval);
-  
-  
-}
-
-// Timer starts counting back to the end_time
-countdown(curr_time,end_time,i){
-    let endTime = new Date(end_time).getTime();
-    let current_time = new Date(moment.unix(curr_time).toISOString());
-
-    console.log(current_time)
-
-      // Update the count down every 1 second
-      this.interval = setInterval(function () {
-        // Get todays date and time
-        current_time.setSeconds(current_time.getSeconds() + 1);
-        let NOW = current_time.getTime();
-        // Find the distance between now and the count down date
-        let distance = endTime - NOW;
-        // Time calculations for days, hours, minutes and seconds
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        
-        
-  
-        // If the count down is over, write some text 
-        if (distance < 0) {
-          console.log("test")
-          clearInterval(this.interval);
-        }
-        else{
-          // Output the result in an element with id="demo"
-          this.timer = days + "d " + hours + "h "
-          + minutes + "m " + seconds + "s ";
-
-            document.getElementById(i).innerHTML = "Time Left: "+hours + "h:"+ minutes + "m:" + seconds + "s ";   
+  // Timer starts counting back to the end_time
+  countdown(curr_time,end_time,i){
+      let endTime = new Date(end_time).getTime();
+      let current_time = new Date(moment.unix(curr_time).toISOString());
+      let timer = '';
+    
+        // Update the count down every 1 second
+        this.intervals.push(setInterval(function () {
+          // Get todays date and time
+          current_time.setSeconds(current_time.getSeconds() + 1);
+          let NOW = current_time.getTime();
+          // Find the distance between now and the count down date
+          let distance = endTime - NOW;
+          // Time calculations for days, hours, minutes and seconds
+          let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          let seconds = Math.floor((distance % (1000 * 60)) / 1000);
           
+    
+          // If the count down is over, write some text 
+          if (distance < 0) {
+            clearInterval(this.interval);
+          }
+          else{
+            // Output the result in an element with id="index"
+            timer = "Time Left: "+hours + "h:"+ minutes + "m:" + seconds + "s ";
+            document.getElementById(i).innerHTML = timer;
+            
+          }
           
-        }
+        }, 1000));
         
-      }, 1000);
-      
-  
-  }
-
+    
+      }
 }
+
+

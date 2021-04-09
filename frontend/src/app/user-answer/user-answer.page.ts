@@ -23,14 +23,17 @@ export class UserAnswerPage implements OnInit {
      ) {}
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(async (res)=>{
-      this.question = res;
-    });
-    //this.getTimeStamp();
+    this.getQuestion();
+    console.log(this.question)
   }
 
   
-
+  getQuestion(){
+    this.activatedRoute.queryParams.subscribe(async (res)=>{
+      this.question = res;
+    });
+  }
+  
   answer() {
     this.navController.navigateRoot(['/user-submit']);
   }
