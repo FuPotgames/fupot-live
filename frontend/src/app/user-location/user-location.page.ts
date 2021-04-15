@@ -1,3 +1,4 @@
+import { UserGroupDataService } from './../services/user-services/user-group-data.service';
 import { NotificationService } from './../services/general-services/notification.service';
 import { AuthService } from './../services/auth-services/auth.service';
 import { GeoLocationService } from './../services/general-services/geo-location.service';
@@ -68,7 +69,8 @@ export class UserLocationPage implements OnInit {
     private geoLocationService:GeoLocationService,
     private authService:AuthService,
     private domSanitizer:DomSanitizer,
-    private notificationService:NotificationService
+    private notificationService:NotificationService,
+    private userGroupDataService:UserGroupDataService
     ) { }
 
   async ngOnInit() {
@@ -105,6 +107,8 @@ export class UserLocationPage implements OnInit {
   }
   async set_group_properties(){
     this.activatedRoute.queryParams.subscribe(async (res)=>{
+      await this.userGroupDataService.set_id(res.group_id);
+
       this.group_id = res.group_id
       this.group_name = res.name
       this.group_phone = res.phone

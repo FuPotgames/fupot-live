@@ -9,7 +9,7 @@ import * as moment from 'moment';
   templateUrl: './user-answer.page.html',
   styleUrls: ['./user-answer.page.scss'],
 })
-export class UserAnswerPage implements OnInit {
+export class UserAnswerPage implements OnInit{
   question: any;
   current_timestamp: number;
   interval:any;

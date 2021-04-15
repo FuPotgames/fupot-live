@@ -13,6 +13,8 @@ export class UserAvailableQuestionsPage implements OnInit {
 
   // Declared some variables for obtaining and modying style of the questions
   questions = new Array();
+  answered_questions = new Array();
+
   colors = ['fupot_blue','fupot_purple','fupot_pink','fupot_teal'];
   card_colors = ['blueCard','purpleCard','pinkCard','tealCard'];
   group_id: any;
@@ -32,6 +34,7 @@ export class UserAvailableQuestionsPage implements OnInit {
 
   async ngOnInit() {
     this.getGroupId();
+    //this.checkIfAnswered(this.group_id);
     await this.getCurrentTimeStamp();
     await this.getGroupQuestions();
   }
@@ -96,8 +99,30 @@ export class UserAvailableQuestionsPage implements OnInit {
 
   // redirects the user to user-answer page
   user_answer_page(i){
-    this.navController.navigateForward('/user-answer',{'queryParams': this.questions[i]});
+    var q = this.questions[i];
+    if(q.answers_1 == "" && q.answers_2 == "" && q.answers_3 == "" && q.answers_4 == ""){
+      //Open-Ended
+      q['open-ended'] = true;
+      this.navController.navigateForward('/user-openended',{'queryParams': q});
+      
+    }
+    else{
+      //Multiple Choices
+      q['mult-choice'] = true;
+      this.navController.navigateForward('/user-answer',{'queryParams': q});
+
+    }
+    
   }
+  //TODO:Need to work on checking if question is answered
+  // async checkIfAnswered(group_id){
+  //   this.answered_questions = await this.userQuestionService.answeredResponses(group_id).toPromise();
+  //   for(var i=0;i<this.questions.length;i++){
+  //     for(var y=0;y<this.answered_questions.length;y++){
+  //       if((this.answered_questions[y].question) == ())
+  //     }
+  //   }
+    
 
   // Timer starts counting back to the end_time
   countdown(curr_time,end_time,i){
