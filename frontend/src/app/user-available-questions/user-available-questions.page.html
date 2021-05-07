@@ -1,19 +1,23 @@
 <ion-header>
   <ion-toolbar color="none">
-    <div class="ion-text-center">
-      <img src="../../assets/main_logo.png" width="45%" style="padding-bottom: 1%;padding-top: 7%;">
-      </div >
-      <div style="text-align: center; font-size: 10pt; margin-bottom: 3%;">
-        Available Questions
-      </div>
+
+    <div class="ion-text-center" id="logo" style="margin-top: 7%;">
+      <ion-buttons id="back">
+      <ion-back-button defaultHref="user-tabs" text="" icon="../../assets/chevron-back.svg" color="fupot_grey"></ion-back-button>
+      </ion-buttons>
+
+      <img src="../../assets/main_logo.png" width="45%"></div>
+
+    <div style="text-align: center; font-size: 10pt; padding-top: 1%; padding-bottom: 3%;">Available Questions</div>
   </ion-toolbar>
-  </ion-header>
+</ion-header> 
+  
   <ion-content>
     <ion-list *ngFor="let question of questions;let i = index">
       <ion-card>
         <ion-card-header style="display: flex;justify-content: center;align-items: center;" color={{question.color}}>
             <ion-icon *ngIf="question.has_winner == true" src="../../assets/gift-outline.svg" style="margin-bottom: 4%;"></ion-icon>
-            <ion-card-title  id={{i}} style="color: white;margin-top: 5%;margin-left: 2%;margin-bottom: 4%;">{{"Coming Soon"}}</ion-card-title>
+            <ion-label  id={{i}} style="color: white;margin-top: 5%;margin-left: 2%;margin-bottom: 5%; font-size: 16pt; font-weight: 600;">{{"Coming Soon"}}</ion-label>
         </ion-card-header>
 
         <ion-card-content style="padding-top: 2%;" id={{question.card_color}}> 

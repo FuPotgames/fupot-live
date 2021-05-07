@@ -14,7 +14,6 @@
   </ion-header>
 
 <ion-content #content  [scrollEvents]="true" scrollDownOnLoad="true">
-  <!-- <div class="chatBubble chatBubbleCorner">Come join us tonight between 5-9pm! Answer questions for a chance to win a free app every hour!</div> -->
 
   <!-- CHAT BUBBLES -->
   <ion-button (click)="ScrollToBottom()"></ion-button>
@@ -31,7 +30,7 @@
       <ion-label>The Owner hasn't published any messages yet</ion-label>
     </div> -->
 
-  <ion-item><ion-input [(ngModel)]="msg" [(ngModel)]="scrollTo"></ion-input><ion-button (click)="onSubmit()" shape="round" color="fupot_blue"><ion-label color="light">Send</ion-label></ion-button></ion-item>
+  <ion-item color="none"><ion-input [(ngModel)]="msg" [(ngModel)]="scrollTo"></ion-input><ion-button (click)="onSubmit()" shape="round" color="fupot_blue"><ion-label color="light">Send</ion-label></ion-button></ion-item>
 
 
 </ion-content>

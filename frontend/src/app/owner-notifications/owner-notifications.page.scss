@@ -1,3 +1,4 @@
+
 ion-content {
     
   --background: url(../../assets/bg_mid .png) no-repeat center/cover fixed;
@@ -50,4 +51,12 @@ bottom: -13px;
 .video-container {
   height: 500px;
   padding: 0px;  
+}
+
+.editButton {
+  opacity: 50%;
+}
+
+ion-list {
+  background-color: transparent;
 }
