@@ -76,7 +76,7 @@ export class UserOpenendedPage implements OnInit {
     this.userQuestionService.answerQuestion(this.answerData).subscribe((res)=>{
       console.log(res);
       this.user_answer = '';
-      this.navController.navigateBack('/user-available-questions');
+      this.navController.navigateBack('/user-available-questions',{'queryParams': {answered:true,id:this.question.id}});
     },error =>{
       console.log(error);
     })

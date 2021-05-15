@@ -22,7 +22,8 @@
 
         <ion-card-content style="padding-top: 2%;" id={{question.card_color}}> 
           <ion-label *ngIf="question.available == false">{{"Starts At: "}}{{question.starts_at_original | date: "hh:mm a"}}</ion-label>
-          <ion-button (click)="user_answer_page(i)" *ngIf="question.available == true" color="clear" style="align-content: center;">
+          <ion-label *ngIf="(question.available == true) && (question.answered == true)">Already Answered</ion-label>
+          <ion-button (click)="user_answer_page(i)" *ngIf="(question.available == true) && (question.answered != true)" color="clear" style="align-content: center;">
             <ion-label color={{question.color}} style="font-size: 11pt;">Answer Question</ion-label>
             <ion-icon color={{question.color}} src="../../assets/chevron-forward.svg"></ion-icon></ion-button>
         </ion-card-content>

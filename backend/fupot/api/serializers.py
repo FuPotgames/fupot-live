@@ -31,6 +31,7 @@ class SubmissionSerializer(serializers.ModelSerializer):
 	Serializes the User Submission model
     """
     username = serializers.SerializerMethodField('get_username')
+    prompt = serializers.SerializerMethodField('get_prompt')
     class Meta:
         model = Submission
         fields ='__all__'
@@ -38,6 +39,9 @@ class SubmissionSerializer(serializers.ModelSerializer):
     def get_username(self, submission):
         username = submission.user.username
         return username
+    def get_prompt(self, submission):
+        prompt = submission.question.prompt
+        return prompt
 
 class ResultSerializer(serializers.ModelSerializer):
     """

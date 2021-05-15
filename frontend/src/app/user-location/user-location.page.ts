@@ -74,7 +74,6 @@ export class UserLocationPage implements OnInit {
     ) { }
 
   async ngOnInit() {
-    
     this.set_group_properties();
     this.coordinates = await this.geoLocationService.getLocation();
     this.user_id = await this.authDataService.get_user_id()
@@ -162,7 +161,7 @@ convertToDataURLviaCanvas(url, outputFormat){
 // Gets the group messages
 async getGroupMessages(infiniteScroll?) {setTimeout(() => {
   this.notificationService.getGroupMessages(this.group_id,this.page).subscribe(async res => {
-    
+    this.messages = new Array();
       res.slice().reverse().forEach(y => {
         var zone_name =  moment.tz.guess();
         var utcDate = y.created_at;  // ISO-8601 formatted date returned from server

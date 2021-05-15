@@ -47,8 +47,8 @@
 
 <!-- CHAT BUBBLES -->
 <div id="messages">
-<div *ngIf="messages.length != 0" class="video-container" id="whitespace">
-<ion-list lines="none" >
+<div  class="video-container" id="whitespace">
+<ion-list *ngIf="messages.length != 0" lines="none" >
     <ion-item [@fade] *ngFor="let msg of messages" style="padding-bottom: 5px;" color="none">
       <ion-row >
         <div class="ion-text-center" style="margin:auto;"><ion-label color="medium" id=timestamp>{{msg.created_at}}</ion-label></div>
@@ -65,7 +65,9 @@
   <ion-infinite-scroll infiniteScroll  (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
     <ion-infinite-scroll-content class="main_front" style="min-height: 5px;"></ion-infinite-scroll-content>
     </ion-infinite-scroll> 
-
+<div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
+    <ion-label>The Owner hasn't published any messages yet</ion-label>
+  </div>
 <!-- Answer Questions -->
     <div class="ion-text-center" style="margin-top: 5%; margin-left: 6%;margin-right: 6%;">
       <ion-button id="option" (click)="goAnswer()" expand="block" size="large" color="fupot_blue"><ion-label id="label" style="font-size: 15pt; font-weight: bold;" color="light">See Questions</ion-label></ion-button>
@@ -73,9 +75,7 @@
   
   </div>
 
-  <div *ngIf="messages.length == 0" style="justify-content: center;" class="chatBubble chatBubbleCorner ion-text-center">
-    <ion-label>The Owner hasn't published any messages yet</ion-label>
-  </div>
+  
 </div>
 
 

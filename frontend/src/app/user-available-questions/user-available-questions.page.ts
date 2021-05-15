@@ -13,7 +13,7 @@ export class UserAvailableQuestionsPage implements OnInit {
 
   // Declared some variables for obtaining and modying style of the questions
   questions = new Array();
-  answered_questions = new Array();
+  answered_questions;
 
   colors = ['fupot_blue','fupot_purple','fupot_pink','fupot_teal'];
   card_colors = ['blueCard','purpleCard','pinkCard','tealCard'];
@@ -34,9 +34,10 @@ export class UserAvailableQuestionsPage implements OnInit {
 
   async ngOnInit() {
     this.getGroupId();
-    //this.checkIfAnswered(this.group_id);
+    this.checkIfAnswered(this.group_id);
     await this.getCurrentTimeStamp();
     await this.getGroupQuestions();
+    
   }
 
   // Clearing up intervals here
@@ -49,6 +50,12 @@ export class UserAvailableQuestionsPage implements OnInit {
   // Gets and sets the group_id from the other page
   getGroupId(){
     this.activatedRoute.queryParams.subscribe(async (res)=>{
+      if(res.answered != undefined){
+        for(var x=0;x<this.questions.length;x++){
+          this.questions[x].available = true;
+          this.questions[x].answered = true;
+        }
+      }
       this.group_id = res.group_id;
     });
   }
@@ -58,11 +65,25 @@ export class UserAvailableQuestionsPage implements OnInit {
   async getGroupQuestions() {
       var temp = await this.userQuestionService.getGroupQuestions(this.group_id).toPromise();
       var count = 0;
+      
       for (var x = 0; x < temp.length; x++) {
         this.countdown(this.current_timestamp,String(temp[x]['ends_at_original']),x);
         temp[x]['color'] = this.colors[count];
         temp[x]['card_color'] = this.card_colors[count];
-        if((this.isAvailable(temp[x].starts_at_original,temp[x].ends_at_original,this.current_timestamp) == true)){
+        
+        for(var y=0;y<this.answered_questions.length;y++){
+          if(this.answered_questions[y].prompt == temp[x].prompt){
+            console.log("answered")
+            temp[x]['answered'] = true;
+          }
+          else{
+            console.log("not answered");
+            temp[x]['answered'] = false;
+          }
+        }
+
+        if((this.isAvailable(temp[x].starts_at_original,temp[x].ends_at_original,this.current_timestamp) == true)
+        ){
           //Question Available
             temp[x]['available'] = true;
         }
@@ -70,12 +91,16 @@ export class UserAvailableQuestionsPage implements OnInit {
           temp[x]['available'] = false;
         }
         
+        
+        
         this.questions.push(temp[x]);
         count++;
         if (count == 4) {
           count = 0;
         }
       }
+      
+    
       temp = null;
   
 }
@@ -114,14 +139,9 @@ export class UserAvailableQuestionsPage implements OnInit {
     }
     
   }
-  //TODO:Need to work on checking if question is answered
-  // async checkIfAnswered(group_id){
-  //   this.answered_questions = await this.userQuestionService.answeredResponses(group_id).toPromise();
-  //   for(var i=0;i<this.questions.length;i++){
-  //     for(var y=0;y<this.answered_questions.length;y++){
-  //       if((this.answered_questions[y].question) == ())
-  //     }
-  //   }
+  async checkIfAnswered(group_id){
+     this.answered_questions = await this.userQuestionService.answeredResponses(group_id).toPromise();
+  }
     
 
   // Timer starts counting back to the end_time
