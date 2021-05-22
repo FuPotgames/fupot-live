@@ -28,6 +28,8 @@ export class UserAvailableQuestionsPage {
 
   is_time_over:boolean = false;
   is_time_running:boolean = true;
+
+  
   
   constructor(
     private userQuestionService:UserQuestionService,
@@ -37,6 +39,7 @@ export class UserAvailableQuestionsPage {
   ) { }
 
   async ionViewWillEnter(){
+
     this.questions = [];
     this.answered_questions = [];
 
@@ -45,7 +48,7 @@ export class UserAvailableQuestionsPage {
     await this.getCurrentTimeStamp();
     await this.getGroupQuestions();
 
-    console.log(this.questions)
+    console.log(this.is_time_over)
   }
 
   // Clearing up intervals here
@@ -77,6 +80,9 @@ export class UserAvailableQuestionsPage {
       
       for (var x = 0; x < temp.length; x++) {
         this.countdown(this.current_timestamp,String(temp[x]['ends_at_original']),x,this.is_time_over,this.is_time_running);
+
+        
+
         temp[x]['color'] = this.colors[count];
         temp[x]['card_color'] = this.card_colors[count];
         
@@ -84,8 +90,6 @@ export class UserAvailableQuestionsPage {
         var matches  = this.getMatch(temp,this.answered_questions);
         for(var i = 0; i<matches.length;i++){
             temp[matches[i]]['answered'] = true;
-          
-          
         }
         if((this.isAvailable(temp[x].starts_at_original,temp[x].ends_at_original,this.current_timestamp) == true)
         ){
@@ -183,12 +187,30 @@ export class UserAvailableQuestionsPage {
           let seconds = Math.floor((distance % (1000 * 60)) / 1000);
           
     
+          
           // If the count down is over, write some text 
           if (distance < 0) {
             is_time_over = true;
             is_time_running = false;
             
+            
             document.getElementById(i).innerHTML = "Timed Out";
+            document.getElementById(String(i)+String(i)).setAttribute("disabled","true");
+            document.getElementById(String(i)+String(i)).style.fontSize = "11pt";
+            document.getElementById(String(i)+String(i)).style.color = "black";
+            document.getElementById(String(i)+String(i)).innerHTML = "Come back later"
+            
+                  
+            
+            
+            
+            //if(document.getElementById(i).innerHTML === "Timed Out"){
+              console.log("2 timeout")
+              //document.getElementById("timed_out_msg").style.color = 'black';
+              //document.getElementById("timed_out_msg").style.fontSize = '11pt';
+              
+           // }
+            //document.getElementById(i).innerHTML = "Come back later";
             clearInterval(this.interval);
 
           }
@@ -197,7 +219,7 @@ export class UserAvailableQuestionsPage {
             is_time_running = true;
             // Output the result in an element with id="index"
             timer = "Time Left: "+hours + "h:"+ minutes + "m:" + seconds + "s ";
-            document.getElementById(i).innerHTML = timer;
+            document.getElementById(i).innerText = timer;
             
           }
           
