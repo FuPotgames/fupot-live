@@ -3,13 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { UserQuestionService } from './../services/user-services/user-question.service';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { UserGroupDataService } from '../services/user-services/user-group-data.service';
 
 @Component({
   selector: 'app-user-available-questions',
   templateUrl: './user-available-questions.page.html',
   styleUrls: ['./user-available-questions.page.scss'],
 })
-export class UserAvailableQuestionsPage implements OnInit {
+export class UserAvailableQuestionsPage {
 
   // Declared some variables for obtaining and modying style of the questions
   questions = new Array();
@@ -25,19 +26,26 @@ export class UserAvailableQuestionsPage implements OnInit {
   // For storing each interval ref id for destroying them later when the user leave this page
   intervals = new Array();
 
+  is_time_over:boolean = false;
+  is_time_running:boolean = true;
   
   constructor(
     private userQuestionService:UserQuestionService,
     private activatedRoute:ActivatedRoute,
-    private navController:NavController
+    private navController:NavController,
+    private userGroupDataService:UserGroupDataService,
   ) { }
 
-  async ngOnInit() {
+  async ionViewWillEnter(){
+    this.questions = [];
+    this.answered_questions = [];
+
     this.getGroupId();
     this.checkIfAnswered(this.group_id);
     await this.getCurrentTimeStamp();
     await this.getGroupQuestions();
-    
+
+    console.log(this.questions)
   }
 
   // Clearing up intervals here
@@ -63,25 +71,22 @@ export class UserAvailableQuestionsPage implements OnInit {
   // gets the groups questions specified by the group_id
   // as well as gets the question data from owner-question page from the route
   async getGroupQuestions() {
+    this.group_id = await this.userGroupDataService.get_id();
       var temp = await this.userQuestionService.getGroupQuestions(this.group_id).toPromise();
       var count = 0;
       
       for (var x = 0; x < temp.length; x++) {
-        this.countdown(this.current_timestamp,String(temp[x]['ends_at_original']),x);
+        this.countdown(this.current_timestamp,String(temp[x]['ends_at_original']),x,this.is_time_over,this.is_time_running);
         temp[x]['color'] = this.colors[count];
         temp[x]['card_color'] = this.card_colors[count];
         
-        for(var y=0;y<this.answered_questions.length;y++){
-          if(this.answered_questions[y].prompt == temp[x].prompt){
-            console.log("answered")
-            temp[x]['answered'] = true;
-          }
-          else{
-            console.log("not answered");
-            temp[x]['answered'] = false;
-          }
+        
+        var matches  = this.getMatch(temp,this.answered_questions);
+        for(var i = 0; i<matches.length;i++){
+            temp[matches[i]]['answered'] = true;
+          
+          
         }
-
         if((this.isAvailable(temp[x].starts_at_original,temp[x].ends_at_original,this.current_timestamp) == true)
         ){
           //Question Available
@@ -103,6 +108,19 @@ export class UserAvailableQuestionsPage implements OnInit {
     
       temp = null;
   
+}
+
+  getMatch(a, b) {
+  var matches = [];
+
+  for ( var i = 0; i < a.length; i++ ) {
+      for ( var e = 0; e < b.length; e++ ) {
+          if ( a[i].prompt === b[e].prompt ){
+            matches.push( i );
+          } 
+      }
+  }
+  return matches;
 }
 
   // Responsible for getting and setting the current_timestamp from the server
@@ -140,12 +158,13 @@ export class UserAvailableQuestionsPage implements OnInit {
     
   }
   async checkIfAnswered(group_id){
-     this.answered_questions = await this.userQuestionService.answeredResponses(group_id).toPromise();
+    group_id = await this.userGroupDataService.get_id();
+    this.answered_questions = await this.userQuestionService.answeredResponses(group_id).toPromise();
   }
     
 
   // Timer starts counting back to the end_time
-  countdown(curr_time,end_time,i){
+  countdown(curr_time,end_time,i,is_time_over,is_time_running){
       let endTime = new Date(end_time).getTime();
       let current_time = new Date(moment.unix(curr_time).toISOString());
       let timer = '';
@@ -166,9 +185,16 @@ export class UserAvailableQuestionsPage implements OnInit {
     
           // If the count down is over, write some text 
           if (distance < 0) {
+            is_time_over = true;
+            is_time_running = false;
+            
+            document.getElementById(i).innerHTML = "Timed Out";
             clearInterval(this.interval);
+
           }
           else{
+            is_time_over = false;
+            is_time_running = true;
             // Output the result in an element with id="index"
             timer = "Time Left: "+hours + "h:"+ minutes + "m:" + seconds + "s ";
             document.getElementById(i).innerHTML = timer;
